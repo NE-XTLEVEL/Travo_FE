@@ -1,12 +1,11 @@
 import React from 'react';
-import TravelPlan from './TravelPlans/TravelPlan';
+import ScheduleContainer from '../components/Schedule/ScheduleContainer';
 
 const MainWeb = () => {
   return (
     <div>
       this is web
-      <h1>Travel Plan</h1>
-      <TravelPlan />
+      <ScheduleContainer />
     </div>
   );
 };

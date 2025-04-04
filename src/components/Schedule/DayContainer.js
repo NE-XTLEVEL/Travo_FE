@@ -5,32 +5,32 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-import SortablePlace from './Place.js';
+import SortableCard from './SortableCard.js';
 
 const containerStyle = {
-  width: 100,
+  width: 300,
   background: '#dadada',
   padding: 10,
   margin: 10,
   flex: 1,
 };
 
-export default function DayPlan({ id, places }) {
+export default function DayContainer({ id, items }) {
   const { setNodeRef } = useDroppable({ id });
 
   return (
     <SortableContext
       id={id}
-      items={places.map((place) => place.id)}
+      items={items.map((item) => item.id)}
       strategy={verticalListSortingStrategy}
     >
       <div ref={setNodeRef} style={containerStyle}>
-        {places.map((place) => (
-          <SortablePlace
-            key={place.id}
-            id={place.id}
-            category={place.category}
-            name={place.name}
+        {items.map((item) => (
+          <SortableCard
+            key={item.id}
+            id={item.id}
+            type={item.type}
+            name={item.name}
           />
         ))}
       </div>

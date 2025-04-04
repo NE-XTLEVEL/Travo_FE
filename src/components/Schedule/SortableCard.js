@@ -2,9 +2,9 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-export function Place({ id, category, name }) {
+export function Card({ id, type, name }) {
   const style = {
-    width: 100,
+    width: 300,
     height: 50,
     display: 'flex',
     alignItems: 'center',
@@ -16,23 +16,25 @@ export function Place({ id, category, name }) {
 
   return (
     <div id={id} style={style}>
-      {category} - {name}
+      {type} - {name}
     </div>
   );
 }
 
-export default function SortablePlace({ id, category, name }) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: id });
+export default function SortableCard({ id, type, name }) {
+  const { attributes, listeners, setNodeRef, transform } = useSortable({
+    id: id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition: 'transform 250ms ease',
+    cursor: 'grab',
   };
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Place id={id} category={category} name={name} />
+      <Card id={id} type={type} name={name} />
     </div>
   );
 }
