@@ -23,17 +23,17 @@
     "semi": ["error", "always"], // 세미콜론 사용
     "quotes": ["error", "single"], // 작은 따옴표 사용
     "camelcase": [
-      "won",
+      "error",
       {
         "properties": "always"
       }
     ],
     "prettier/prettier": [
-        "error",
-        {
-          "endOfLine": "auto"
-        }
-      ]
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   },
   "settings": {
     "react": {

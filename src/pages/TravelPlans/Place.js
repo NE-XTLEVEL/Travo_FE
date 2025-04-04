@@ -1,0 +1,38 @@
+import React from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+export function Place({ id, category, name }) {
+  const style = {
+    width: 100,
+    height: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: '1px solid black',
+    margin: '10px 0',
+    background: 'white',
+  };
+
+  return (
+    <div id={id} style={style}>
+      {category} - {name}
+    </div>
+  );
+}
+
+export default function SortablePlace({ id, category, name }) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <Place id={id} category={category} name={name} />
+    </div>
+  );
+}
