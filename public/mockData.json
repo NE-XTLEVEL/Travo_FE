@@ -61,6 +61,13 @@
   ],
   [
     {
+      "id": 14,
+      "type": "accommodation",
+      "name": "하얏트 호텔",
+      "isReservationNeeded": true,
+      "reservationUrl": "https://booking.com"
+    },
+    {
       "id": 9,
       "type": "cafe",
       "name": "카페 굴소스",

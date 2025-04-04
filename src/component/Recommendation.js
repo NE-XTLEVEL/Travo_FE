@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import DayList from './DayList';
+import DayList from './DayList.js';
 
 const Recommendation = () => {
   const [data, setData] = useState([]);
