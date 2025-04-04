@@ -1,7 +1,7 @@
 import './App.css';
 import MainWeb from './pages/MainWeb';
 import MainMobile from './pages/MainMobile';
-import Recommendation from './pages/Recommendation';
+import Recommendation from './component/Recommendation';
 import { Routes, Route } from 'react-router-dom';
 import useResponsive from './useResponsive';
 

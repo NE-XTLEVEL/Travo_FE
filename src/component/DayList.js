@@ -1,7 +1,7 @@
 import react from 'react';
-import Card from './Card';
+import Card from '../pages/Card';
 import './DayList.css';
-import TransportDuration from './TransportDuration';
+import TransportDuration from '../pages/TransportDuration';
 
 function DayList({ day, data }) {
   const items = data[day - 1] || [];
