@@ -1,12 +1,13 @@
 import { useEffect, useRef } from "react";
+import "./Map.css"; 
 
 const MapComponent = () => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    const initMap = () => {
+    const InitMap = () => {
       if (window.kakao && window.kakao.maps) {
-        const map = new window.kakao.maps.Map(mapRef.current, {
+        const Map = new window.kakao.maps.Map(mapRef.current, {
           center: new window.kakao.maps.LatLng(37.5851349, 127.0284268), // 서울 좌표
           level: 3, // 확대 수준
         });
@@ -16,35 +17,35 @@ const MapComponent = () => {
         const baseSize = { width: 64, height: 69 }; // 기본 마커 크기
 
         // 마커 위치
-        const markerPosition = new window.kakao.maps.LatLng(37.5851349, 127.0284268); // 정보관 위치 (구글맵 기준)(구글맵 주소에서 위도 경도 확인 가능)
+        const markerPosition = new window.kakao.maps.LatLng(37.5851349, 127.0284268);
 
         // 마커 이미지 설정 함수
-        const getMarkerImage = (width, height) => {
+        const GetMarkerImage = (width, height) => {
           return new window.kakao.maps.MarkerImage(
-            process.env.PUBLIC_URL + '/tiger.png', // 이미지 수정 시, 왼쪽 경로 수정하면 됨
+            process.env.PUBLIC_URL + "/tiger.png",
             new window.kakao.maps.Size(width, height),
-            { offset: new window.kakao.maps.Point(width / 2, height) } // 클릭 위치 조정
+            { offset: new window.kakao.maps.Point(width / 2, height) }
           );
         };
 
         // 마커 생성
-        const marker = new window.kakao.maps.Marker({
+        const Marker = new window.kakao.maps.Marker({
           position: markerPosition,
-          image: getMarkerImage(baseSize.width, baseSize.height),
-          map: map,
+          image: GetMarkerImage(baseSize.width, baseSize.height),
+          map: Map,
         });
 
         // 줌 변경 이벤트 추가
-        window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
-          const currentZoom = map.getLevel(); // 현재 줌 레벨
-          const scale = baseZoomLevel / currentZoom; // 줌 레벨에 따른 크기 조절 비율
+        window.kakao.maps.event.addListener(Map, "zoom_changed", () => {
+          const currentZoom = Map.getLevel();
+          const scale = baseZoomLevel / currentZoom;
           const newSize = {
-            width: Math.max(20, baseSize.width * scale), // 최소 크기 제한
+            width: Math.max(20, baseSize.width * scale),
             height: Math.max(20, baseSize.height * scale),
           };
 
           // 마커 크기 업데이트
-          marker.setImage(getMarkerImage(newSize.width, newSize.height));
+          Marker.setImage(GetMarkerImage(newSize.width, newSize.height));
         });
 
       } else {
@@ -52,33 +53,30 @@ const MapComponent = () => {
       }
     };
 
-    // 🔹 카카오맵 스크립트가 이미 로드되었는지 확인
+    // 카카오맵 스크립트 로드
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&autoload=false`; // appkey -> .env
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&autoload=false`;
       script.async = true;
       document.head.appendChild(script);
 
       script.onload = () => {
         if (window.kakao && window.kakao.maps) {
-          window.kakao.maps.load(initMap);
+          window.kakao.maps.load(InitMap);
         } else {
           console.error("카카오맵 API가 정상적으로 로드되지 않았습니다.");
         }
       };
     } else {
-      window.kakao.maps.load(initMap);
+      window.kakao.maps.load(InitMap);
     }
   }, []);
 
   return (
-    <div className="view" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <h1 className="text" style={{ marginBottom: "16px" }}>
-        NE:XT contest map api test
-      </h1>
-      <div className="map" ref={mapRef} style={{ width: "500px", height: "500px", backgroundColor: "lightgray" }}></div>
+    <div className="mapViewContainer"> 
+      <div className="mapBox" ref={mapRef}></div>
     </div>
-  );
+  );  
 };
 
 export default MapComponent;
