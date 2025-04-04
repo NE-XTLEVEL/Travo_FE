@@ -1,0 +1,36 @@
+.search-item {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 10px;
+  margin: 10px;
+  transition: transform 0.2s ease-in-out;
+  border-bottom: 1px solid #ccc;
+}
+.addlocation-button {
+  background: none;
+  border: none;
+  color: #969696;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.searchbar {
+  width: 80%;
+  height: 70%;
+  border: none;
+  background-color: #efefef;
+}
+
+.scroll-container {
+  overflow: auto; /* 내부 스크롤 활성화 */
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  -ms-overflow-style: none; /* IE, Edge에서 스크롤바 숨기기 */
+}
+
+/* Chrome, Safari에서 스크롤바 숨기기 */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
