@@ -1,4 +1,5 @@
 import React from 'react';
+import ScheduleContainer from '../components/Schedule/ScheduleContainer';
 import AddLocation from '../component/AddLocation.js';
 import { useState, useEffect } from 'react';
 import Modal from '../component/Modal.js';
@@ -30,6 +31,8 @@ const MainWeb = () => {
   }, []);
   return (
     <div>
+      this is web
+      <ScheduleContainer />
       <button onClick={openModal}>장소 추가</button>
       <Modal open={isModalOpen} close={closeModal}>
         <AddLocation dayPlan={dayPlan} setDayPlan={setDayPlan} />
