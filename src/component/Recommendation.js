@@ -20,9 +20,22 @@ const Recommendation = () => {
   }, []);
   return (
     <div>
-      {Array.from({ length: day }, (_, index) => (
-        <DayList key={index + 1} day={index + 1} data={data} />
-      ))}
+      <ul
+        style={{
+          height: '100vh', // 원하는 높이로 조정
+          overflowY: 'auto',
+          padding: 0,
+          margin: 0,
+          listStyle: 'none',
+          border: '1px solid #ddd', // 선택사항
+        }}
+      >
+        {Array.from({ length: day }, (_, index) => (
+          <li key={index + 1}>
+            <DayList day={index + 1} data={data} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

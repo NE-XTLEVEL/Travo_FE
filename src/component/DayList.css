@@ -30,4 +30,6 @@
 }
 .addButton {
   font-weight: 800;
+  background: none;
+  border: none;
 }
