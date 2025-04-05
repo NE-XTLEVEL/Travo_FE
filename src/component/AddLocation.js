@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { /*useEffect,*/ useState } from 'react';
 import './AddLocation.css';
 import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
@@ -7,26 +7,26 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
 
-  useEffect(() => {
-    const loadKakaoMap = () => {
-      if (window.kakao) {
-        return;
-      }
+  // useEffect(() => {
+  //   const loadKakaoMap = () => {
+  //     if (window.kakao) {
+  //       return;
+  //     }
 
-      const script = document.createElement('script');
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
-      script.async = true;
-      document.head.appendChild(script);
+  //     const script = document.createElement('script');
+  //     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
+  //     script.async = true;
+  //     document.head.appendChild(script);
 
-      script.onload = () => {
-        console.log('Kakao Map API 로드 완료');
-        window.kakao.maps.load(() => {
-          console.log('Kakao Maps Services 로드 완료');
-        });
-      };
-    };
-    loadKakaoMap();
-  });
+  //     script.onload = () => {
+  //       console.log('Kakao Map API 로드 완료');
+  //       window.kakao.maps.load(() => {
+  //         console.log('Kakao Maps Services 로드 완료');
+  //       });
+  //     };
+  //   };
+  //   loadKakaoMap();
+  // });
   const searchPlaces = (keyWord) => {
     if (!window.kakao || !window.kakao.maps) return;
 
@@ -58,8 +58,10 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
         ...dayPlan,
         {
           id: place.id,
-          categoryGroupName: place.category_group_name,
-          placeName: place.place_name,
+          type: place.category_group_name,
+          name: place.place_name,
+          isReservationNeeded: true,
+          reservationUrl: place.place_url,
         },
       ];
       setDayPlan(updated);

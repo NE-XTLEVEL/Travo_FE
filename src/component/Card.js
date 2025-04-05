@@ -29,7 +29,7 @@ const Card = ({ item }) => {
           {item.isReservationNeeded && (
             <div
               className="CardButton"
-              onClick={() => window.open('https://www.naver.com', '_blank')}
+              onClick={() => window.open(item.reservationUrl, '_blank')}
             >
               예약하기
             </div>
