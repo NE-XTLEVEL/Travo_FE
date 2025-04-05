@@ -30,14 +30,14 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
   const searchPlaces = (keyWord) => {
     if (!window.kakao || !window.kakao.maps) return;
 
-    const options = {
-      location: new window.kakao.maps.LatLng(
-        37.58629750845203,
-        127.02922775537017
-      ),
-      radius: 5000,
-      sort: window.kakao.maps.services.SortBy.DISTANCE,
-    };
+    // const options = {
+    //   location: new window.kakao.maps.LatLng(
+    //     37.58629750845203,
+    //     127.02922775537017
+    //   ),
+    //   radius: 20000,
+    //   sort: window.kakao.maps.services.SortBy.DISTANCE,
+    // };
 
     const ps = new window.kakao.maps.services.Places();
     ps.keywordSearch(
@@ -47,8 +47,8 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           setPlaces(data);
           console.log('검색 완료', data);
         }
-      },
-      options
+      }
+      /*options*/
     );
   };
 
@@ -142,7 +142,11 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           {places.map((place) => (
             <li key={place.id} className="search-item">
               <div>
-                <p>{place.category_group_name}</p>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div>{place.category_group_name}</div>
+                  <div>{place.address_name}</div>
+                </div>
+
                 <strong>{place.place_name}</strong>
               </div>
               <button
