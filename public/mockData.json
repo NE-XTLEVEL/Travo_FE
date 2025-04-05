@@ -1,0 +1,85 @@
+[
+  [
+    {
+      "id": 1,
+      "type": "transport",
+      "name": "제주공항",
+      "isReservationNeeded": true,
+      "reservationUrl": "https://naver.com"
+    },
+    {
+      "id": 2,
+      "type": "restaurant",
+      "name": "식당 마요네즈",
+      "isReservationNeeded": false,
+      "reservationUrl": ""
+    },
+    {
+      "id": 3,
+      "type": "activity",
+      "name": "자전거 타기",
+      "isReservationNeeded": false,
+      "reservationUrl": ""
+    },
+    {
+      "id": 4,
+      "type": "accommodation",
+      "name": "그랜드 호텔",
+      "isReservationNeeded": true,
+      "reservationUrl": "https://booking.com"
+    }
+  ],
+  [
+    {
+      "id": 5,
+      "type": "accommodation",
+      "name": "그랜드 호텔",
+      "isReservationNeeded": false,
+      "reservationUrl": ""
+    },
+    {
+      "id": 6,
+      "type": "restaurant",
+      "name": "식당 캐첩",
+      "isReservationNeeded": false,
+      "reservationUrl": ""
+    },
+    {
+      "id": 7,
+      "type": "activity",
+      "name": "테디베어 박물관",
+      "isReservationNeeded": false,
+      "reservationUrl": ""
+    },
+    {
+      "id": 8,
+      "type": "accommodation",
+      "name": "그랜드 호텔",
+      "isReservationNeeded": false,
+      "reservationUrl": ""
+    }
+  ],
+  [
+    {
+      "id": 14,
+      "type": "accommodation",
+      "name": "하얏트 호텔",
+      "isReservationNeeded": true,
+      "reservationUrl": "https://booking.com"
+    },
+    {
+      "id": 9,
+      "type": "cafe",
+      "name": "카페 굴소스",
+      "isReservationNeeded": false,
+      "reservationUrl": ""
+    },
+    {
+      "id": 10,
+      "type": "transport",
+      "name": "제주공항",
+      "isReservationNeeded": true,
+      "reservationUrl": "https://naver.com"
+    }
+  ]
+]

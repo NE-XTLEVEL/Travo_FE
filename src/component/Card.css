@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+}
+.Card {
+  width: 440px;
+  height: 70px;
+  border: 1px solid #d9d9d9;
+  display: flex;
+  flex-direction: row;
+  border-radius: 10px;
+  justify-content: space-between;
+}
+.CardContent {
+  display: flex;
+  flex-direction: column;
+  padding: 13px 17px;
+  gap: 5px;
+}
+.CardType {
+  color: #b0b0b0;
+  font-size: 14px;
+}
+.CardLowLine {
+  display: flex;
+  gap: 15px;
+}
+.CardName {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 400;
+}
+.CardButton {
+  color: #5292d3;
+  font-size: 14px;
+  font-weight: 200;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.Option {
+  width: 35px;
+  height: 35px;
+  padding-top: 17.5px;
+  padding-bottom: 17.5px;
+  margin-right: 17.85px;
+  cursor: pointer;
+}

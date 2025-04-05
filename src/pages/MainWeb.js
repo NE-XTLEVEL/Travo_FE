@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import ScheduleContainer from '../components/Schedule/ScheduleContainer';
 import AddLocation from '../component/AddLocation.js';
 import { useState, useEffect } from 'react';
@@ -34,6 +35,7 @@ const MainWeb = () => {
       this is web
       <ScheduleContainer />
       <button onClick={openModal}>장소 추가</button>
+      <button onClick={() => navigate('/recommendation')}>추천받기</button>
       <Modal open={isModalOpen} close={closeModal}>
         <AddLocation dayPlan={dayPlan} setDayPlan={setDayPlan} />
       </Modal>
