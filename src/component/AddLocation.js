@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { /*useEffect,*/ useState } from 'react';
 import './AddLocation.css';
 import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
@@ -7,37 +7,37 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
 
-  useEffect(() => {
-    const loadKakaoMap = () => {
-      if (window.kakao) {
-        return;
-      }
+  // useEffect(() => {
+  //   const loadKakaoMap = () => {
+  //     if (window.kakao) {
+  //       return;
+  //     }
 
-      const script = document.createElement('script');
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
-      script.async = true;
-      document.head.appendChild(script);
+  //     const script = document.createElement('script');
+  //     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
+  //     script.async = true;
+  //     document.head.appendChild(script);
 
-      script.onload = () => {
-        console.log('Kakao Map API 로드 완료');
-        window.kakao.maps.load(() => {
-          console.log('Kakao Maps Services 로드 완료');
-        });
-      };
-    };
-    loadKakaoMap();
-  });
+  //     script.onload = () => {
+  //       console.log('Kakao Map API 로드 완료');
+  //       window.kakao.maps.load(() => {
+  //         console.log('Kakao Maps Services 로드 완료');
+  //       });
+  //     };
+  //   };
+  //   loadKakaoMap();
+  // });
   const searchPlaces = (keyWord) => {
     if (!window.kakao || !window.kakao.maps) return;
 
-    const options = {
-      location: new window.kakao.maps.LatLng(
-        37.58629750845203,
-        127.02922775537017
-      ),
-      radius: 5000,
-      sort: window.kakao.maps.services.SortBy.DISTANCE,
-    };
+    // const options = {
+    //   location: new window.kakao.maps.LatLng(
+    //     37.58629750845203,
+    //     127.02922775537017
+    //   ),
+    //   radius: 20000,
+    //   sort: window.kakao.maps.services.SortBy.DISTANCE,
+    // };
 
     const ps = new window.kakao.maps.services.Places();
     ps.keywordSearch(
@@ -47,8 +47,8 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           setPlaces(data);
           console.log('검색 완료', data);
         }
-      },
-      options
+      }
+      /*options*/
     );
   };
 
@@ -58,8 +58,10 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
         ...dayPlan,
         {
           id: place.id,
-          categoryGroupName: place.category_group_name,
-          placeName: place.place_name,
+          type: place.category_group_name,
+          name: place.place_name,
+          isReservationNeeded: true,
+          reservationUrl: place.place_url,
         },
       ];
       setDayPlan(updated);
@@ -142,7 +144,11 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           {places.map((place) => (
             <li key={place.id} className="search-item">
               <div>
-                <p>{place.category_group_name}</p>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div>{place.category_group_name}</div>
+                  <div>{place.address_name}</div>
+                </div>
+
                 <strong>{place.place_name}</strong>
               </div>
               <button
