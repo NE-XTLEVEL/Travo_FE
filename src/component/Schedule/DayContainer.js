@@ -7,14 +7,6 @@ import {
 
 import SortableCard from './SortableCard.js';
 
-const containerStyle = {
-  width: 300,
-  background: '#dadada',
-  padding: 10,
-  margin: 10,
-  flex: 1,
-};
-
 export default function DayContainer({ id, items }) {
   const { setNodeRef } = useDroppable({ id });
 
@@ -24,14 +16,9 @@ export default function DayContainer({ id, items }) {
       items={items.map((item) => item.id)}
       strategy={verticalListSortingStrategy}
     >
-      <div ref={setNodeRef} style={containerStyle}>
+      <div ref={setNodeRef}>
         {items.map((item) => (
-          <SortableCard
-            key={item.id}
-            id={item.id}
-            type={item.type}
-            name={item.name}
-          />
+          <SortableCard key={item.id} item={item} />
         ))}
       </div>
     </SortableContext>
