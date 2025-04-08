@@ -1,3 +1,4 @@
+
 import './TransportDuration.css';
 
 const TransportDuration = ({ duration }) => {
