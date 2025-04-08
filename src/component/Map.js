@@ -13,7 +13,7 @@ const MapComponent = () => {
         });
 
         const bounds = new window.kakao.maps.LatLngBounds();
-
+        // eslint-disable-next-line no-unused-vars
         Object.entries(markerData).forEach(([_, locations], dayIndex) => {
           const linePath = [];
 
@@ -60,7 +60,6 @@ const MapComponent = () => {
         console.error('카카오맵 API가 로드되지 않았습니다.');
       }
     };
-
 
     const loadMapScript = () => {
       const script = document.createElement('script');
