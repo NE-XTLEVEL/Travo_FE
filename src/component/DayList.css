@@ -24,9 +24,10 @@
   color: #b0b0b0;
   font-size: 18px;
   white-space: nowrap;
-  padding-top: 6px;
+  padding-top: 10px;
   padding-right: 1px;
   cursor: pointer;
+  margin-top: 2px;
 }
 .addButton {
   font-weight: 800;

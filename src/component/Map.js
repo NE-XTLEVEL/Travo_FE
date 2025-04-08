@@ -61,9 +61,11 @@ const MapComponent = () => {
       }
     };
 
+
     const loadMapScript = () => {
       const script = document.createElement('script');
       script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`; //${process.env.REACT_APP_KAKAO_API_KEY}
+
       script.async = true;
       document.head.appendChild(script);
 
