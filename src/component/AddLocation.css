@@ -1,7 +1,5 @@
 .search-item {
-  flex-grow: 1;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background: white;
   padding: 10px;

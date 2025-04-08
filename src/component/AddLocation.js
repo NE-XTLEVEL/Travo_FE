@@ -83,7 +83,7 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           justifyContent: 'center',
         }}
       >
-        <div style={{ fontSize: '130%' }}>
+        <div style={{ fontSize: 'clamp(15px,2vh,40px)' }}>
           추가하고 싶은 장소를 검색해보세요
         </div>
       </div>
@@ -136,22 +136,32 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
             margin: '0px',
             paddingLeft: '0px',
             display: 'flex',
-            maxHeight: '100%',
             flexDirection: 'column',
-            // flexWrap: 'wrap',
           }}
         >
           {places.map((place) => (
             <li key={place.id} className="search-item">
-              <div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div
+                style={{
+                  flex: 5,
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                >
                   <div>{place.category_group_name}</div>
-                  <div>{place.address_name}</div>
+                  <div style={{ height: '30px' }}></div>
+                  <div style={{ color: '#B0B0B0' }}>{place.address_name}</div>
                 </div>
 
                 <strong>{place.place_name}</strong>
               </div>
               <button
+                style={{ flex: 1 }}
                 className="addlocation-button"
                 onClick={() => handleAdd(place)}
               >
