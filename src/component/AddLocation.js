@@ -51,17 +51,19 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
       /*options*/
     );
   };
-
+  /* eslint-disable camelcase */
   const handleAdd = (place) => {
     if (!dayPlan.some((dayplan) => dayplan.id === place.id)) {
       const updated = [
         ...dayPlan,
         {
-          id: place.id,
-          type: place.category_group_name,
+          kakao_id: place.id,
+          category: place.category_group_name,
           name: place.place_name,
-          isReservationNeeded: true,
-          reservationUrl: place.place_url,
+          url: place.place_url,
+          x: place.x,
+          y: place.y,
+          address: place.address_name,
         },
       ];
       setDayPlan(updated);
@@ -71,7 +73,7 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
       console.log(dayPlan);
     }
   };
-
+  /* eslint-disable camelcase */
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* 1. 제목 영역 (20%) */}
