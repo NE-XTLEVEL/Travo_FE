@@ -6,7 +6,8 @@ import { FiSearch } from 'react-icons/fi';
 const AddLocation = ({ dayPlan, setDayPlan }) => {
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
-
+  const [loading, setLoading] = useState(false);
+  const [noResult, setNoResult] = useState(false);
   // useEffect(() => {
   //   const loadKakaoMap = () => {
   //     if (window.kakao) {
@@ -40,12 +41,20 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
     // };
 
     const ps = new window.kakao.maps.services.Places();
+    setLoading(true);
     ps.keywordSearch(
       keyWord,
       (data, status) => {
         if (status === window.kakao.maps.services.Status.OK) {
           setPlaces(data);
+          setNoResult(false);
+          setLoading(false);
           console.log('검색 완료', data);
+        } else {
+          setPlaces([]);
+          setLoading(false);
+          setNoResult(true);
+          console.log('검색 결과 없음');
         }
       }
       /*options*/
@@ -63,7 +72,7 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           url: place.place_url,
           x: place.x,
           y: place.y,
-          address: place.address_name,
+          address: place.road_address_name,
         },
       ];
       setDayPlan(updated);
@@ -133,45 +142,51 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           paddingRight: '20px',
         }}
       >
-        <ul
-          style={{
-            margin: '0px',
-            paddingLeft: '0px',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {places.map((place) => (
-            <li key={place.id} className="search-item">
-              <div
-                style={{
-                  flex: 5,
-                }}
-              >
+        {loading && <div>검색 중입니다. </div>}
+        {noResult && <div>검색 결과가 없습니다. </div>}
+        {!loading && !noResult && (
+          <ul
+            style={{
+              margin: '0px',
+              paddingLeft: '0px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {places.map((place) => (
+              <li key={place.id} className="search-item">
                 <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    flex: 5,
                   }}
                 >
-                  <div>{place.category_group_name}</div>
-                  <div style={{ height: '30px' }}></div>
-                  <div style={{ color: '#B0B0B0' }}>{place.address_name}</div>
-                </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>{place.category_group_name}</div>
+                    <div style={{ height: '30px' }}></div>
+                    <div style={{ color: '#B0B0B0' }}>
+                      {place.road_address_name}
+                    </div>
+                  </div>
 
-                <strong>{place.place_name}</strong>
-              </div>
-              <button
-                style={{ flex: 1 }}
-                className="addlocation-button"
-                onClick={() => handleAdd(place)}
-              >
-                <FaPlus />
-              </button>
-            </li>
-          ))}
-        </ul>
+                  <strong>{place.place_name}</strong>
+                </div>
+                <button
+                  style={{ flex: 1 }}
+                  className="addlocation-button"
+                  onClick={() => handleAdd(place)}
+                >
+                  <FaPlus />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
