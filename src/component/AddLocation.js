@@ -2,8 +2,9 @@ import { /*useEffect,*/ useState } from 'react';
 import './AddLocation.css';
 import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
+import { BeatLoader } from 'react-spinners';
 
-const AddLocation = ({ dayPlan, setDayPlan }) => {
+const AddLocation = ({ dayPlan, setDayPlan, close }) => {
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
   const [loading, setLoading] = useState(false);
@@ -76,6 +77,7 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
         },
       ];
       setDayPlan(updated);
+      close();
       console.log(updated);
     } else {
       console.log('이미 있는 장소입니다.');
@@ -142,8 +144,32 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           paddingRight: '20px',
         }}
       >
-        {loading && <div>검색 중입니다. </div>}
-        {noResult && <div>검색 결과가 없습니다. </div>}
+        {loading && (
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {' '}
+            <BeatLoader color="#9c63e1" size={10} speedMultiplier={0.5} />
+          </div>
+        )}
+        {noResult && (
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            검색 결과가 없습니다.{' '}
+          </div>
+        )}
+
         {!loading && !noResult && (
           <ul
             style={{
