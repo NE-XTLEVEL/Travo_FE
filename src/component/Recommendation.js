@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import DayList from './DayList.js';
 
 const Recommendation = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [day, setDay] = useState(0);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const Recommendation = () => {
         const response = await fetch('/mockData.json');
         const body = await response.json();
         setData(body);
-        setDay(body.length);
+        setDay(Object.keys(body).length);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -32,7 +32,7 @@ const Recommendation = () => {
       >
         {Array.from({ length: day }, (_, index) => (
           <li key={index + 1}>
-            <DayList day={index + 1} data={data} />
+            <DayList day={index + 1} data={data[`day${index + 1}`]} />
           </li>
         ))}
       </ul>
