@@ -28,19 +28,10 @@ const MapComponent = () => {
             linePath.push(position);
             bounds.extend(position);
 
-            const marker = new window.kakao.maps.Marker({
+            new window.kakao.maps.Marker({
               position,
               map,
               image: markerImg,
-              title: loc.name,
-            });
-
-            const info = new window.kakao.maps.InfoWindow({
-              content: `<div style='padding:5px;font-size:14px;'><a href='${loc.url}' target='_blank' rel='noopener noreferrer'>${loc.name}</a></div>`,
-            });
-
-            window.kakao.maps.event.addListener(marker, 'click', () => {
-              info.open(map, marker);
             });
           });
 
