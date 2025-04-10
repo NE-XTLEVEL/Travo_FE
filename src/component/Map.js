@@ -95,11 +95,7 @@ const MapComponent = () => {
     }
   }, []);
 
-  return (
-    <div className="mapViewContainer">
-      <div className="mapBox" ref={mapRef}></div>
-    </div>
-  );
+  return <div className="mapViewContainer" ref={mapRef}></div>;
 };
 
 export default MapComponent;
