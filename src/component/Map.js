@@ -14,11 +14,11 @@ const MapComponent = () => {
 
         const bounds = new window.kakao.maps.LatLngBounds();
 
-        Object.entries(markerData).forEach(([_, locations], dayIndex) => {
+        Object.values(markerData).forEach((locations, dayIndex) => {
           const linePath = [];
 
           const markerImg = new window.kakao.maps.MarkerImage(
-            `${process.env.PUBLIC_URL}/marker${dayIndex + 1}.png`,
+            `${process.env.PUBLIC_URL}/markerDay${dayIndex + 1}.png`,
             new window.kakao.maps.Size(40, 45),
             { offset: new window.kakao.maps.Point(20, 45) }
           );
@@ -47,7 +47,13 @@ const MapComponent = () => {
           const polyline = new window.kakao.maps.Polyline({
             path: linePath,
             strokeWeight: 4,
-            strokeColor: ['#FF0000', '#0000FF', '#00AA00'][dayIndex % 3],
+            strokeColor: [
+              '#1CBB39',
+              '#FF4646',
+              '#38A7EC',
+              '#FF762D',
+              '#FB6AA1',
+            ][dayIndex % 5],
             strokeOpacity: 0.8,
             strokeStyle: 'solid',
           });
