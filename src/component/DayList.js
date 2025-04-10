@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import Card from './Card.js';
 import './DayList.css';
@@ -24,7 +24,7 @@ function DayList({ day, data }) {
       for (let i = 0; i < items.length - 1; i++) {
         const from = items[i];
         const to = items[i + 1];
-        const cacheKey = `${from.local_id}-${to.local_id}`;
+        const cacheKey = `${from.kakao_id}-${to.kakao_id}`;
 
         if (durationCache.has(cacheKey)) {
           results.push(durationCache.get(cacheKey));
@@ -54,18 +54,18 @@ function DayList({ day, data }) {
             // 5: 출발과 도착 정류장이 존재하지 않음
             // 6: 서비스 지역이 아님
             // -99: 검색결과가 없음
-            time = '?';
+            time = data.error.msg;
           } else if (data.error) {
             // 서버, 형식 오류
             console.error('Error:', data.error.msg);
-            time = '?';
+            time = data.error.msg;
           }
 
           durationCache.set(cacheKey, time); // 캐시 저장
           results.push(time);
         } catch (error) {
           console.error(error);
-          results.push('?');
+          results.push(error.message);
         }
 
         await new Promise((r) => setTimeout(r, 1000)); // 딜레이
@@ -93,17 +93,18 @@ function DayList({ day, data }) {
         <div className="dayNum" style={{ color: dayColor }}>
           {day}일차
         </div>
+        <div className="dayBlank"></div>
         <div className="addPlace" onClick={openModal}>
           <span className="addButton">+ </span>장소추가
         </div>
       </div>
       {items.map((item, index) => (
-        <react.Fragment key={item.local_id}>
-          <Card key={item.local_id} item={item} />
+        <React.Fragment key={item.local_id}>
+          <Card item={item} />
           {index < items.length - 1 && (
             <TransportDuration duration={durations[index]} />
           )}
-        </react.Fragment>
+        </React.Fragment>
       ))}
       <Modal open={isModalOpen} close={closeModal}>
         <AddLocation dayPlan={items} setDayPlan={setItems} />
