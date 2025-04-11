@@ -106,7 +106,7 @@ function DayList({ day, data }) {
         </react.Fragment>
       ))}
       <Modal open={isModalOpen} close={closeModal}>
-        <AddLocation dayPlan={items} setDayPlan={setItems} />
+        <AddLocation dayPlan={items} setDayPlan={setItems} close={closeModal} />
       </Modal>
     </div>
   );
