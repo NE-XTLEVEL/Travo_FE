@@ -9,7 +9,12 @@ import GridLines from 'react-gridlines';
 function App() {
   // const { isMobile } = useResponsive();
   return (
-    <GridLines className="grid-area" cellWidth={10} strokeWidth={1}>
+    <GridLines
+      className="grid-area"
+      cellWidth={20}
+      strokeWidth={0.5}
+      color="EFEFEF"
+    >
       <Routes>
         <Route path="/plan" element={<Plan />} />
         <Route path="/" element={<MainWeb />}></Route>

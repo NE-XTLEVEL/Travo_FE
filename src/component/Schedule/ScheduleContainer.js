@@ -3,18 +3,49 @@ import {
   DndContext,
   DragOverlay,
   closestCorners,
-  PointerSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
+  useDroppable,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 
 import Card from '../Card';
 import DayContainer from './DayContainer';
 
+function PlaceBin() {
+  const { setNodeRef } = useDroppable({
+    id: 'place-bin',
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        width: 60,
+        height: 60,
+        backgroundColor: '#ffffff',
+        borderRadius: 30,
+        marginBottom: 20,
+        border: '1px solid #ddd',
+        position: 'absolute',
+        display: 'flex',
+        bottom: 20,
+        right: 20,
+      }}
+    >
+      Trash Bin
+    </div>
+  );
+}
+
 const wrapperStyle = {
   display: 'flex',
   flexDirection: 'column',
+  overflow: 'scroll',
+  height: '90vh',
+  width: 450,
 };
 
 export default function ScheduleContainer() {
@@ -101,6 +132,20 @@ export default function ScheduleContainer() {
         isReservationNeeded: true,
         reservationUrl: 'https://naver.com',
       },
+      {
+        id: 'place11',
+        type: 'activity',
+        name: '한라산',
+        isReservationNeeded: false,
+        reservationUrl: '',
+      },
+      {
+        id: 'place12',
+        type: 'accommodation',
+        name: '세린이 집',
+        isReservationNeeded: true,
+        reservationUrl: 'https://naver.com',
+      },
     ],
   };
 
@@ -108,7 +153,7 @@ export default function ScheduleContainer() {
 
   const [activeId, setActiveId] = useState(null);
 
-  const sensors = useSensors(useSensor(PointerSensor));
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   const activeItem = activeId
     ? Object.values(schedule)
@@ -125,6 +170,8 @@ export default function ScheduleContainer() {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
+        {activeId === null ? null : <PlaceBin disabled={activeId === null} />}
+
         {Object.keys(schedule)
           .sort()
           .map((day) => (
@@ -160,6 +207,10 @@ export default function ScheduleContainer() {
     const { id: overId } = over;
 
     const activeDay = findDay(id);
+
+    if (overId === 'place-bin') {
+      return;
+    }
     const overDay = findDay(overId);
 
     if (!activeDay || !overDay || activeDay === overDay) {
@@ -201,6 +252,19 @@ export default function ScheduleContainer() {
     const { id: overId } = over;
 
     const activeDay = findDay(id);
+
+    if (overId === 'place-bin') {
+      setSchedule((schedule) => {
+        const newSchedule = { ...schedule };
+        const activeItems = newSchedule[activeDay].filter(
+          (place) => place.id !== id
+        );
+        newSchedule[activeDay] = activeItems;
+        return newSchedule;
+      });
+      setActiveId(null);
+      return;
+    }
     const overDay = findDay(overId);
 
     if (!activeDay || !overDay) {
