@@ -28,6 +28,7 @@ function DayList({ day, data }) {
 
         if (durationCache.has(cacheKey)) {
           results.push(durationCache.get(cacheKey));
+          console.log('Cache hit:', cacheKey, durationCache.get(cacheKey));
           continue;
         }
         const url = `https://api.odsay.com/v1/api/searchPubTransPathT?SX=${from.x}&SY=${from.y}&EX=${to.x}&EY=${to.y}&apiKey=${API_KEY}`;
@@ -35,7 +36,7 @@ function DayList({ day, data }) {
         try {
           const response = await fetch(url);
           if (response.status === 429) {
-            results.push('?');
+            results.push(response.message);
           }
 
           const data = await response.json();
@@ -54,11 +55,12 @@ function DayList({ day, data }) {
             // 5: 출발과 도착 정류장이 존재하지 않음
             // 6: 서비스 지역이 아님
             // -99: 검색결과가 없음
-            time = data.error.msg;
+            // time = data.error.msg;
+            time = '?';
           } else if (data.error) {
             // 서버, 형식 오류
-            console.error('Error:', data.error.msg);
-            time = data.error.msg;
+            console.error('Error:', data.error);
+            time = '?';
           }
 
           durationCache.set(cacheKey, time); // 캐시 저장
@@ -68,9 +70,9 @@ function DayList({ day, data }) {
           results.push(error.message);
         }
 
-        await new Promise((r) => setTimeout(r, 1000)); // 딜레이
+        await new Promise((r) => setTimeout(r, 500)); // 딜레이
       }
-      console.log('results', results);
+      console.log('results: ', results);
       setDurations(results);
     }
 

@@ -9,7 +9,7 @@ import {
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 
-import { Card } from './SortableCard';
+import Card from '../Card';
 import DayContainer from './DayContainer';
 
 const wrapperStyle = {
@@ -132,13 +132,7 @@ export default function ScheduleContainer() {
           ))}
 
         <DragOverlay>
-          {activeId ? (
-            <Card
-              id={activeItem.id}
-              type={activeItem.type}
-              name={activeItem.name}
-            />
-          ) : null}
+          {activeId ? <Card item={activeItem} /> : null}
         </DragOverlay>
       </DndContext>
     </div>

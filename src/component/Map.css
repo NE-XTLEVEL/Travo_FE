@@ -1,12 +1,16 @@
 .mapViewContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .mapBox {
-    width: 500px;
-    height: 500px;
-    background-color: lightgray;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.mapBox {
+  width: 90%;
+  max-width: 600px;
+  height: 60vw;
+  max-height: 600px;
+  min-height: 300px;
+  background-color: lightgray;
+  border-radius: 12px;
+}

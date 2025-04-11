@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import ScheduleContainer from '../components/Schedule/ScheduleContainer';
+import ScheduleContainer from '../component/Schedule/ScheduleContainer';
 
 const MainWeb = () => {
   const navigate = useNavigate();
