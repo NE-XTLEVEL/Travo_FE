@@ -2,11 +2,13 @@ import { /*useEffect,*/ useState } from 'react';
 import './AddLocation.css';
 import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
+import { BeatLoader } from 'react-spinners';
 
-const AddLocation = ({ dayPlan, setDayPlan }) => {
+const AddLocation = ({ dayPlan, setDayPlan, close }) => {
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
-
+  const [loading, setLoading] = useState(false);
+  const [noResult, setNoResult] = useState(false);
   // useEffect(() => {
   //   const loadKakaoMap = () => {
   //     if (window.kakao) {
@@ -40,38 +42,49 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
     // };
 
     const ps = new window.kakao.maps.services.Places();
+    setLoading(true);
     ps.keywordSearch(
       keyWord,
       (data, status) => {
         if (status === window.kakao.maps.services.Status.OK) {
           setPlaces(data);
+          setNoResult(false);
+          setLoading(false);
           console.log('검색 완료', data);
+        } else {
+          setPlaces([]);
+          setLoading(false);
+          setNoResult(true);
+          console.log('검색 결과 없음');
         }
       }
       /*options*/
     );
   };
-
+  /* eslint-disable camelcase */
   const handleAdd = (place) => {
     if (!dayPlan.some((dayplan) => dayplan.id === place.id)) {
       const updated = [
         ...dayPlan,
         {
-          id: place.id,
-          type: place.category_group_name,
+          kakao_id: place.id,
+          category: place.category_group_name,
           name: place.place_name,
-          isReservationNeeded: true,
-          reservationUrl: place.place_url,
+          url: place.place_url,
+          x: place.x,
+          y: place.y,
+          address: place.road_address_name,
         },
       ];
       setDayPlan(updated);
+      close();
       console.log(updated);
     } else {
       console.log('이미 있는 장소입니다.');
       console.log(dayPlan);
     }
   };
-
+  /* eslint-disable camelcase */
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* 1. 제목 영역 (20%) */}
@@ -83,7 +96,7 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           justifyContent: 'center',
         }}
       >
-        <div style={{ fontSize: '130%' }}>
+        <div style={{ fontSize: 'clamp(15px,2vh,40px)' }}>
           추가하고 싶은 장소를 검색해보세요
         </div>
       </div>
@@ -131,35 +144,75 @@ const AddLocation = ({ dayPlan, setDayPlan }) => {
           paddingRight: '20px',
         }}
       >
-        <ul
-          style={{
-            margin: '0px',
-            paddingLeft: '0px',
-            display: 'flex',
-            maxHeight: '100%',
-            flexDirection: 'column',
-            // flexWrap: 'wrap',
-          }}
-        >
-          {places.map((place) => (
-            <li key={place.id} className="search-item">
-              <div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <div>{place.category_group_name}</div>
-                  <div>{place.address_name}</div>
-                </div>
+        {loading && (
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {' '}
+            <BeatLoader color="#9c63e1" size={10} speedMultiplier={0.5} />
+          </div>
+        )}
+        {noResult && (
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            검색 결과가 없습니다.{' '}
+          </div>
+        )}
 
-                <strong>{place.place_name}</strong>
-              </div>
-              <button
-                className="addlocation-button"
-                onClick={() => handleAdd(place)}
-              >
-                <FaPlus />
-              </button>
-            </li>
-          ))}
-        </ul>
+        {!loading && !noResult && (
+          <ul
+            style={{
+              margin: '0px',
+              paddingLeft: '0px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {places.map((place) => (
+              <li key={place.id} className="search-item">
+                <div
+                  style={{
+                    flex: 5,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>{place.category_group_name}</div>
+                    <div style={{ height: '30px' }}></div>
+                    <div style={{ color: '#B0B0B0' }}>
+                      {place.road_address_name}
+                    </div>
+                  </div>
+
+                  <strong>{place.place_name}</strong>
+                </div>
+                <button
+                  style={{ flex: 1 }}
+                  className="addlocation-button"
+                  onClick={() => handleAdd(place)}
+                >
+                  <FaPlus />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

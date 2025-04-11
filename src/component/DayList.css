@@ -7,7 +7,9 @@
   margin: 30px;
 }
 .DayHeader {
-  width: 440px;
+  width: 100%;
+  min-width: 250px;
+  max-width: 440px;
   height: 50px;
   display: flex;
   flex-direction: row;
@@ -17,16 +19,20 @@
 .dayNum {
   color: #ff4646;
   font-size: 25px;
-  width: 440px;
+  white-space: nowrap;
+}
+.dayBlank {
+  width: 60%;
   height: 50px;
 }
 .addPlace {
   color: #b0b0b0;
   font-size: 18px;
   white-space: nowrap;
-  padding-top: 6px;
+  padding-top: 10px;
   padding-right: 1px;
   cursor: pointer;
+  margin-top: 2px;
 }
 .addButton {
   font-weight: 800;
