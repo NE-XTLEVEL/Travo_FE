@@ -5,7 +5,7 @@ import Header from '../component/Header';
 
 const Plan = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div style={{ flex: 2 }}>
         <Header />
       </div>
@@ -18,7 +18,7 @@ const Plan = () => {
       >
         <div
           style={{
-            flex: 1,
+            flex: 6,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -28,10 +28,11 @@ const Plan = () => {
         </div>
         <div
           style={{
-            flex: 1,
+            flex: 4,
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'start',
+            paddingRight: '20px',
           }}
         >
           <Recommendation />
