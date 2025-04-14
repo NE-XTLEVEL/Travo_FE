@@ -2,7 +2,7 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import Card from '../Card';
+import Card from './Card';
 
 /*export function Card({ id, type, name }) {
   const style = {
@@ -25,7 +25,7 @@ import Card from '../Card';
 
 export default function SortableCard({ item }) {
   const { attributes, listeners, setNodeRef, transform } = useSortable({
-    id: item.id,
+    id: item.local_id,
   });
 
   const style = {
