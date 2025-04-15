@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'KakaoBigSans';
+  src: url('../public/fonts/KakaoBigSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KakaoBigSans';
+  src: url('../public/fonts/KakaoBigSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KakaoBigSans';
+  src: url('../public/fonts/KakaoBigSans-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+}

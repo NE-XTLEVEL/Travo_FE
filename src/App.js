@@ -5,6 +5,8 @@ import Plan from './pages/Plan';
 import { Routes, Route } from 'react-router-dom';
 // import useResponsive from './useResponsive';
 import GridLines from 'react-gridlines';
+import Main from './pages/Main';
+import './index.css';
 
 function App() {
   // const { isMobile } = useResponsive();
@@ -17,6 +19,7 @@ function App() {
     >
       <Routes>
         <Route path="/plan" element={<Plan />} />
+        <Route path="/main" element={<Main />} />
         <Route path="/" element={<MainWeb />}></Route>
       </Routes>
     </GridLines>
