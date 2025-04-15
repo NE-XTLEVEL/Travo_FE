@@ -16,5 +16,9 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* 필요하면 이거도 */
+  overflow: hidden;
+}
+button {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }

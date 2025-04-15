@@ -123,7 +123,7 @@ const AddLocation = ({ dayPlan, setDayPlan, close }) => {
         >
           <input
             className="searchbar"
-            style={{ fontSize: '130%' }}
+            style={{ fontSize: '130%', outline: 'none' }}
             value={keyWord}
             onChange={(e) => setKeyWord(e.target.value)}
           />

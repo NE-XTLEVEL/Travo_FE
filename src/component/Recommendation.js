@@ -21,13 +21,14 @@ const Recommendation = () => {
   return (
     <div>
       <ul
+        className="scroll-container"
         style={{
-          height: '100vh', // 원하는 높이로 조정
+          height: '90vh', // 원하는 높이로 조정
           overflowY: 'auto',
           padding: 0,
           margin: 0,
           listStyle: 'none',
-          border: '1px solid #ddd', // 선택사항
+          border: 'none', // 선택사항
         }}
       >
         {Array.from({ length: day }, (_, index) => (
