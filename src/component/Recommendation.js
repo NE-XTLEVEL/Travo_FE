@@ -71,6 +71,7 @@ const Recommendation = () => {
 
   return (
     <div
+      className="scroll-container"
       style={{
         height: '90vh', // 원하는 높이로 조정
         overflow: 'scroll',
