@@ -4,7 +4,8 @@ import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
 import { BeatLoader } from 'react-spinners';
 
-const AddLocation = ({ dayPlan, setDayPlan, close }) => {
+const AddLocation = ({ dayId, data, setData,close }) => {
+  const dayPlan = data[dayId];
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
   const [loading, setLoading] = useState(false);
@@ -63,21 +64,24 @@ const AddLocation = ({ dayPlan, setDayPlan, close }) => {
   };
   /* eslint-disable camelcase */
   const handleAdd = (place) => {
-    if (!dayPlan.some((dayplan) => dayplan.id === place.id)) {
-      const updated = [
-        ...dayPlan,
-        {
-          kakao_id: place.id,
-          category: place.category_group_name,
-          name: place.place_name,
-          url: place.place_url,
-          x: place.x,
-          y: place.y,
-          address: place.road_address_name,
-        },
-      ];
-      setDayPlan(updated);
-      close();
+
+    if (!dayPlan.some((prevPlace) => prevPlace.kakao_id === place.id)) {
+      const updated = {
+        ...data,
+        [dayId]: [
+          ...dayPlan,
+          {
+            kakao_id: place.id,
+            category: place.category_group_name,
+            name: place.place_name,
+            url: place.place_url,
+            x: place.x,
+            y: place.y,
+            address: place.address_name,
+          },
+        ],
+      };
+      setData(updated);
       console.log(updated);
     } else {
       console.log('이미 있는 장소입니다.');

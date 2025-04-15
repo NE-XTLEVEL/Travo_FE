@@ -9,6 +9,7 @@ const MainWeb = () => {
       this is web
       <ScheduleContainer />
       <button onClick={() => navigate('/plan')}>plan</button>
+      <button onClick={() => navigate('/main')}>main</button>
     </div>
   );
 };
