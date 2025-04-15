@@ -1,20 +1,25 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import Card from './Card.js';
+import { useDroppable } from '@dnd-kit/core';
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+
 import './DayList.css';
 import Modal from './Modal.js';
 import AddLocation from './AddLocation.js';
 import TransportDuration from './TransportDuration';
+import SortableCard from './SortableCard.js';
 
 const API_KEY = process.env.REACT_APP_ODSAY_API_KEY;
 const durationCache = new Map();
 
-function DayList({ day, data }) {
-  const originItems = data || [];
+function DayList({ id, day, data, setData }) {
+  const items = data[id];
   const colors = ['#FF4646', '#1CBB39', '#811CBB', 'orange', 'blue'];
   const dayColor = colors[(day - 1) % colors.length];
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [items, setItems] = useState(originItems);
   const [durations, setDurations] = useState([]);
 
   useEffect(() => {
@@ -89,29 +94,39 @@ function DayList({ day, data }) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const { setNodeRef } = useDroppable({ id });
+
   return (
-    <div className="DayList">
-      <div className="DayHeader">
-        <div className="dayNum" style={{ color: dayColor }}>
-          {day}일차
+    <SortableContext
+      id={id}
+      items={items.map((item) => item.local_id)}
+      strategy={verticalListSortingStrategy}
+    >
+      <div className="DayList">
+        <div className="DayHeader">
+          <div className="dayNum" style={{ color: dayColor }}>
+            {day}일차
+          </div>
+          <div className="addPlace" onClick={openModal}>
+            <span className="addButton">+ </span>장소추가
+          </div>
         </div>
-        <div className="dayBlank"></div>
-        <div className="addPlace" onClick={openModal}>
-          <span className="addButton">+ </span>장소추가
+        <div ref={setNodeRef}>
+          {items.map((item, index) => (
+            <react.Fragment key={item.local_id}>
+              <SortableCard item={item} />
+              {index < items.length - 1 && (
+                <TransportDuration duration={durations[index]} />
+              )}
+            </react.Fragment>
+          ))}
         </div>
       </div>
-      {items.map((item, index) => (
-        <React.Fragment key={item.local_id}>
-          <Card item={item} />
-          {index < items.length - 1 && (
-            <TransportDuration duration={durations[index]} />
-          )}
-        </React.Fragment>
-      ))}
       <Modal open={isModalOpen} close={closeModal}>
-        <AddLocation dayPlan={items} setDayPlan={setItems} close={closeModal} />
+        <AddLocation dayId={day} data={data} setData={setData} close={closeModal} />
       </Modal>
-    </div>
+    </SortableContext>
   );
 }
 
