@@ -2,12 +2,14 @@ import { /*useEffect,*/ useState } from 'react';
 import './AddLocation.css';
 import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
+import { BeatLoader } from 'react-spinners';
 
-const AddLocation = ({ dayId, data, setData }) => {
+const AddLocation = ({ dayId, data, setData,close }) => {
   const dayPlan = data[dayId];
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
-
+  const [loading, setLoading] = useState(false);
+  const [noResult, setNoResult] = useState(false);
   // useEffect(() => {
   //   const loadKakaoMap = () => {
   //     if (window.kakao) {
@@ -41,12 +43,20 @@ const AddLocation = ({ dayId, data, setData }) => {
     // };
 
     const ps = new window.kakao.maps.services.Places();
+    setLoading(true);
     ps.keywordSearch(
       keyWord,
       (data, status) => {
         if (status === window.kakao.maps.services.Status.OK) {
           setPlaces(data);
+          setNoResult(false);
+          setLoading(false);
           console.log('검색 완료', data);
+        } else {
+          setPlaces([]);
+          setLoading(false);
+          setNoResult(true);
+          console.log('검색 결과 없음');
         }
       }
       /*options*/
@@ -54,7 +64,8 @@ const AddLocation = ({ dayId, data, setData }) => {
   };
   /* eslint-disable camelcase */
   const handleAdd = (place) => {
-    if (!dayPlan.some((prevPlace) => prevPlace.kakao_id === place.kakao_id)) {
+
+    if (!dayPlan.some((prevPlace) => prevPlace.kakao_id === place.id)) {
       const updated = {
         ...data,
         [dayId]: [
@@ -137,45 +148,75 @@ const AddLocation = ({ dayId, data, setData }) => {
           paddingRight: '20px',
         }}
       >
-        <ul
-          style={{
-            margin: '0px',
-            paddingLeft: '0px',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {places.map((place) => (
-            <li key={place.id} className="search-item">
-              <div
-                style={{
-                  flex: 5,
-                }}
-              >
+        {loading && (
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {' '}
+            <BeatLoader color="#9c63e1" size={10} speedMultiplier={0.5} />
+          </div>
+        )}
+        {noResult && (
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            검색 결과가 없습니다.{' '}
+          </div>
+        )}
+
+        {!loading && !noResult && (
+          <ul
+            style={{
+              margin: '0px',
+              paddingLeft: '0px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {places.map((place) => (
+              <li key={place.id} className="search-item">
                 <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    flex: 5,
                   }}
                 >
-                  <div>{place.category_group_name}</div>
-                  <div style={{ height: '30px' }}></div>
-                  <div style={{ color: '#B0B0B0' }}>{place.address_name}</div>
-                </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>{place.category_group_name}</div>
+                    <div style={{ height: '30px' }}></div>
+                    <div style={{ color: '#B0B0B0' }}>
+                      {place.road_address_name}
+                    </div>
+                  </div>
 
-                <strong>{place.place_name}</strong>
-              </div>
-              <button
-                style={{ flex: 1 }}
-                className="addlocation-button"
-                onClick={() => handleAdd(place)}
-              >
-                <FaPlus />
-              </button>
-            </li>
-          ))}
-        </ul>
+                  <strong>{place.place_name}</strong>
+                </div>
+                <button
+                  style={{ flex: 1 }}
+                  className="addlocation-button"
+                  onClick={() => handleAdd(place)}
+                >
+                  <FaPlus />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
