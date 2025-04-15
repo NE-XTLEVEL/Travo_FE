@@ -114,17 +114,17 @@ function DayList({ id, day, data, setData }) {
         </div>
         <div ref={setNodeRef}>
           {items.map((item, index) => (
-            <react.Fragment key={item.local_id}>
+            <React.Fragment key={item.local_id}>
               <SortableCard item={item} />
               {index < items.length - 1 && (
                 <TransportDuration duration={durations[index]} />
               )}
-            </react.Fragment>
+            </React.Fragment>
           ))}
         </div>
       </div>
       <Modal open={isModalOpen} close={closeModal}>
-        <AddLocation dayId={day} data={data} setData={setData} close={closeModal} />
+        <AddLocation dayId={day} data={data} setData={setData} />
       </Modal>
     </SortableContext>
   );

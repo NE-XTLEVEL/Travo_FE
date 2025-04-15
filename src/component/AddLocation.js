@@ -4,8 +4,11 @@ import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
 import { BeatLoader } from 'react-spinners';
 
-const AddLocation = ({ dayId, data, setData,close }) => {
-  const dayPlan = data[dayId];
+const AddLocation = ({ dayId, data, setData }) => {
+  const dayPlan = data[`day${dayId}`];
+  console.log('AddLocation/', data);
+  console.log('AddLocation/', dayId);
+  console.log('AddLocation/', dayPlan);
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
   const [loading, setLoading] = useState(false);
@@ -64,11 +67,10 @@ const AddLocation = ({ dayId, data, setData,close }) => {
   };
   /* eslint-disable camelcase */
   const handleAdd = (place) => {
-
-    if (!dayPlan.some((prevPlace) => prevPlace.kakao_id === place.id)) {
+    if (!dayPlan?.some((prevPlace) => prevPlace.kakao_id === place.id)) {
       const updated = {
         ...data,
-        [dayId]: [
+        [`day${dayId}`]: [
           ...dayPlan,
           {
             kakao_id: place.id,
