@@ -5,33 +5,40 @@ import Header from '../component/Header';
 
 const Plan = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ flex: 2 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <div style={{ height: '10%', boxSizing: 'border-box' }}>
         <Header />
       </div>
       <div
         style={{
           display: 'flex',
           flexDirection: 'row',
-          flex: 8,
+          height: '90%',
+          boxSizing: 'border-box',
         }}
       >
         <div
           style={{
-            flex: 1,
+            flex: 6,
+            height: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            padding: '20px 0 20px 20px',
+            boxSizing: 'border-box',
           }}
         >
           <Map />
         </div>
         <div
           style={{
-            flex: 1,
+            flex: 4,
+            height: '100%',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'start',
+            paddingRight: '20px',
+            boxSizing: 'border-box',
           }}
         >
           <Recommendation />
