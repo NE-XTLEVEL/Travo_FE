@@ -1,22 +1,21 @@
-import { useEffect, useRef } from 'react'; 
+import { useEffect, useRef } from 'react';
 import './Map.css';
 
-const MapComponent = () => { 
+const MapComponent = () => {
   const mapRef = useRef(null);
 
-  useEffect(() => { 
-
+  useEffect(() => {
     /**
-     * 
+     *
      * InitMap 함수
      * 1) Kakao Map 초기화
      * 2) 마커 설정
      * 3) 선 설정
-     * 
-     * @param {*} markerData : 
+     *
+     * @param {*} markerData :
      */
-    const InitMap = (markerData) => { 
-        // 1) Kakao Map 초기화
+    const InitMap = (markerData) => {
+      // 1) Kakao Map 초기화
       if (window.kakao && window.kakao.maps) {
         const map = new window.kakao.maps.Map(mapRef.current, {
           center: new window.kakao.maps.LatLng(37.5665, 126.978), // 지도 초기 중심 좌표 (서울 시청 기준)
@@ -26,24 +25,55 @@ const MapComponent = () => {
         // 2) 마커 설정
         const bounds = new window.kakao.maps.LatLngBounds(); // 마커들이 있는 위치를 모두 포함하는 범위 계산
 
-        Object.values(markerData).forEach((locations, dayIndex) => { // day 무시하고 장소 배열만 가져옴 (locations:특정 날짜의 장소 리스트, dayIndex: 날짜 인덱스)
+        const dayColors = [
+          '#1CBB39',
+          '#FF4646',
+          '#38A7EC',
+          '#FF762D',
+          '#FB6AA1',
+          '#C9D405',
+          '#477DEF',
+          '#CF8524',
+          '#5AE1C2',
+          '#8861FF',
+        ];
+
+        Object.values(markerData).forEach((locations, dayIndex) => {
+          // day 무시하고 장소 배열만 가져옴 (locations:특정 날짜의 장소 리스트, dayIndex: 날짜 인덱스)
           const linePath = [];
 
-          const markerImg = new window.kakao.maps.MarkerImage(
-            `${process.env.PUBLIC_URL}/markerDay${dayIndex + 1}.png`,
-            new window.kakao.maps.Size(40, 45), // 마커 크기
-            { offset: new window.kakao.maps.Point(20, 45) } // 마커 실제 꼭짓점 기준 (마커 하단 중앙)
-          );
-
-          locations.forEach((loc) => {
+          locations.forEach((loc, idx) => {
             const position = new window.kakao.maps.LatLng(loc.y, loc.x); // 장소의 위도(y), 경도(x)로 마커 위치 만듦
             linePath.push(position); // 경로 배열 -> 선 그릴 때 사용
             bounds.extend(position); // 현재 마커 bounds에 포함시킴
 
-            new window.kakao.maps.Marker({ // 마커를 지도 위에 생성하고 표시
+            const dayColor = dayColors[dayIndex % dayColors.length]; // dayIndex에 맞는 색상 지정
+
+            const content = `
+            <div style="
+              background:${dayColor};
+              color:white;
+              width:32px;
+              height:32px;
+              border-radius:50%;
+              display:flex;
+              justify-content:center;
+              align-items:center;
+              font-size:14px;
+              font-weight:bold;
+              border:2px solid white;
+              box-shadow:0 0 3px rgba(0,0,0,0.3);
+            ">
+              ${idx + 1}
+            </div>
+          `;
+
+            new window.kakao.maps.CustomOverlay({
               position,
+              content,
+              xAnchor: 0.5, // 마커의 가로 기준 중앙 정렬
+              yAnchor: 0.5, // 마커의 세로 기준 중앙 정렬
               map,
-              image: markerImg,
             });
           });
 
@@ -51,17 +81,10 @@ const MapComponent = () => {
           const polyline = new window.kakao.maps.Polyline({
             path: linePath,
             strokeWeight: 4,
-            strokeColor: [
-              '#1CBB39',
-              '#FF4646',
-              '#38A7EC',
-              '#FF762D',
-              '#FB6AA1',
-            ][dayIndex % 5],
+            strokeColor: dayColors[dayIndex % dayColors.length],
             strokeOpacity: 0.8,
             strokeStyle: 'solid',
           });
-
           polyline.setMap(map);
         });
 
@@ -108,7 +131,7 @@ const MapComponent = () => {
     }
   }, []);
 
-  // 렌더링할 JSX를 반환. React 애플리케이션 
+  // 렌더링할 JSX를 반환. React 애플리케이션
   return <div className="mapViewContainer" ref={mapRef}></div>;
 };
 
