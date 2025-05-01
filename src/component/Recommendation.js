@@ -58,8 +58,23 @@ const Recommendation = () => {
     const loadData = async () => {
       try {
         const response = await fetch('/mockData.json');
-        const body = await response.json();
-        setData(body);
+        // await fetch(
+        //   'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation',
+        //   {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       Accept: 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //       description: '산뜻한 여행을 가고 싶어요',
+        //       date: '2023-10-01',
+        //     }),
+        //   }
+        // );
+        const body1 = await response.json();
+        const body2 = body1.data;
+        setData(body2);
         /*setDay(Object.keys(body).length);*/
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -73,10 +88,12 @@ const Recommendation = () => {
     <div
       className="scroll-container"
       style={{
+        width: '100%',
         height: '90vh', // 원하는 높이로 조정
         overflow: 'scroll',
         padding: 0,
         margin: 0,
+        marginLeft: '15%',
         display: 'flex',
         flexDirection: 'column',
       }}

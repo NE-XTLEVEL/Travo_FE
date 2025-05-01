@@ -159,7 +159,7 @@ export default function ScheduleContainer() {
       try {
         const response = await fetch('/mockData.json');
         const body = await response.json();
-        setSchedule(body);
+        setSchedule(body.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

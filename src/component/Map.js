@@ -109,6 +109,7 @@ const MapComponent = () => {
         if (window.kakao && window.kakao.maps) {
           fetch('/mockData.json')
             .then((res) => res.json())
+            .then((data) => data.data)
             .then((data) => window.kakao.maps.load(() => InitMap(data)))
             .catch((err) => console.error('데이터 로딩 실패:', err));
         } else {
