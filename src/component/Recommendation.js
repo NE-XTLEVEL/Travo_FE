@@ -88,10 +88,12 @@ const Recommendation = () => {
     <div
       className="scroll-container"
       style={{
+        width: '100%',
         height: '90vh', // 원하는 높이로 조정
         overflow: 'scroll',
         padding: 0,
         margin: 0,
+        marginLeft: '15%',
         display: 'flex',
         flexDirection: 'column',
       }}
