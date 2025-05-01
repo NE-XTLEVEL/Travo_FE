@@ -3,6 +3,7 @@ import {
   DndContext,
   DragOverlay,
   closestCenter,
+  closestCorners,
   MouseSensor,
   TouchSensor,
   useSensor,
@@ -13,6 +14,23 @@ import { arrayMove } from '@dnd-kit/sortable';
 import Card from './Card';
 import DayList from './DayList.js';
 import PlaceBin from './PlaceBin.js';
+
+function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
+  // drag and drop collision detection
+  const closestCenterCollisions = closestCenter({
+    ...args,
+    droppableContainers: droppableContainers,
+  });
+
+  if (closestCenterCollisions[0].id === 'place-bin') {
+    return closestCenterCollisions;
+  }
+
+  return closestCorners({
+    ...args,
+    droppableContainers: droppableContainers,
+  });
+}
 
 const Recommendation = () => {
   const [data, setData] = useState({});
@@ -58,7 +76,7 @@ const Recommendation = () => {
     >
       <DndContext
         sensors={sensors}
-        collisionDetection={closestCenter}
+        collisionDetection={collisionDetectionAlgorithm}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
