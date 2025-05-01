@@ -54,7 +54,7 @@ const AddLocation = ({ dayId, data, setData }) => {
   };
   /* eslint-disable camelcase */
   const handleAdd = (place) => {
-    if (!dayPlan.some((prevPlace) => prevPlace.kakao_id === place.kakao_id)) {
+    if (!dayPlan.some((prevPlace) => prevPlace.kakao_id === place.id)) {
       const updated = {
         ...data,
         [dayId]: [
