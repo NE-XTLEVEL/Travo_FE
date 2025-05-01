@@ -5,69 +5,106 @@ const MapComponent = () => {
   const mapRef = useRef(null);
 
   useEffect(() => {
+    /**
+     *
+     * InitMap 함수
+     * 1) Kakao Map 초기화
+     * 2) 마커 설정
+     * 3) 선 설정
+     *
+     * @param {*} markerData :
+     */
     const InitMap = (markerData) => {
+      // 1) Kakao Map 초기화
       if (window.kakao && window.kakao.maps) {
         const map = new window.kakao.maps.Map(mapRef.current, {
-          center: new window.kakao.maps.LatLng(37.5665, 126.978),
-          level: 3,
+          center: new window.kakao.maps.LatLng(37.5665, 126.978), // 지도 초기 중심 좌표 (서울 시청 기준)
+          level: 3, // 지도 확대/축소 레벨 (작을수록 더 확대됨)
         });
 
-        const bounds = new window.kakao.maps.LatLngBounds();
-        // eslint-disable-next-line no-unused-vars
-        Object.entries(markerData).forEach(([_, locations], dayIndex) => {
+        // 2) 마커 설정
+        const bounds = new window.kakao.maps.LatLngBounds(); // 마커들이 있는 위치를 모두 포함하는 범위 계산
+
+        const dayColors = [
+          '#1CBB39',
+          '#FF4646',
+          '#38A7EC',
+          '#FF762D',
+          '#FB6AA1',
+          '#C9D405',
+          '#477DEF',
+          '#CF8524',
+          '#5AE1C2',
+          '#8861FF',
+        ];
+
+        Object.values(markerData).forEach((locations, dayIndex) => {
+          // day 무시하고 장소 배열만 가져옴 (locations:특정 날짜의 장소 리스트, dayIndex: 날짜 인덱스)
           const linePath = [];
 
-          const markerImg = new window.kakao.maps.MarkerImage(
-            `${process.env.PUBLIC_URL}/marker${dayIndex + 1}.png`,
-            new window.kakao.maps.Size(40, 45),
-            { offset: new window.kakao.maps.Point(20, 45) }
-          );
+          locations.forEach((loc, idx) => {
+            const position = new window.kakao.maps.LatLng(loc.y, loc.x); // 장소의 위도(y), 경도(x)로 마커 위치 만듦
+            linePath.push(position); // 경로 배열 -> 선 그릴 때 사용
+            bounds.extend(position); // 현재 마커 bounds에 포함시킴
 
-          locations.forEach((loc) => {
-            const position = new window.kakao.maps.LatLng(loc.y, loc.x);
-            linePath.push(position);
-            bounds.extend(position);
+            const dayColor = dayColors[dayIndex % dayColors.length]; // dayIndex에 맞는 색상 지정
 
-            const marker = new window.kakao.maps.Marker({
+            const content = `
+            <div style="
+              background:${dayColor};
+              color:white;
+              width:32px;
+              height:32px;
+              border-radius:50%;
+              display:flex;
+              justify-content:center;
+              align-items:center;
+              font-size:14px;
+              font-weight:bold;
+              border:2px solid white;
+              box-shadow:0 0 3px rgba(0,0,0,0.3);
+            ">
+              ${idx + 1}
+            </div>
+          `;
+
+            new window.kakao.maps.CustomOverlay({
               position,
+              content,
+              xAnchor: 0.5, // 마커의 가로 기준 중앙 정렬
+              yAnchor: 0.5, // 마커의 세로 기준 중앙 정렬
               map,
-              image: markerImg,
-              title: loc.name,
-            });
-
-            const info = new window.kakao.maps.InfoWindow({
-              content: `<div style='padding:5px;font-size:14px;'><a href='${loc.url}' target='_blank' rel='noopener noreferrer'>${loc.name}</a></div>`,
-            });
-
-            window.kakao.maps.event.addListener(marker, 'click', () => {
-              info.open(map, marker);
             });
           });
 
+          // 3) 선 설정
           const polyline = new window.kakao.maps.Polyline({
             path: linePath,
             strokeWeight: 4,
-            strokeColor: ['#FF0000', '#0000FF', '#00AA00'][dayIndex % 3],
+            strokeColor: dayColors[dayIndex % dayColors.length],
             strokeOpacity: 0.8,
             strokeStyle: 'solid',
           });
-
           polyline.setMap(map);
         });
 
-        map.setBounds(bounds);
+        map.setBounds(bounds); // bounds에 저장된 모든 마커 한 화면 안에 보이도록 (카카오맵 제공 메서드)
       } else {
         console.error('카카오맵 API가 로드되지 않았습니다.');
       }
     };
 
+    /**
+     * loadMapScript 함수 - Kakao Map API 스크립트 생성, 로드
+     */
     const loadMapScript = () => {
       const script = document.createElement('script');
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`; //${process.env.REACT_APP_KAKAO_API_KEY}
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
 
       script.async = true;
       document.head.appendChild(script);
 
+      // 카카오맵 내부 완전히 준비 된 후, mockData 가져와서 InitMap 호출, 마커와 선 그림
       script.onload = () => {
         if (window.kakao && window.kakao.maps) {
           fetch('/mockData.json')
@@ -80,6 +117,10 @@ const MapComponent = () => {
       };
     };
 
+    /**
+     * Kakao Map API가 로드되어 있지 않은 경우, loadMapScript 함수를 호출
+     * Kakao Map API가 이미 로드된 경우, fetch를 통해 mock 데이터를 가져와 InitMap 함수 호출
+     */
     if (!window.kakao || !window.kakao.maps) {
       loadMapScript();
     } else {
@@ -90,11 +131,8 @@ const MapComponent = () => {
     }
   }, []);
 
-  return (
-    <div className="mapViewContainer">
-      <div className="mapBox" ref={mapRef}></div>
-    </div>
-  );
+  // 렌더링할 JSX를 반환. React 애플리케이션
+  return <div className="mapViewContainer" ref={mapRef}></div>;
 };
 
 export default MapComponent;

@@ -5,9 +5,13 @@
   display: flex;
   flex-direction: column;
   margin: 30px;
+  width: 100%;
+  min-width: 330px;
 }
 .DayHeader {
-  width: 440px;
+  width: 100%;
+  min-width: 250px;
+  max-width: 440px;
   height: 50px;
   display: flex;
   flex-direction: row;
@@ -17,7 +21,10 @@
 .dayNum {
   color: #ff4646;
   font-size: 25px;
-  width: 440px;
+  white-space: nowrap;
+}
+.dayBlank {
+  width: 60%;
   height: 50px;
 }
 .addPlace {

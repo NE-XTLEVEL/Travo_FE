@@ -2,48 +2,24 @@ import { useEffect, useState } from 'react';
 import {
   DndContext,
   DragOverlay,
-  closestCorners,
+  closestCenter,
   MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
-  useDroppable,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 
 import Card from './Card';
 import DayList from './DayList.js';
-
-function PlaceBin() {
-  const { setNodeRef } = useDroppable({
-    id: 'place-bin',
-  });
-
-  const style = {
-    width: 60,
-    height: 60,
-    backgroundColor: '#ffffff',
-    borderRadius: 30,
-    marginBottom: 20,
-    border: '1px solid #ddd',
-    position: 'absolute',
-    display: 'flex',
-    bottom: 20,
-    right: 20,
-  };
-
-  return (
-    <div ref={setNodeRef} style={style}>
-      Trash Bin
-    </div>
-  );
-}
+import PlaceBin from './PlaceBin.js';
 
 const Recommendation = () => {
   const [data, setData] = useState({});
-  /*const [day, setDay] = useState(0);*/
 
   const [activeId, setActiveId] = useState(null);
+  const [isBinActive, setIsBinActive] = useState(false);
+
   const sensors = useSensors(
     useSensor(MouseSensor),
     useSensor(TouchSensor, { DelayConstraint: { delay: 500 } })
@@ -60,7 +36,6 @@ const Recommendation = () => {
         const response = await fetch('/mockData.json');
         const body = await response.json();
         setData(body);
-        /*setDay(Object.keys(body).length);*/
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -71,6 +46,7 @@ const Recommendation = () => {
 
   return (
     <div
+      className="scroll-container"
       style={{
         height: '90vh', // 원하는 높이로 조정
         overflow: 'scroll',
@@ -82,7 +58,7 @@ const Recommendation = () => {
     >
       <DndContext
         sensors={sensors}
-        collisionDetection={closestCorners}
+        collisionDetection={closestCenter}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
@@ -99,10 +75,10 @@ const Recommendation = () => {
             />
           ))}
 
-        {activeId === null ? null : <PlaceBin />}
+        {activeId === null ? null : <PlaceBin isActive={isBinActive} />}
 
         <DragOverlay>
-          {activeId ? <Card item={activeItem} /> : null}
+          {activeId ? <Card isOverlay={true} item={activeItem} /> : null}
         </DragOverlay>
       </DndContext>
     </div>
@@ -127,13 +103,19 @@ const Recommendation = () => {
     const { active, over, draggingRect } = event;
 
     const { id } = active;
+
+    if (!over) {
+      return;
+    }
     const { id: overId } = over;
 
     const activeDay = findDay(id);
 
     if (overId === 'place-bin') {
+      setIsBinActive(true);
       return;
     }
+    setIsBinActive(false);
     const overDay = findDay(overId);
 
     if (!activeDay || !overDay || activeDay === overDay) {
@@ -211,7 +193,7 @@ const Recommendation = () => {
         [overDay]: arrayMove(data[overDay], activeIndex, overIndex),
       }));
     }
-
+    setIsBinActive(false);
     setActiveId(null);
   }
 };

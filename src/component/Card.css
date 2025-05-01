@@ -2,20 +2,39 @@
   box-sizing: border-box;
 }
 .Card {
-  width: 440px;
+  width: 100%;
   height: 70px;
+  min-width: 300px;
+  max-width: 440px;
   border: 1px solid #d9d9d9;
   display: flex;
   flex-direction: row;
   border-radius: 10px;
   justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
   background-color: #ffffff;
+}
+.OverlayCard {
+  background-color: #FFEAFE;
 }
 .CardContent {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 13px 17px;
   gap: 5px;
+  align-items: center;
+}
+.CardImage {
+  margin-right: 10px;
+}
+.CardInfo {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
 }
 .CardType {
   color: #b0b0b0;
@@ -23,15 +42,29 @@
 }
 .CardLowLine {
   display: flex;
+  flex-direction: row;
   gap: 15px;
+  width: 100%;
+  min-width: 0;
 }
 .CardName {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  text-overflow: clip;
+  overflow: hidden;
   color: #000000;
   font-size: 18px;
   font-weight: 400;
+  max-width: 100%;
+  flex-grow: 1;
+  min-width: 0;
 }
 .CardButton {
-  color: #5292d3;
+  display: flex;
+  align-items: center;
+  color: #B563E8;
   font-size: 14px;
   font-weight: 200;
   text-decoration: underline;
@@ -40,7 +73,7 @@
 .Option {
   width: 35px;
   height: 35px;
-  padding-top: 17.5px;
+  padding-top: 22px;
   padding-bottom: 17.5px;
   margin-right: 17.85px;
   cursor: pointer;

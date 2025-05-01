@@ -12,8 +12,6 @@
   border: none;
   color: #969696;
   font-size: 1.5rem;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
 }
 .searchbar {
   width: 80%;

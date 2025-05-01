@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import {
@@ -29,10 +29,11 @@ function DayList({ id, day, data, setData }) {
       for (let i = 0; i < items.length - 1; i++) {
         const from = items[i];
         const to = items[i + 1];
-        const cacheKey = `${from.local_id}-${to.local_id}`;
+        const cacheKey = `${from.kakao_id}-${to.kakao_id}`;
 
         if (durationCache.has(cacheKey)) {
           results.push(durationCache.get(cacheKey));
+          console.log('Cache hit:', cacheKey, durationCache.get(cacheKey));
           continue;
         }
         const url = `https://api.odsay.com/v1/api/searchPubTransPathT?SX=${from.x}&SY=${from.y}&EX=${to.x}&EY=${to.y}&apiKey=${API_KEY}`;
@@ -40,7 +41,7 @@ function DayList({ id, day, data, setData }) {
         try {
           const response = await fetch(url);
           if (response.status === 429) {
-            results.push('?');
+            results.push(response.message);
           }
 
           const data = await response.json();
@@ -59,10 +60,11 @@ function DayList({ id, day, data, setData }) {
             // 5: 출발과 도착 정류장이 존재하지 않음
             // 6: 서비스 지역이 아님
             // -99: 검색결과가 없음
+            // time = data.error.msg;
             time = '?';
           } else if (data.error) {
             // 서버, 형식 오류
-            console.error('Error:', data.error.msg);
+            console.error('Error:', data.error);
             time = '?';
           }
 
@@ -70,12 +72,12 @@ function DayList({ id, day, data, setData }) {
           results.push(time);
         } catch (error) {
           console.error(error);
-          results.push('?');
+          results.push(error.message);
         }
 
-        await new Promise((r) => setTimeout(r, 1000)); // 딜레이
+        await new Promise((r) => setTimeout(r, 500)); // 딜레이
       }
-      console.log('results', results);
+      console.log('results: ', results);
       setDurations(results);
     }
 
@@ -112,12 +114,12 @@ function DayList({ id, day, data, setData }) {
         </div>
         <div ref={setNodeRef}>
           {items.map((item, index) => (
-            <react.Fragment key={item.local_id}>
+            <React.Fragment key={item.local_id}>
               <SortableCard item={item} />
               {index < items.length - 1 && (
                 <TransportDuration duration={durations[index]} />
               )}
-            </react.Fragment>
+            </React.Fragment>
           ))}
         </div>
       </div>
