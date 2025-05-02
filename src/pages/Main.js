@@ -2,6 +2,8 @@ import React from 'react';
 import HeaderMain from '../component/HeaderMain';
 import './Main.css';
 import Main2 from './Main2';
+import Footer from '../component/Footer';
+import '../component/Footer.css';
 import { FiCalendar } from 'react-icons/fi';
 import { MdPeopleOutline, MdKeyboardArrowDown } from 'react-icons/md';
 import { LuSend } from 'react-icons/lu';
@@ -12,7 +14,7 @@ const Main = () => {
   return (
     <>
       <div className="MainContainer">
-        <div className="Main">
+        <div className="Main" id="firstPage">
           <div className="MainHeader">
             <HeaderMain />
           </div>
@@ -55,6 +57,7 @@ const Main = () => {
           </div>
         </div>
         <Main2 />
+        <Footer />
       </div>
     </>
   );

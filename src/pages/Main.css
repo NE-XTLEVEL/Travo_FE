@@ -6,6 +6,7 @@
   height: 100vh;
 }
 .Main {
+  height: 110vh;
   background-image: url('./assets/mainBackground.png');
   background-size: cover;
   display: flex;
@@ -87,7 +88,7 @@
 .MainBelowButton {
   display: flex;
   justify-content: center;
-  margin-top: 47px;
+  margin-top: 30px;
 }
 .animated {
   animation-duration: 1s;

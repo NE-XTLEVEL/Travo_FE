@@ -6,7 +6,6 @@ const Main = () => {
       <div
         className="Main2"
         style={{
-          backgroundColor: 'yellowgreen',
           width: '100vw',
           height: '400vh',
         }}
