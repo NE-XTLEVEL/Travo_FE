@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { FaBars } from 'react-icons/fa6';
+import { PiSignInBold } from 'react-icons/pi';
 import Sidebar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('2박3일 서울 여행 계획');
+  const token = localStorage.getItem('access_Token');
+  const navigate = useNavigate();
   const plans = [
     {
       id: 1,
@@ -29,7 +33,7 @@ const Header = () => {
         alignItems: 'center',
       }}
     >
-      <img src="/logo.png" width={30} style={{ margin: '10px' }} />
+      <img src="/logo.svg" width={30} style={{ margin: '10px' }} />
       <div style={{ padding: '10px', fontSize: '20px' }}>Travo</div>
       <div
         style={{
@@ -52,12 +56,22 @@ const Header = () => {
           }}
         ></input>
       </div>
-      <button
-        style={{ background: 'none', border: 'none', margin: '10px' }}
-        onClick={() => setIsOpen(true)}
-      >
-        <FaBars size={30} />
-      </button>
+      {token ? (
+        <button
+          style={{ background: 'none', border: 'none', margin: '10px' }}
+          onClick={() => setIsOpen(true)}
+        >
+          <FaBars size={30} />
+        </button>
+      ) : (
+        <button
+          style={{ background: 'none', border: 'none', margin: '10px' }}
+          onClick={() => navigate('/login')}
+        >
+          <PiSignInBold size={30} />
+        </button>
+      )}
+
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}>
         {plans.map((plan) => (
           <div key={plan.id} className="search-item">
