@@ -62,38 +62,39 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className="login-wrapper">
-        <div className="login-logo">
-          <img src="../../img/logo.jpg" alt="Logo" className="logo-image" />
-          <button className="logo-button" onClick={() => navigate('/')}>
-            OnBoard
-          </button>
+    <div
+      className="login-wrapper"
+      style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}
+    >
+      <div className="login-logo">
+        <img src="/logo.svg" alt="Logo" className="logo-image" />
+        <button className="logo-button" onClick={() => navigate('/')}>
+          Travo
+        </button>
+      </div>
+      <div className="login-container">
+        <div>
+          <input
+            type="text"
+            id="id"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
         </div>
-        <div className="login-container">
-          <div>
-            <input
-              type="text"
-              id="id"
-              placeholder="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyPress={handleKeyPress}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              id="password"
-              placeholder="비밀번호"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyPress={handleKeyPress}
-            />
-          </div>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          <button onClick={handleLogin}>로그인</button>
+        <div>
+          <input
+            type="password"
+            id="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
         </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button onClick={handleLogin}>로그인</button>
       </div>
       <div className="login-links">
         <button
@@ -115,7 +116,7 @@ const Login = () => {
           비밀번호 찾기
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
