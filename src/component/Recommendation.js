@@ -15,17 +15,19 @@ import Card from './Card';
 import DayList from './DayList.js';
 import PlaceBin from './PlaceBin.js';
 
+// OverlayCard 위치 판단 알고리즘
 function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
-  // drag and drop collision detection
   const closestCenterCollisions = closestCenter({
     ...args,
     droppableContainers: droppableContainers,
   });
 
+  // closestCenter로 OverlayCard가 PlaceBin과 가까운지 확인
   if (closestCenterCollisions[0].id === 'place-bin') {
     return closestCenterCollisions;
   }
 
+  // closestCorners로 OverlayCard가 어느 Card와 가장 가까운지 확인
   return closestCorners({
     ...args,
     droppableContainers: droppableContainers,
@@ -35,18 +37,23 @@ function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
 const Recommendation = () => {
   const [data, setData] = useState({});
 
+  // DragOverlay와 가장 가까운 Card의 id
   const [activeId, setActiveId] = useState(null);
-  const [isBinActive, setIsBinActive] = useState(false);
 
-  const sensors = useSensors(
-    useSensor(MouseSensor),
-    useSensor(TouchSensor, { DelayConstraint: { delay: 500 } })
-  );
   const activeItem = activeId
     ? Object.values(data)
         .flat()
         .find((item) => item.local_id === activeId)
     : null;
+
+  // DragOverly가 PlaceBin에 가까우면 true로 설정
+  const [isBinActive, setIsBinActive] = useState(false);
+
+  // Drag and drop에 MouseSensor와 TouchSensor 사용
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor, { DelayConstraint: { delay: 500 } })
+  );
 
   useEffect(() => {
     const loadData = async () => {
@@ -102,6 +109,7 @@ const Recommendation = () => {
     </div>
   );
 
+  // Card의 id를 받아 해당 Card가 속한 day를 반환
   function findDay(id) {
     if (id in data) {
       return id;
@@ -111,29 +119,32 @@ const Recommendation = () => {
     );
   }
 
+  // Drag 시작
   function handleDragStart(event) {
     const { active } = event;
     const { id } = active;
     setActiveId(id);
   }
 
+  // Drag 중
   function handleDragOver(event) {
     const { active, over, draggingRect } = event;
-
-    const { id } = active;
 
     if (!over) {
       return;
     }
+
+    const { id } = active;
+    const activeDay = findDay(id);
     const { id: overId } = over;
 
-    const activeDay = findDay(id);
-
+    // OverlayCard가 PlaceBin에 가까우면 isBinActive를 true로 설정하고 return
     if (overId === 'place-bin') {
       setIsBinActive(true);
       return;
     }
     setIsBinActive(false);
+
     const overDay = findDay(overId);
 
     if (!activeDay || !overDay || activeDay === overDay) {
@@ -173,6 +184,7 @@ const Recommendation = () => {
     });
   }
 
+  // Drag 종료
   function handleDragEnd(event) {
     const { active, over } = event;
     const { id } = active;
