@@ -1,7 +1,14 @@
 * {
   box-sizing: border-box;
 }
+.MainContainer {
+  overflow-y: auto;
+  height: 100vh;
+}
 .Main {
+  height: 110vh;
+  background-image: url('./assets/mainBackground.png');
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,24 +16,32 @@
 }
 .MainHeader {
   width: 100vw;
-  border: 1px solid #efefef;
 }
 .MainImage {
-  height: 70vh;
-  font-weight: bold;
-  font-size: 40px;
-  background-color: white;
+  height: 60vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+}
+.MainDescription {
+  width: 30%;
+  height: auto;
+  visibility: visible;
+  animation-name: fadeInLeft;
+}
+.MainPhonePCImg {
+  width: 35%;
+  height: auto;
+  visibility: visible;
+  animation-name: fadeInUp;
 }
 .MainContent {
   height: 30vh;
-  background-color: white;
 }
 .MainOption {
   display: flex;
   justify-content: center;
+  margin-left: -10vw;
   gap: 76px;
   margin-bottom: 26px;
 }
@@ -38,6 +53,8 @@
 .OptionPeople {
   display: flex;
   gap: 14px;
+  align-items: center;
+  font-size: 1.39vw;
 }
 .MainPrompt {
   display: flex;
@@ -49,29 +66,64 @@
   margin: auto 18.75vw;
   border-radius: 30px;
   border: solid 1px #d9d9d9;
-  background-color: #efefef;
-  padding: 30px;
+  background-color: #ffffff;
   gap: 20px;
   box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
 }
 .MainPromptInput {
-  width: 90%;
+  width: 85%;
   height: 100%;
   border: none;
   outline: none;
   border-radius: 30px;
-  padding-left: 20px;
+  padding-left: 0.7vw;
   font-size: 20px;
   background-color: inherit;
   font-weight: regular;
   color: #b0b0b0;
 }
 .LuSend {
-  size: 40px;
+  stroke: darknavy;
+}
+.MainBelowButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+.delay-05s {
+  animation-delay: 0.5s;
+}
+
+delay-03s {
+  animation-delay: 0.3s;
+}
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @media screen and (max-width: 412px) {
   .MainImage {
-    height: 80vh;
+    height: 70vh;
     font-size: 24px;
   }
   .MainContent {

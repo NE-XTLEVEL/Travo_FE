@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import {
@@ -12,7 +13,7 @@ import AddLocation from './AddLocation.js';
 import TransportDuration from './TransportDuration';
 import SortableCard from './SortableCard.js';
 
-const API_KEY = process.env.REACT_APP_ODSAY_API_KEY;
+const API_KEY = process.env.REACT_APP_TMAP_API_KEY;
 const durationCache = new Map();
 
 function DayList({ id, day, data, setData }) {
@@ -24,7 +25,7 @@ function DayList({ id, day, data, setData }) {
 
   useEffect(() => {
     async function Duration() {
-      const results = [];
+      const promises = [];
 
       for (let i = 0; i < items.length - 1; i++) {
         const from = items[i];
@@ -32,51 +33,52 @@ function DayList({ id, day, data, setData }) {
         const cacheKey = `${from.kakao_id}-${to.kakao_id}`;
 
         if (durationCache.has(cacheKey)) {
-          results.push(durationCache.get(cacheKey));
+          promises.push(Promise.resolve(durationCache.get(cacheKey)));
           console.log('Cache hit:', cacheKey, durationCache.get(cacheKey));
           continue;
         }
-        const url = `https://api.odsay.com/v1/api/searchPubTransPathT?SX=${from.x}&SY=${from.y}&EX=${to.x}&EY=${to.y}&apiKey=${API_KEY}`;
-
         try {
-          const response = await fetch(url);
-          if (response.status === 429) {
-            results.push(response.message);
+          const response = await axios.post(
+            'https://apis.openapi.sk.com/transit/routes',
+            {
+              startX: from.x,
+              startY: from.y,
+              endX: to.x,
+              endY: to.y,
+            },
+            {
+              headers: {
+                appKey: API_KEY,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+
+          if (response.status === 14) {
+            promises.push(response.message);
+          } else if (response.status === 31) {
+            promises.push(response.message);
           }
 
-          const data = await response.json();
+          const itineraries = response.data?.metaData?.plan?.itineraries;
           let time;
-          if (data.result?.path?.[0]?.info?.totalTime) {
-            time = data.result.path[0].info.totalTime;
-          } else if (data.error?.code === '-98') {
-            // 700m 이내인 경우..
+          if (!itineraries || itineraries.length === 0) {
             time = '도보 이동';
-          } else if (
-            data.error &&
-            ['3', '4', '5', '6', '-99'].includes(data.error.code)
-          ) {
-            // 3: 출발 정류장이 존재하지 않음
-            // 4: 도착 정류장이 존재하지 않음
-            // 5: 출발과 도착 정류장이 존재하지 않음
-            // 6: 서비스 지역이 아님
-            // -99: 검색결과가 없음
-            // time = data.error.msg;
-            time = '?';
-          } else if (data.error) {
-            // 서버, 형식 오류
-            console.error('Error:', data.error);
-            time = '?';
+          } else {
+            time = itineraries[0].totalTime;
+            time = Math.ceil(time / 60); // 분 단위로 변환
+            // 총 소요 시간 (s)
           }
 
           durationCache.set(cacheKey, time); // 캐시 저장
-          results.push(time);
+          promises.push(time);
         } catch (error) {
           console.error(error);
-          results.push(error.message);
+          promises.push(error.message);
         }
-
-        await new Promise((r) => setTimeout(r, 500)); // 딜레이
       }
+      const results = await Promise.all(promises);
       console.log('results: ', results);
       setDurations(results);
     }
@@ -109,7 +111,7 @@ function DayList({ id, day, data, setData }) {
             {day}일차
           </div>
           <div className="addPlace" onClick={openModal}>
-            <span className="addButton">+ </span>장소추가
+            <span className="addButton"> + </span>장소추가
           </div>
         </div>
         <div ref={setNodeRef}>
