@@ -18,6 +18,7 @@ import { HiOutlineFlag } from 'react-icons/hi';
 import { IoSchoolOutline } from 'react-icons/io5';
 import { HiOutlineBuildingOffice } from 'react-icons/hi2';
 import { LuCircleParking } from 'react-icons/lu';
+import classNames from 'classnames';
 
 function CardIcons(category) {
   switch (category) {
@@ -66,9 +67,13 @@ function CardIcons(category) {
   }
 }
 
-const Card = ({ item }) => {
+const Card = ({ isOverlay = false, item }) => {
+  const classes = classNames('Card', {
+    OverlayCard: isOverlay,
+  });
+
   return (
-    <div className="Card">
+    <div className={classes}>
       <div className="CardContent">
         <div className="CardImage">{CardIcons(item.category)}</div>
         <div className="CardInfo">
