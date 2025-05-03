@@ -3,6 +3,7 @@
 }
 .MainContainer {
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100vh;
 }
 .Main {
@@ -88,7 +89,12 @@
 .MainBelowButton {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 47px;
+}
+.Bouncing-arrow {
+  display: inline-block;
+  animation: bounce 1.5s ease-in-out infinite;
+  cursor: pointer;
 }
 .animated {
   animation-duration: 1s;
@@ -119,6 +125,20 @@ delay-03s {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 @media screen and (max-width: 412px) {

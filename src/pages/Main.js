@@ -51,7 +51,11 @@ const Main = () => {
                 <LuSend size={'3vw'} stroke="#030045" strokeWidth={2} />
               </div>
               <div className="MainBelowButton">
-                <MdKeyboardArrowDown size={'3.75vw'} color="#B0B0B0" />
+                <MdKeyboardArrowDown
+                  className="Bouncing-arrow"
+                  size={'3.75vw'}
+                  color="#B0B0B0"
+                />
               </div>
             </div>
           </div>
