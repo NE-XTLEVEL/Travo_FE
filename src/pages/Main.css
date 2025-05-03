@@ -83,6 +83,10 @@
   font-weight: regular;
   color: #b0b0b0;
 }
+.MainPromptInput::placeholder {
+  color: #b0b0b0;
+  font-weight: regular;
+}
 .LuSend {
   stroke: darknavy;
 }

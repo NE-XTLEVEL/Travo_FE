@@ -15,6 +15,9 @@
   overflow: hidden;
   background-color: #ffffff;
 }
+.OverlayCard {
+  background-color: #FFEAFE;
+}
 .CardContent {
   display: flex;
   flex-direction: row;
@@ -61,7 +64,7 @@
 .CardButton {
   display: flex;
   align-items: center;
-  color: #5292d3;
+  color: #B563E8;
   font-size: 14px;
   font-weight: 200;
   text-decoration: underline;

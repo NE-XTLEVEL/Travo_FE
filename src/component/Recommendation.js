@@ -2,97 +2,62 @@ import { useEffect, useState } from 'react';
 import {
   DndContext,
   DragOverlay,
+  closestCenter,
   closestCorners,
   MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
-  useDroppable,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 
 import Card from './Card';
 import DayList from './DayList.js';
+import PlaceBin from './PlaceBin.js';
 
-function PlaceBin() {
-  const { setNodeRef } = useDroppable({
-    id: 'place-bin',
+// OverlayCard 위치 판단 알고리즘
+function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
+  const closestCenterCollisions = closestCenter({
+    ...args,
+    droppableContainers: droppableContainers,
   });
 
-  const style = {
-    width: 60,
-    height: 60,
-    backgroundColor: '#ffffff',
-    borderRadius: 30,
-    marginBottom: 20,
-    border: '1px solid #ddd',
-    position: 'absolute',
-    display: 'flex',
-    bottom: 20,
-    right: 20,
-  };
+  // closestCenter로 OverlayCard가 PlaceBin과 가까운지 확인
+  if (closestCenterCollisions[0].id === 'place-bin') {
+    return closestCenterCollisions;
+  }
 
-  return (
-    <div ref={setNodeRef} style={style}>
-      Trash Bin
-    </div>
-  );
+  // closestCorners로 OverlayCard가 어느 Card와 가장 가까운지 확인
+  return closestCorners({
+    ...args,
+    droppableContainers: droppableContainers,
+  });
 }
 
-const Recommendation = () => {
-  const [data, setData] = useState({});
-  /*const [day, setDay] = useState(0);*/
+const Recommendation = ({ plan }) => {
+  const [data, setData] = useState(plan);
 
+  // DragOverlay와 가장 가까운 Card의 id
   const [activeId, setActiveId] = useState(null);
-  const sensors = useSensors(
-    useSensor(MouseSensor),
-    useSensor(TouchSensor, { DelayConstraint: { delay: 500 } })
-  );
+
   const activeItem = activeId
     ? Object.values(data)
         .flat()
         .find((item) => item.local_id === activeId)
     : null;
 
+  // DragOverly가 PlaceBin에 가까우면 true로 설정
+  const [isBinActive, setIsBinActive] = useState(false);
+
+  // Drag and drop에 MouseSensor와 TouchSensor 사용
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor, { DelayConstraint: { delay: 500 } })
+  );
+
   useEffect(() => {
-    const loadData = async () => {
-      const body = {
-        // request body(prompt에 넣을 내용)
-        description: '산뜻한 여행을 가고 싶어요',
-        date: '2023-10-01',
-        days: 3,
-        // eslint-disable-next-line camelcase
-        plan_name: '2박 3일 여행계획',
-      };
-      try {
-        const response = await fetch(
-          'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation/test',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify(body),
-          }
-        );
-        console.log('Status:', response);
-        // await fetch('/mockData.json');
-
-        const body1 = await response.json();
-        const body2 = body1.data;
-        console.log('Keys:', Object.keys(body2));
-        console.log('Data:', body2);
-
-        setData(body2);
-        /*setDay(Object.keys(body).length);*/
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    loadData();
-  }, []);
+    setData(plan);
+  }, [plan]);
 
   return (
     <div
@@ -110,32 +75,34 @@ const Recommendation = () => {
     >
       <DndContext
         sensors={sensors}
-        collisionDetection={closestCorners}
+        collisionDetection={collisionDetectionAlgorithm}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        {Object.keys(data)
-          .sort()
-          .map((day, index) => (
-            <DayList
-              key={day}
-              id={day}
-              day={index + 1}
-              data={data}
-              setData={setData}
-            />
-          ))}
+        {data &&
+          Object.keys(data)
+            .sort()
+            .map((day, index) => (
+              <DayList
+                key={day}
+                id={day}
+                day={index + 1}
+                data={data}
+                setData={setData}
+              />
+            ))}
 
-        {activeId === null ? null : <PlaceBin />}
+        {activeId === null ? null : <PlaceBin isActive={isBinActive} />}
 
         <DragOverlay>
-          {activeId ? <Card item={activeItem} /> : null}
+          {activeId ? <Card isOverlay={true} item={activeItem} /> : null}
         </DragOverlay>
       </DndContext>
     </div>
   );
 
+  // Card의 id를 받아 해당 Card가 속한 day를 반환
   function findDay(id) {
     if (id in data) {
       return id;
@@ -145,23 +112,32 @@ const Recommendation = () => {
     );
   }
 
+  // Drag 시작
   function handleDragStart(event) {
     const { active } = event;
     const { id } = active;
     setActiveId(id);
   }
 
+  // Drag 중
   function handleDragOver(event) {
     const { active, over, draggingRect } = event;
 
-    const { id } = active;
-    const { id: overId } = over;
-
-    const activeDay = findDay(id);
-
-    if (overId === 'place-bin') {
+    if (!over) {
       return;
     }
+
+    const { id } = active;
+    const activeDay = findDay(id);
+    const { id: overId } = over;
+
+    // OverlayCard가 PlaceBin에 가까우면 isBinActive를 true로 설정하고 return
+    if (overId === 'place-bin') {
+      setIsBinActive(true);
+      return;
+    }
+    setIsBinActive(false);
+
     const overDay = findDay(overId);
 
     if (!activeDay || !overDay || activeDay === overDay) {
@@ -201,6 +177,7 @@ const Recommendation = () => {
     });
   }
 
+  // Drag 종료
   function handleDragEnd(event) {
     const { active, over } = event;
     const { id } = active;
@@ -239,7 +216,7 @@ const Recommendation = () => {
         [overDay]: arrayMove(data[overDay], activeIndex, overIndex),
       }));
     }
-
+    setIsBinActive(false);
     setActiveId(null);
   }
 };
