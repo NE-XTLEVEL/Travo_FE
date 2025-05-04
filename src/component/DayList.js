@@ -34,7 +34,6 @@ function DayList({ id, day, data, setData }) {
 
         if (durationCache.has(cacheKey)) {
           promises.push(Promise.resolve(durationCache.get(cacheKey)));
-          console.log('Cache hit:', cacheKey, durationCache.get(cacheKey));
           continue;
         }
         try {
@@ -79,7 +78,6 @@ function DayList({ id, day, data, setData }) {
         }
       }
       const results = await Promise.all(promises);
-      console.log('results: ', results);
       setDurations(results);
     }
 

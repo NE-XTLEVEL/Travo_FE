@@ -34,8 +34,8 @@ function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
   });
 }
 
-const Recommendation = () => {
-  const [data, setData] = useState({});
+const Recommendation = ({ plan }) => {
+  const [data, setData] = useState(plan);
 
   // dragging 중인 Card의 id
   const [activeId, setActiveId] = useState(null);
@@ -56,20 +56,8 @@ const Recommendation = () => {
   );
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetch('/mockData.json');
-        const body1 = await response.json();
-        const body2 = body1.data;
-        setData(body2);
-        /*setDay(Object.keys(body).length);*/
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    loadData();
-  }, []);
+    setData(plan);
+  }, [plan]);
 
   return (
     <div
@@ -92,17 +80,18 @@ const Recommendation = () => {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        {Object.keys(data)
-          .sort()
-          .map((day, index) => (
-            <DayList
-              key={day}
-              id={day}
-              day={index + 1}
-              data={data}
-              setData={setData}
-            />
-          ))}
+        {data &&
+          Object.keys(data)
+            .sort()
+            .map((day, index) => (
+              <DayList
+                key={day}
+                id={day}
+                day={index + 1}
+                data={data}
+                setData={setData}
+              />
+            ))}
 
         {activeId === null ? null : <PlaceBin isActive={isBinActive} />}
 

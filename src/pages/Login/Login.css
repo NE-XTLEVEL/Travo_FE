@@ -1,0 +1,104 @@
+body.login-body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ffffff;
+  margin-top: 500;
+}
+
+.login-wrapper {
+  justify-content: center;
+  align-items: center;
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo-image {
+  width: 150px; /* 원하는 크기로 조정 */
+  height: 150px; /* 원하는 크기로 조정 */
+  margin-right: 15px; /* 간격 조정 */
+  margin-top: 10px;
+}
+
+.logo-button {
+  font-size: 100px; /* 폰트 크기를 키움 */
+  margin: 0;
+  font-weight: normal; /* 글씨 굵기를 줄임 */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit; /* 버튼의 텍스트 색상을 상속받도록 설정 */
+}
+
+.login-container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  width: 80px; /* 라벨의 너비 조정 */
+  text-align: left;
+  margin-right: 10px;
+}
+
+.login-container input {
+  text-align: left;
+  width: 100%;
+  padding: 15px;
+  margin: 30px 0;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+  background-color: #f0f0f0;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 15px;
+  background-color: #b563e8;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 30px;
+}
+
+.login-container button:hover {
+  background-color: #733e95;
+}
+
+.login-transparent-button {
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  margin: 10px 2.5px 2.5px;
+  font-size: 15px;
+}
+
+.login-transparent-button:hover {
+  color: #3c64c8;
+}
+
+.login-links {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  margin: 10px auto;
+}

@@ -10,11 +10,11 @@ const HeaderMain = () => {
       plan: '2박3일 서울 여행 계획',
     },
     {
-      id: 1,
+      id: 2,
       plan: '2박3일 서울 여행 계획',
     },
     {
-      id: 1,
+      id: 3,
       plan: '2박3일 서울 여행 계획',
     },
   ];
@@ -36,19 +36,7 @@ const HeaderMain = () => {
           justifyContent: 'center',
           fontSize: '20px',
         }}
-      >
-        <input
-          style={{
-            background: 'none',
-            border: 'none',
-            height: '50px',
-            width: '40%',
-            fontSize: '80%',
-            textAlign: 'center',
-            outline: 'none',
-          }}
-        ></input>
-      </div>
+      ></div>
       <button
         style={{ background: 'none', border: 'none', margin: '10px' }}
         onClick={() => setIsOpen(true)}
