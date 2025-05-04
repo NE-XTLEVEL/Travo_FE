@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderMain from '../component/HeaderMain';
 import './Main.css';
@@ -17,6 +17,37 @@ import 'moment/locale/ko';
 moment.locale('ko');
 
 const Main = () => {
+  // scrollY 값에 따라 Header 스타일 변경
+  const [isSticky, setIsSticky] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+
+    const handleScroll = () => {
+      const scrollTop = container.scrollTop;
+      setIsSticky(scrollTop > 0);
+    };
+
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
+  const handleScroll = () => {
+    setIsSticky(window.scrollY || document.documentElement.scrollTop);
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   // Calendar에서 시작, 끝 날짜 받아와서 적용
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -84,10 +115,10 @@ const Main = () => {
 
   return (
     <>
-      <div className="MainContainer">
+      <div className="MainContainer" ref={containerRef}>
         <div className="Main" id="firstPage">
-          <div className="MainHeader">
-            <HeaderMain />
+          <div className={isSticky ? 'MainHeader-sticky' : 'MainHeader'}>
+            <HeaderMain style={{ position: 'sticky' }} />
           </div>
           <div style={{ width: '100vw' }}>
             <div className="MainImage">
@@ -166,12 +197,18 @@ const Main = () => {
                   className="Bouncing-arrow"
                   size={'3.75vw'}
                   color="#B0B0B0"
+                  onClick={() => {
+                    const secondPage = document.getElementById('secondPage');
+                    secondPage.scrollIntoView({ behavior: 'smooth' });
+                  }}
                 />
               </div>
             </div>
           </div>
         </div>
-        <Main2 />
+        <div className="Main2" id="secondPage">
+          <Main2 />
+        </div>
         <Footer />
       </div>
     </>

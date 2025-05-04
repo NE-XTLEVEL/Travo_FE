@@ -2,21 +2,39 @@
   box-sizing: border-box;
 }
 .MainContainer {
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
   height: 100vh;
+  scrollbar-gutter: stable;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none;
 }
 .Main {
-  height: 110vh;
   background-image: url('./assets/mainBackground.png');
   background-size: cover;
+  height: 110vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: 'KakaoBigSans';
+  z-index: 1;
 }
 .MainHeader {
   width: 100vw;
+  background-color: transparent;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
+}
+.MainHeader-sticky {
+  background-color: white;
+  border-bottom: #d9d9d9 solid 1px;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+  top: 0;
+  position: fixed;
+  width: 100vw;
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
 }
 .MainImage {
   height: 60vh;
