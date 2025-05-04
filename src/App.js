@@ -7,6 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 import useResponsive from './useResponsive';
 import GridLines from 'react-gridlines';
 import Main from './pages/Main';
+import Login from './pages/Login/Login';
 import './index.css';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
       <Routes>
         <Route path="/plan" element={<Plan />} />
         <Route path="/main" element={<Main />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<MainWeb />}></Route>
       </Routes>
     </GridLines>

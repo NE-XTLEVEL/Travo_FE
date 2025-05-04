@@ -4,6 +4,7 @@
 .DayList {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 .DayHeader {
   width: 100%;
