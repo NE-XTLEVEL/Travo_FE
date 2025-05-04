@@ -37,7 +37,7 @@ function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
 const Recommendation = ({ plan }) => {
   const [data, setData] = useState(plan);
 
-  // DragOverlay와 가장 가까운 Card의 id
+  // dragging 중인 Card의 id
   const [activeId, setActiveId] = useState(null);
 
   const activeItem = activeId
@@ -52,7 +52,7 @@ const Recommendation = ({ plan }) => {
   // Drag and drop에 MouseSensor와 TouchSensor 사용
   const sensors = useSensors(
     useSensor(MouseSensor),
-    useSensor(TouchSensor, { DelayConstraint: { delay: 500 } })
+    useSensor(TouchSensor, { DelayConstraint: { delay: 1000 } })
   );
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const Recommendation = ({ plan }) => {
       className="scroll-container"
       style={{
         width: '100%',
-        height: '90vh', // 원하는 높이로 조정
+        height: '100%', // 원하는 높이로 조정
         overflow: 'scroll',
         padding: 0,
         margin: 0,
