@@ -2,20 +2,39 @@
   box-sizing: border-box;
 }
 .MainContainer {
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
   height: 100vh;
+  scrollbar-gutter: stable;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none;
 }
 .Main {
-  height: 110vh;
   background-image: url('./assets/mainBackground.png');
   background-size: cover;
+  height: 110vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: 'KakaoBigSans';
+  z-index: 1;
 }
 .MainHeader {
   width: 100vw;
+  background-color: transparent;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
+}
+.MainHeader-sticky {
+  background-color: white;
+  border-bottom: #d9d9d9 solid 1px;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+  top: 0;
+  position: fixed;
+  width: 100vw;
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
 }
 .MainImage {
   height: 60vh;
@@ -82,13 +101,22 @@
   font-weight: regular;
   color: #b0b0b0;
 }
+.MainPromptInput::placeholder {
+  color: #b0b0b0;
+  font-weight: regular;
+}
 .LuSend {
   stroke: darknavy;
 }
 .MainBelowButton {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 47px;
+}
+.Bouncing-arrow {
+  display: inline-block;
+  animation: bounce 1.5s ease-in-out infinite;
+  cursor: pointer;
 }
 .animated {
   animation-duration: 1s;
@@ -119,6 +147,20 @@ delay-03s {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 @media screen and (max-width: 412px) {
