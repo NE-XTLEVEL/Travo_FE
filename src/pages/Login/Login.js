@@ -33,26 +33,30 @@ const Login = () => {
   // }, []);
 
   const handleLogin = async () => {
-    try {
-      const response = await axios.post(
-        'https://api-server-860259406241.asia-northeast1.run.app/docs#/Auth/AuthController_login',
+    axios
+      .post(
+        'https://api-server-860259406241.asia-northeast1.run.app/auth/login',
         {
           email: email,
           password: password,
         }
-      );
-      if (response.status === 201) {
-        const accessToken = response.data.access_Token;
-        const refreshToken = response.data.refresh_Token;
-        localStorage.setItem('access_Token', accessToken);
-        localStorage.setItem('refresh_Token', refreshToken);
-        console.log(accessToken);
-        console.log(refreshToken);
-        navigate('/home');
-      } else setError('아이디 또는 비밀번호를 확인해주세요.');
-    } catch (error) {
-      setError('Error');
-    }
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.status == 201) {
+          const accessToken = res.data.access_Token;
+          const refreshToken = res.data.refresh_Token;
+          localStorage.setItem('access_Token', accessToken);
+          localStorage.setItem('refresh_Token', refreshToken);
+          console.log(accessToken);
+          console.log(refreshToken);
+          navigate('/main');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.response.data.message);
+      });
   };
 
   const handleKeyPress = (event) => {
