@@ -44,10 +44,10 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         if (res.status == 201) {
-          const accessToken = res.data.access_Token;
-          const refreshToken = res.data.refresh_Token;
-          localStorage.setItem('access_Token', accessToken);
-          localStorage.setItem('refresh_Token', refreshToken);
+          const accessToken = res.data.access_token;
+          const refreshToken = res.data.refresh_token;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
           console.log(accessToken);
           console.log(refreshToken);
           navigate('/main');

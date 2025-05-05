@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa6';
 import { PiSignInBold } from 'react-icons/pi';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
+import authAxios from './AuthAxios';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('2박3일 서울 여행 계획');
-  const token = localStorage.getItem('access_Token');
+  const [auth, setAuth] = useState(false);
   const navigate = useNavigate();
   const plans = [
     {
@@ -23,6 +24,19 @@ const Header = () => {
       plan: '2박3일 서울 여행 계획',
     },
   ];
+  useEffect(() => {
+    authAxios
+      .get('/auth/check')
+      .then((res) => {
+        if (res.status == 200) {
+          setAuth(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div
       style={{
@@ -56,7 +70,7 @@ const Header = () => {
           }}
         ></input>
       </div>
-      {token ? (
+      {auth ? (
         <button
           style={{ background: 'none', border: 'none', margin: '10px' }}
           onClick={() => setIsOpen(true)}
