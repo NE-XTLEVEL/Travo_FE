@@ -2,8 +2,11 @@ import React from 'react';
 import Map from '../component/Map';
 import Recommendation from '../component/Recommendation';
 import Header from '../component/Header';
+import { useLocation } from 'react-router-dom';
 
 const Plan = () => {
+  const location = useLocation();
+  const { plan } = location.state || {}; // plan이 undefined일 경우를 대비하여 기본값 설정
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div style={{ height: '10%', boxSizing: 'border-box' }}>
@@ -41,7 +44,7 @@ const Plan = () => {
             boxSizing: 'border-box',
           }}
         >
-          <Recommendation />
+          <Recommendation plan={plan} />
         </div>
       </div>
     </div>
