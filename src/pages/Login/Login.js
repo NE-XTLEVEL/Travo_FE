@@ -103,21 +103,9 @@ const Login = () => {
       <div className="login-links">
         <button
           className="login-transparent-button"
-          onClick={() => navigate('/Login/Signup')}
+          onClick={() => navigate('/signup')}
         >
-          회원가입
-        </button>
-        <button
-          className="login-transparent-button"
-          onClick={() => navigate('/Login/ForgetId')}
-        >
-          아이디 찾기
-        </button>
-        <button
-          className="login-transparent-button"
-          onClick={() => navigate('/Login/Forgetpassword')}
-        >
-          비밀번호 찾기
+          <div style={{ color: '#FFFFF' }}>회원가입</div>
         </button>
       </div>
     </div>
