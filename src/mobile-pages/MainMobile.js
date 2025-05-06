@@ -112,7 +112,12 @@ const MainMobile = () => {
       </Slider>
       <div className="mobile-bottom">
         <div
-          style={{ width: '62.5vw', minWidth: '373px', paddingLeft: '15px' }}
+          style={{
+            width: '62.5vw',
+            minWidth: '373px',
+            paddingLeft: '15px',
+            paddingBottom: '5px',
+          }}
         >
           <div
             style={{
