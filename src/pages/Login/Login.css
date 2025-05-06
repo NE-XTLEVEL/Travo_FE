@@ -21,14 +21,15 @@ body.login-body {
 }
 
 .logo-image {
-  width: 150px; /* 원하는 크기로 조정 */
-  height: 150px; /* 원하는 크기로 조정 */
+  width: 5vw; /* 원하는 크기로 조정 */
+  height: auto; /* 원하는 크기로 조정 */
+  min-width: 100px;
   margin-right: 15px; /* 간격 조정 */
   margin-top: 10px;
 }
 
 .logo-button {
-  font-size: 100px; /* 폰트 크기를 키움 */
+  font-size: clamp(14px, 10vw, 100px);
   margin: 0;
   font-weight: normal; /* 글씨 굵기를 줄임 */
   background: none;
@@ -38,22 +39,11 @@ body.login-body {
 }
 
 .login-container {
-  width: 400px;
+  width: 80vw;
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px 20px 0px 20px;
   border-radius: 10px;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  width: 80px; /* 라벨의 너비 조정 */
-  text-align: left;
-  margin-right: 10px;
 }
 
 .login-container input {
