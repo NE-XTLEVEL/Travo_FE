@@ -23,6 +23,8 @@ function App() {
         color="EFEFEF"
       >
         <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/plan" element={<PlanMobile />} />
           <Route path="/main" element={<MainMobile />} />
           <Route path="/" element={<MainMobile />} />
