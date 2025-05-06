@@ -32,7 +32,7 @@ const MainMobile = () => {
 
     try {
       const response = await fetch(
-        'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation/test',
+        'https://api.travo.kr/location/recommendation/test',
         {
           method: 'POST',
           headers: {
