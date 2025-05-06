@@ -114,7 +114,7 @@ const MainMobile = () => {
         <div
           style={{
             width: '62.5vw',
-            minWidth: '373px',
+            minWidth: '300px',
             paddingLeft: '15px',
             paddingBottom: '5px',
           }}

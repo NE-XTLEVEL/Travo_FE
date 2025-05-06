@@ -185,7 +185,8 @@ delay-03s {
     gap: 5px;
   }
   .MainPrompt {
-    width: 373px;
+    width: 67.5vw;
+    min-width: 300px;
     height: 74px;
     padding: 20px;
     margin: auto 20px;
