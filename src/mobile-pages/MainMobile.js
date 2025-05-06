@@ -98,6 +98,7 @@ const MainMobile = () => {
           display: 'flex',
           alignItems: 'center',
           width: '100%',
+          adaptiveHeight: true,
         }}
       >
         <div>
