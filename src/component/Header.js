@@ -93,7 +93,7 @@ const Header = ({ mobile = false }) => {
         </button>
       )}
 
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}>
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} mobile={mobile}>
         {plans.map((plan) => (
           <div key={plan.id} className="search-item">
             {plan.plan}
