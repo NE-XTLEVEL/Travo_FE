@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const AuthAxios = axios.create({
-  baseURL: 'https://api-server-860259406241.asia-northeast1.run.app',
+  baseURL: 'https://api.travo.kr',
 });
 
 // Request 인터셉터: 매 요청에 accessToken 자동 추가

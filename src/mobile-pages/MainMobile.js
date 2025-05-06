@@ -32,7 +32,7 @@ const MainMobile = () => {
 
     try {
       const response = await fetch(
-        'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation/test',
+        'https://api.travo.kr/location/recommendation/test',
         {
           method: 'POST',
           headers: {
@@ -112,14 +112,7 @@ const MainMobile = () => {
       </Slider>
       <div className="mobile-bottom">
         <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'start',
-            width: '100%',
-            paddingLeft: '100px',
-            paddingBottom: '10px',
-          }}
+          style={{ width: '62.5vw', minWidth: '373px', paddingLeft: '15px' }}
         >
           <div
             style={{
