@@ -67,7 +67,15 @@ const CustomCalendar = ({ onDateChange, onInvalidRange }) => {
         cursor={'pointer'}
       />
       {isOpen && (
-        <div className="calendarPopup" style={{ position: 'absolute' }}>
+        <div
+          className="calendarPopup"
+          style={{
+            position: 'absolute',
+            bottom: '100%', // 아이콘 위로 배치
+            marginBottom: '10px', // 아이콘과 약간의 간격
+            zIndex: 100,
+          }}
+        >
           <Calendar
             onClickDay={handleClickDay}
             tileClassName={tileClassName}
