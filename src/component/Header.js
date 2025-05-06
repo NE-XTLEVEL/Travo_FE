@@ -5,9 +5,9 @@ import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 import authAxios from './AuthAxios';
 
-const Header = () => {
+const Header = ({ mobile = false }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [input, setInput] = useState('2박3일 서울 여행 계획');
+  const [input, setInput] = useState('2박 3일 서울 여행 계획획');
   const [auth, setAuth] = useState(false);
   const navigate = useNavigate();
   const plans = [
@@ -40,15 +40,18 @@ const Header = () => {
   return (
     <div
       style={{
-        backgroundColor: 'white',
+        backgroundColor: mobile ? 'transparent' : 'white',
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        ...(!mobile && { borderBottom: '1px solid #EFEFEF' }),
       }}
     >
       <img src="/logo.svg" width={30} style={{ margin: '10px' }} />
-      <div style={{ padding: '10px', fontSize: '20px' }}>Travo</div>
+      {!mobile && (
+        <div style={{ padding: '10px', fontSize: '20px' }}>Travo</div>
+      )}
       <div
         style={{
           flex: 1,
@@ -57,18 +60,22 @@ const Header = () => {
           fontSize: '20px',
         }}
       >
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          style={{
-            border: 'none',
-            height: '50px',
-            width: '40%',
-            fontSize: '80%',
-            textAlign: 'center',
-            outline: 'none',
-          }}
-        ></input>
+        {mobile ? (
+          <p style={{ fontWeight: 700 }}>Travo</p>
+        ) : (
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            style={{
+              border: 'none',
+              height: '50px',
+              width: '40%',
+              fontSize: '80%',
+              textAlign: 'center',
+              outline: 'none',
+            }}
+          ></input>
+        )}
       </div>
       {auth ? (
         <button
