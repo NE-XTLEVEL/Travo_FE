@@ -94,11 +94,12 @@ const MainMobile = () => {
       <Slider
         {...settings}
         style={{
-          flex: 9,
+          height: '55%',
           display: 'flex',
           alignItems: 'center',
           width: '100%',
           adaptiveHeight: true,
+          useTransform: false,
         }}
       >
         <div>
@@ -111,20 +112,20 @@ const MainMobile = () => {
           <img src={intro3}></img>
         </div>
       </Slider>
-      <div className="mobile-bottom">
+      <div className="mobile-bottom" style={{ height: '35%' }}>
         <div
           style={{
             width: '62.5vw',
             minWidth: '300px',
             paddingLeft: '15px',
-            paddingBottom: '5px',
+            paddingBottom: '10px',
           }}
         >
           <div
             style={{
               display: 'flex',
               flexDirection: 'row',
-              gap: '20px',
+              gap: '14px',
             }}
           >
             <CustomCalendar
@@ -173,7 +174,7 @@ const MainMobile = () => {
           <input
             className="MainPromptInput"
             type="text"
-            placeholder="연인과 함께 북촌으로 봄 여행을 가고 싶어"
+            placeholder="어떤 여행을 떠나고 싶은가요?"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           ></input>

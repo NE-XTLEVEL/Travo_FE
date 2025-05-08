@@ -182,7 +182,7 @@ delay-03s {
   .OptionDate,
   .OptionPeople {
     display: flex;
-    gap: 5px;
+    gap: 14px;
   }
   .MainPrompt {
     width: 67.5vw;
