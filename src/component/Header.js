@@ -33,10 +33,22 @@ const Header = ({ mobile = false }) => {
         }
       })
       .catch((error) => {
+        setAuth(false);
         console.log(error);
       });
   }, []);
-
+  const handleToPlan = (planName) => {
+    authAxios
+      .get(`/auth/plan${planName}`)
+      .then((res) => {
+        if (res.status == 200) {
+          navigate('/plan', { state: { plan: res.data } });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div
       style={{
@@ -96,7 +108,12 @@ const Header = ({ mobile = false }) => {
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} mobile={mobile}>
         {plans.map((plan) => (
           <div key={plan.id} className="search-item">
-            {plan.plan}
+            <button
+              style={{ background: 'none', border: 'none' }}
+              onClick={handleToPlan(plan.plan)}
+            >
+              {plan.plan}
+            </button>
           </div>
         ))}
       </Sidebar>

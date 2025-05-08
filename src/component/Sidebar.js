@@ -27,6 +27,12 @@ const Sidebar = ({ children, isOpen, setIsOpen, mobile }) => {
     };
   }, [isOpen, handleClose]);
 
+  const handleLogOut = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    window.location.reload();
+  };
+
   return (
     <div className={styles.container}>
       <div
@@ -44,7 +50,7 @@ const Sidebar = ({ children, isOpen, setIsOpen, mobile }) => {
         }}
       >
         <div className={styles.content}>{children}</div>
-        <button className={styles.logoutButton}>
+        <button className={styles.logoutButton} onClick={handleLogOut}>
           <PiSignOut />
           로그아웃
         </button>
