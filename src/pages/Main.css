@@ -74,6 +74,7 @@
   gap: 14px;
   align-items: center;
   font-size: 1.39vw;
+  z-index: 100;
 }
 .MainPrompt {
   display: flex;
@@ -99,7 +100,7 @@
   font-size: 20px;
   background-color: inherit;
   font-weight: regular;
-  color: #b0b0b0;
+  color: black;
 }
 .MainPromptInput::placeholder {
   color: #b0b0b0;
@@ -112,6 +113,7 @@
   display: flex;
   justify-content: center;
   margin-top: 47px;
+  z-index: 1;
 }
 .Bouncing-arrow {
   display: inline-block;
