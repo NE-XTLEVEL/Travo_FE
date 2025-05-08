@@ -86,7 +86,7 @@ const MainMobile = () => {
   return (
     <div
       className="mobile-body"
-      style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
+      style={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}
     >
       <div style={{ height: '10%', boxSizing: 'border-box' }}>
         <Header mobile={true} />
