@@ -83,7 +83,7 @@
   width: 62.5vw;
   height: 100px;
   min-width: 373px;
-  margin: auto 18.75vw;
+  margin: 10px 18.75vw;
   border-radius: 30px;
   border: solid 1px #d9d9d9;
   background-color: #ffffff;
@@ -91,16 +91,27 @@
   box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
 }
 .MainPromptInput {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   width: 85%;
-  height: 100%;
-  border: none;
-  outline: none;
-  border-radius: 30px;
-  padding-left: 0.7vw;
+  height: 72px;
+  max-height: 3.2em;
+  line-height: 1.6;
+  resize: none; /* 사용자가 크기 조절 못하게 */
+  overflow-y: auto; /* 내용이 많아지면 스크롤 */
+  line-height: 1.5;
   font-size: 20px;
+  padding-left: 0.7vw;
+  border: none;
+  border-radius: 8px;
+  box-sizing: border-box;
+  outline: none;
   background-color: inherit;
   font-weight: regular;
   color: black;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
 }
 .MainPromptInput::placeholder {
   color: #b0b0b0;
