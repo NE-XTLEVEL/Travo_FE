@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import moment from 'moment';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -12,6 +12,7 @@ import { LuSend } from 'react-icons/lu';
 import intro1 from './assets/intro1.svg';
 import intro2 from './assets/intro2.svg';
 import intro3 from './assets/intro3.svg';
+import { PlanContext } from '../context/PlanContext';
 
 const MainMobile = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const MainMobile = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [prompt, setPrompt] = useState(''); // 프롬프트
+
+  const { setData } = useContext(PlanContext);
+
   //slider option
   var settings = {
     dots: true,
@@ -52,7 +56,8 @@ const MainMobile = () => {
       }
       const body1 = await response.json();
       const data = body1.data;
-      navigate('/Plan', { state: { plan: data } });
+      setData(data);
+      navigate('/Plan');
     } catch (error) {
       console.error('Error:', error);
       alert('데이터를 가져오는 중 오류가 발생했습니다. 다시 시도해 주세요.');
