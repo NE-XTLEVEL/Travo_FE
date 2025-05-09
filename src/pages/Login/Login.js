@@ -9,50 +9,28 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('access_Token');
-  //   axios
-  //     .get('https://onboardbe-4cn4h6o76q-du.a.run.app/auth/Checktoken', {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         navigate('/home');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-
-  //   document.body.classList.add('login-body');
-  //   return () => {
-  //     document.body.classList.remove('login-body');
-  //   };
-  // }, []);
-
   const handleLogin = async () => {
-    try {
-      const response = await axios.post(
-        'https://api-server-860259406241.asia-northeast1.run.app/docs#/Auth/AuthController_login',
-        {
-          email: email,
-          password: password,
+    axios
+      .post('https://api.travo.kr/auth/login', {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status == 201) {
+          const accessToken = res.data.access_token;
+          const refreshToken = res.data.refresh_token;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+          console.log(accessToken);
+          console.log(refreshToken);
+          navigate('/main');
         }
-      );
-      if (response.status === 201) {
-        const accessToken = response.data.access_Token;
-        const refreshToken = response.data.refresh_Token;
-        localStorage.setItem('access_Token', accessToken);
-        localStorage.setItem('refresh_Token', refreshToken);
-        console.log(accessToken);
-        console.log(refreshToken);
-        navigate('/home');
-      } else setError('아이디 또는 비밀번호를 확인해주세요.');
-    } catch (error) {
-      setError('Error');
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.response.data.message);
+      });
   };
 
   const handleKeyPress = (event) => {
@@ -99,21 +77,9 @@ const Login = () => {
       <div className="login-links">
         <button
           className="login-transparent-button"
-          onClick={() => navigate('/Login/Signup')}
+          onClick={() => navigate('/signup')}
         >
-          회원가입
-        </button>
-        <button
-          className="login-transparent-button"
-          onClick={() => navigate('/Login/ForgetId')}
-        >
-          아이디 찾기
-        </button>
-        <button
-          className="login-transparent-button"
-          onClick={() => navigate('/Login/Forgetpassword')}
-        >
-          비밀번호 찾기
+          <div style={{ color: '#FFFFF' }}>회원가입</div>
         </button>
       </div>
     </div>

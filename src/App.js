@@ -8,6 +8,7 @@ import useResponsive from './useResponsive';
 import GridLines from 'react-gridlines';
 import Main from './pages/Main';
 import Login from './pages/Login/Login';
+import Signup from './pages/Signup/Signup';
 import './index.css';
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
         color="EFEFEF"
       >
         <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/plan" element={<PlanMobile />} />
           <Route path="/main" element={<MainMobile />} />
           <Route path="/" element={<MainMobile />} />
@@ -41,6 +44,7 @@ function App() {
         <Route path="/plan" element={<Plan />} />
         <Route path="/main" element={<Main />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<MainWeb />}></Route>
       </Routes>
     </GridLines>

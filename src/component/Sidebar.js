@@ -1,23 +1,9 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import styles from './Sidebar.module.css';
-import styled from 'styled-components';
 import { PiSignOut } from 'react-icons/pi';
 
-const SideBarWrap = styled.div`
-  z-index: 5;
-  height: 100%;
-  width: 25%;
-  right: -25%;
-  top: 0;
-  position: fixed;
-  background-color: white;
-  transition: right 0.5s ease;
-  &.open {
-    right: 0;
-  }
-`;
-
-const Sidebar = ({ children, isOpen, setIsOpen }) => {
+const Sidebar = ({ children, isOpen, setIsOpen, mobile }) => {
+  //mobile일 때 sidebar의 너비를 더 넓게 설정
   const side = useRef();
 
   const handleClose = useCallback(
@@ -41,15 +27,34 @@ const Sidebar = ({ children, isOpen, setIsOpen }) => {
     };
   }, [isOpen, handleClose]);
 
+  const handleLogOut = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    window.location.reload();
+  };
+
   return (
     <div className={styles.container}>
-      <SideBarWrap ref={side} className={isOpen ? 'open' : ''}>
+      <div
+        ref={side}
+        className={isOpen ? 'open' : ''}
+        style={{
+          zIndex: 5,
+          height: '100%',
+          width: mobile ? '70%' : '25%',
+          right: isOpen ? 0 : mobile ? '-70%' : '-25%',
+          top: 0,
+          position: 'fixed',
+          backgroundColor: 'white',
+          transition: 'right 0.5s ease',
+        }}
+      >
         <div className={styles.content}>{children}</div>
-        <button className={styles.logoutButton}>
+        <button className={styles.logoutButton} onClick={handleLogOut}>
           <PiSignOut />
           로그아웃
         </button>
-      </SideBarWrap>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-body.login-body {
+body.signup-body {
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
@@ -8,27 +8,26 @@ body.login-body {
   margin-top: 500;
 }
 
-.login-wrapper {
+.signup-wrapper {
   justify-content: center;
   align-items: center;
 }
 
-.login-logo {
+.signup-logo {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.logo-image {
+.signup-image {
   width: 5vw; /* 원하는 크기로 조정 */
   height: auto; /* 원하는 크기로 조정 */
-  min-width: 100px;
   margin-right: 15px; /* 간격 조정 */
   margin-top: 10px;
 }
 
-.logo-button {
+.signup-button {
   font-size: clamp(14px, 10vw, 100px);
   margin: 0;
   font-weight: normal; /* 글씨 굵기를 줄임 */
@@ -38,27 +37,27 @@ body.login-body {
   color: inherit; /* 버튼의 텍스트 색상을 상속받도록 설정 */
 }
 
-.login-container {
+.signup-container {
   width: 80vw;
   max-width: 500px;
   margin: 0 auto;
-  padding: 20px 20px 0px 20px;
+  padding: 20px;
   border-radius: 10px;
 }
 
-.login-container input {
+.signup-container input {
   text-align: left;
   width: 100%;
   line-height: 1.1;
   padding: 15px;
-  margin: 30px 0;
+  margin: 20px 0;
   border: 1px solid #ccc;
   border-radius: 20px;
   box-sizing: border-box;
   background-color: #f0f0f0;
 }
 
-.login-container button {
+.signup-button {
   width: 100%;
   padding: 15px;
   background-color: #b563e8;
@@ -70,11 +69,11 @@ body.login-body {
   margin-top: 30px;
 }
 
-.login-container button:hover {
+.signup-container button:hover {
   background-color: #733e95;
 }
 
-.login-transparent-button {
+.signup-transparent-button {
   background: none;
   border: none;
   color: black;
@@ -83,14 +82,6 @@ body.login-body {
   font-size: 15px;
 }
 
-.login-transparent-button:hover {
+.signup-transparent-button:hover {
   color: #3c64c8;
-}
-
-.login-links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 300px;
-  margin: 0px auto;
 }

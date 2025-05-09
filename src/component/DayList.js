@@ -18,7 +18,18 @@ const durationCache = new Map();
 
 function DayList({ id, day, data, setData }) {
   const items = data[id];
-  const colors = ['#FF4646', '#1CBB39', '#811CBB', 'orange', 'blue'];
+  const colors = [
+    '#8861FF',
+    '#C9D405',
+    '#FB6AA1',
+    '#477DEF',
+    '#38A7EC',
+    '#FF762D',
+    '#FF4646',
+    '#9CB5FF',
+    '#5AE1C2',
+    '#1CBB39',
+  ];
   const dayColor = colors[(day - 1) % colors.length];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [durations, setDurations] = useState([]);

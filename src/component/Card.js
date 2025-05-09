@@ -83,6 +83,9 @@ const Card = ({ isOverlay = false, item }) => {
             {item.url && (
               <div
                 className="CardButton"
+                onMouseDown={(event) => {
+                  event.stopPropagation(); // 드래그 이벤트 전파 차단
+                }}
                 onClick={() => window.open(item.url, '_blank')}
               >
                 예약하기
