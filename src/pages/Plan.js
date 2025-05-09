@@ -39,7 +39,7 @@ const Plan = () => {
             boxSizing: 'border-box',
           }}
         >
-          <Map />
+          <Map plan={plan} />
         </div>
         <div
           style={{
