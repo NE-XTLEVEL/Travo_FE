@@ -26,7 +26,7 @@ function CardIcons(category) {
       return <LiaBedSolid size={35} color="#B0B0B0" />;
     case '교통':
       return <PiTrain size={35} color="#B0B0B0" />;
-    case '식당':
+    case '음식점':
       return <PiForkKnife size={35} color="#B0B0B0" />;
     case '카페':
       return <PiCoffee size={35} color="#B0B0B0" />;
@@ -39,6 +39,8 @@ function CardIcons(category) {
     case '문화시설':
       return <LiaLandmarkSolid size={35} color="#B0B0B0" />;
     case '어린이집':
+      return <IoSchoolOutline size={35} color="#B0B0B0" />;
+    case '유치원':
       return <IoSchoolOutline size={35} color="#B0B0B0" />;
     case '학교':
       return <IoSchoolOutline size={35} color="#B0B0B0" />;

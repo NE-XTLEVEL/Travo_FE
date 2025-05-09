@@ -80,7 +80,7 @@ const Main = () => {
 
     try {
       const response = await fetch(
-        'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation/test',
+        'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation',
         {
           method: 'POST',
           headers: {
@@ -91,7 +91,7 @@ const Main = () => {
             date: moment(startDate).format('YYYY-MM-DD'),
             days: days,
             // eslint-disable-next-line camelcase
-            plan_name: `${days}일 여행계획`,
+            plan_name: `${days - 1}박${days}일 여행계획`,
           }),
         }
       );

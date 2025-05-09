@@ -7,10 +7,18 @@ import { useLocation } from 'react-router-dom';
 const Plan = () => {
   const location = useLocation();
   const { plan } = location.state || {}; // plan이 undefined일 경우를 대비하여 기본값 설정
+  const dayCount = Object.keys(plan).length;
+  console.log('plan', dayCount);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div style={{ height: '10%', boxSizing: 'border-box' }}>
-        <Header />
+        <Header
+          planName={
+            dayCount === 1
+              ? '당일치기 여행 계획'
+              : `${dayCount - 1}박 ${dayCount}일 여행 계획`
+          }
+        />
       </div>
       <div
         style={{
