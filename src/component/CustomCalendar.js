@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FiCalendar } from 'react-icons/fi';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -8,9 +8,28 @@ import './CustomCalendar.css';
 
 const CustomCalendar = ({ onDateChange, onInvalidRange }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const calendarRef = useRef(null);
   const [range, setRange] = useState([null, null]);
   const [selecting, setSelecting] = useState(true);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (calendarRef.current && !calendarRef.current.contains(e.target)) {
+        setIsOpen(false);
+        setRange([null, null]);
+        setSelecting(true);
+      }
+    };
 
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
   const handleClickDay = (value) => {
     if (selecting) {
       //시작 날짜 선택
@@ -60,7 +79,11 @@ const CustomCalendar = ({ onDateChange, onInvalidRange }) => {
   };
 
   return (
-    <div className="calendarContainer" style={{ position: 'relative' }}>
+    <div
+      ref={calendarRef}
+      className="calendarContainer"
+      style={{ position: 'relative' }}
+    >
       <FiCalendar
         size={'2.25vw'}
         onClick={handleToggleCalendar}
