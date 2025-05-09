@@ -1,10 +1,12 @@
-import { /*useEffect,*/ useState } from 'react';
+import { /*useEffect,*/ useState, useContext } from 'react';
 import './AddLocation.css';
 import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
 import { BeatLoader } from 'react-spinners';
+import { PlanContext } from '../context/PlanContext';
 
-const AddLocation = ({ dayId, data, setData }) => {
+const AddLocation = ({ dayId }) => {
+  const { data, setData } = useContext(PlanContext);
   const dayPlan = data[`day${dayId}`];
   console.log('AddLocation/', data);
   console.log('AddLocation/', dayId);

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderMain from '../component/HeaderMain';
 import './Main.css';
@@ -12,6 +11,7 @@ import { LuSend } from 'react-icons/lu';
 import mainDescriptionImg from './assets/mainDescription.svg';
 import mainPhonePCImg from './assets/mainPhonePCImg.svg';
 import CustomCalendar from '../component/CustomCalendar';
+import { PlanContext } from '../context/PlanContext';
 import moment from 'moment';
 import 'moment/locale/ko';
 moment.locale('ko');
@@ -20,6 +20,8 @@ const Main = () => {
   // scrollY 값에 따라 Header 스타일 변경
   const [isSticky, setIsSticky] = useState(false);
   const containerRef = useRef(null);
+
+  const { setData } = useContext(PlanContext);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -100,7 +102,8 @@ const Main = () => {
       }
       const body1 = await response.json();
       const data = body1.data;
-      navigate('/Plan', { state: { plan: data } });
+      setData(data);
+      navigate('/Plan');
     } catch (error) {
       console.error('Error:', error);
       alert('데이터를 가져오는 중 오류가 발생했습니다. 다시 시도해 주세요.');
