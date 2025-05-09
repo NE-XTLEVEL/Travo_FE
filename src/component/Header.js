@@ -5,9 +5,9 @@ import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 import authAxios from './AuthAxios';
 
-const Header = ({ mobile = false }) => {
+const Header = ({ mobile = false, planName }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [input, setInput] = useState('2박 3일 서울 여행 계획획');
+  const [input, setInput] = useState(planName || '');
   const [auth, setAuth] = useState(false);
   const navigate = useNavigate();
   const plans = [

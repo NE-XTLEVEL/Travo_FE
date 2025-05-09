@@ -1,13 +1,23 @@
-import React from 'react';
+import { useContext } from 'react';
 import Map from '../component/Map';
 import Recommendation from '../component/Recommendation';
 import Header from '../component/Header';
+import { PlanContext } from '../context/PlanContext';
 
 const Plan = () => {
+  const { data } = useContext(PlanContext);
+  const dayCount = Object.keys(data).length;
+  console.log('plan', dayCount);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div style={{ height: '10%', boxSizing: 'border-box' }}>
-        <Header />
+        <Header
+          planName={
+            dayCount === 1
+              ? '당일치기 여행 계획'
+              : `${dayCount - 1}박 ${dayCount}일 여행 계획`
+          }
+        />
       </div>
       <div
         style={{
@@ -28,7 +38,7 @@ const Plan = () => {
             boxSizing: 'border-box',
           }}
         >
-          <Map />
+          <Map plan={data} />
         </div>
         <div
           style={{
