@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import './Map.css';
+import { PlanContext } from '../context/PlanContext';
 
-const MapComponent = ({ plan }) => {
+const MapComponent = () => {
+  const { data } = useContext(PlanContext);
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -113,8 +115,8 @@ const MapComponent = ({ plan }) => {
     };
 
     if (!window.kakao || !window.kakao.maps) {
-      if (plan) {
-        loadMapScript(plan);
+      if (data) {
+        loadMapScript(data);
       } else {
         fetch('/mockData.json')
           .then((res) => res.json())
@@ -122,8 +124,8 @@ const MapComponent = ({ plan }) => {
           .catch((err) => console.error('데이터 로딩 실패:', err));
       }
     } else {
-      if (plan) {
-        window.kakao.maps.load(() => InitMap(plan));
+      if (data) {
+        window.kakao.maps.load(() => InitMap(data));
       } else {
         fetch('/mockData.json')
           .then((res) => res.json())
@@ -131,7 +133,7 @@ const MapComponent = ({ plan }) => {
           .catch((err) => console.error('데이터 로딩 실패:', err));
       }
     }
-  }, [plan]);
+  }, [data]);
 
   // 렌더링할 JSX를 반환. React 애플리케이션
   return <div className="mapViewContainer" ref={mapRef}></div>;

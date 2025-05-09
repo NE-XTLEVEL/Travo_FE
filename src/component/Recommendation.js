@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -14,6 +14,8 @@ import { arrayMove } from '@dnd-kit/sortable';
 import Card from './Card';
 import DayList from './DayList.js';
 import PlaceBin from './PlaceBin.js';
+
+import { PlanContext } from '../context/PlanContext';
 
 // OverlayCard 위치 판단 알고리즘
 function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
@@ -34,8 +36,8 @@ function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
   });
 }
 
-const Recommendation = ({ plan }) => {
-  const [data, setData] = useState(plan);
+const Recommendation = () => {
+  const { data, setData } = useContext(PlanContext);
 
   // dragging 중인 Card의 id
   const [activeId, setActiveId] = useState(null);
@@ -56,8 +58,8 @@ const Recommendation = ({ plan }) => {
   );
 
   useEffect(() => {
-    setData(plan);
-  }, [plan]);
+    setData(data);
+  }, [data, setData]);
 
   return (
     <div
@@ -65,7 +67,6 @@ const Recommendation = ({ plan }) => {
       style={{
         width: '100%',
         height: '100%', // 원하는 높이로 조정
-        overflow: 'scroll',
         padding: 0,
         margin: 0,
         marginLeft: '15%',
@@ -84,13 +85,7 @@ const Recommendation = ({ plan }) => {
           Object.keys(data)
             .sort()
             .map((day, index) => (
-              <DayList
-                key={day}
-                id={day}
-                day={index + 1}
-                data={data}
-                setData={setData}
-              />
+              <DayList key={day} id={day} day={index + 1} />
             ))}
 
         {activeId === null ? null : <PlaceBin isActive={isBinActive} />}

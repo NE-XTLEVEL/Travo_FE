@@ -1,13 +1,12 @@
-import React from 'react';
+import { useContext } from 'react';
 import Map from '../component/Map';
 import Recommendation from '../component/Recommendation';
 import Header from '../component/Header';
-import { useLocation } from 'react-router-dom';
+import { PlanContext } from '../context/PlanContext';
 
 const Plan = () => {
-  const location = useLocation();
-  const { plan } = location.state || {}; // plan이 undefined일 경우를 대비하여 기본값 설정
-  const dayCount = Object.keys(plan).length;
+  const { data } = useContext(PlanContext);
+  const dayCount = Object.keys(data).length;
   console.log('plan', dayCount);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -39,7 +38,7 @@ const Plan = () => {
             boxSizing: 'border-box',
           }}
         >
-          <Map plan={plan} />
+          <Map plan={data} />
         </div>
         <div
           style={{
@@ -52,7 +51,7 @@ const Plan = () => {
             boxSizing: 'border-box',
           }}
         >
-          <Recommendation plan={plan} />
+          <Recommendation />
         </div>
       </div>
     </div>
