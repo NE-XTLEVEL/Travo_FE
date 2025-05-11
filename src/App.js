@@ -29,25 +29,25 @@ function App() {
     >
       <MaxIdContext.Provider value={{ maxId, setMaxId }}>
         <PlanContext.Provider value={{ data, setData }}>
-        {isMobile ? (
-          <Routes>
-            <Route path="/plan" element={<PlanMobile />} />
-            <Route path="/main" element={<MainMobile />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/" element={<MainWeb />}></Route>
-          </Routes>
-        ) : (
-          <Routes>
-            <Route path="/plan" element={<Plan />} />
-            <Route path="/main" element={<Main />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/loading" element={<Loading />} />
-            <Route path="/" element={<MainWeb />}></Route>
-          </Routes>
-        )}
-      </PlanContext.Provider>
+          {isMobile ? (
+            <Routes>
+              <Route path="/plan" element={<PlanMobile />} />
+              <Route path="/main" element={<MainMobile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/" element={<MainWeb />}></Route>
+            </Routes>
+          ) : (
+            <Routes>
+              <Route path="/plan" element={<Plan />} />
+              <Route path="/main" element={<Main />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/loading" element={<Loading />} />
+              <Route path="/" element={<MainWeb />}></Route>
+            </Routes>
+          )}
+        </PlanContext.Provider>
       </MaxIdContext.Provider>
     </GridLines>
   );
