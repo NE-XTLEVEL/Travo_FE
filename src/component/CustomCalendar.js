@@ -6,7 +6,7 @@ import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import './CustomCalendar.css';
 
-const CustomCalendar = ({ onDateChange, onInvalidRange }) => {
+const CustomCalendar = ({ onDateChange, onInvalidRange, mobile = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const calendarRef = useRef(null);
   const [range, setRange] = useState([null, null]);
@@ -85,7 +85,7 @@ const CustomCalendar = ({ onDateChange, onInvalidRange }) => {
       style={{ position: 'relative' }}
     >
       <FiCalendar
-        size={'2.25vw'}
+        size={mobile ? '5vw' : '2.5vw'}
         onClick={handleToggleCalendar}
         cursor={'pointer'}
       />
@@ -97,6 +97,7 @@ const CustomCalendar = ({ onDateChange, onInvalidRange }) => {
             bottom: '100%', // 아이콘 위로 배치
             marginBottom: '10px', // 아이콘과 약간의 간격
             zIndex: 100,
+            ...(mobile && { width: '75vw', height: 'auto' }),
           }}
         >
           <Calendar

@@ -12,6 +12,7 @@ import mainDescriptionImg from './assets/mainDescription.svg';
 import mainPhonePCImg from './assets/mainPhonePCImg.svg';
 import CustomCalendar from '../component/CustomCalendar';
 import { PlanContext } from '../context/PlanContext';
+import { MaxIdContext } from '../context/MaxIdContext';
 import moment from 'moment';
 import 'moment/locale/ko';
 moment.locale('ko');
@@ -22,6 +23,7 @@ const Main = () => {
   const containerRef = useRef(null);
 
   const { setData } = useContext(PlanContext);
+  const { setMaxId } = useContext(MaxIdContext);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -103,6 +105,7 @@ const Main = () => {
       const body1 = await response.json();
       const data = body1.data;
       setData(data);
+      setMaxId(body1.max_id);
       navigate('/plan');
     } catch (error) {
       console.error('Error:', error);

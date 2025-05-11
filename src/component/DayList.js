@@ -137,7 +137,7 @@ function DayList({ id, day }) {
         </div>
       </div>
       <Modal open={isModalOpen} close={closeModal}>
-        <AddLocation dayId={day} />
+        <AddLocation dayId={day} close={closeModal} />
       </Modal>
     </SortableContext>
   );

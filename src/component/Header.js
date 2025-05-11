@@ -110,7 +110,7 @@ const Header = ({ mobile = false, planName }) => {
           <div key={plan.id} className="search-item">
             <button
               style={{ background: 'none', border: 'none' }}
-              onClick={handleToPlan(plan.plan)}
+              onClick={() => handleToPlan(plan.plan)}
             >
               {plan.plan}
             </button>
