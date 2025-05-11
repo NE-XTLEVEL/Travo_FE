@@ -54,7 +54,9 @@ const Recommendation = () => {
   // Drag and drop에 MouseSensor와 TouchSensor 사용
   const sensors = useSensors(
     useSensor(MouseSensor),
-    useSensor(TouchSensor, { DelayConstraint: { delay: 1000 } })
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 400, distance: 0 },
+    })
   );
 
   useEffect(() => {
