@@ -4,11 +4,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Background, LoadingText } from './LoadingStyles';
 import Spinner from './assets/Spinner.gif';
 import { PlanContext } from '../context/PlanContext';
+import { MaxIdContext } from '../context/MaxIdContext';
 
 const Loading = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setData } = useContext(PlanContext);
+  const { setMaxId } = useContext(MaxIdContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +38,7 @@ const Loading = () => {
         const body1 = await response.json();
         const data = body1.data;
         setData(data);
+        setMaxId(body1.max_id);
         // 응답 받으면 Plan 페이지로 이동
         navigate('/Plan', { state: { plan: data } });
       } catch (error) {
