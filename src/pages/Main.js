@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderMain from '../component/HeaderMain';
 import './Main.css';
@@ -11,7 +12,6 @@ import { LuSend } from 'react-icons/lu';
 import mainDescriptionImg from './assets/mainDescription.svg';
 import mainPhonePCImg from './assets/mainPhonePCImg.svg';
 import CustomCalendar from '../component/CustomCalendar';
-import { PlanContext } from '../context/PlanContext';
 import moment from 'moment';
 import 'moment/locale/ko';
 moment.locale('ko');
@@ -20,8 +20,6 @@ const Main = () => {
   // scrollY 값에 따라 Header 스타일 변경
   const [isSticky, setIsSticky] = useState(false);
   const containerRef = useRef(null);
-
-  const { setData } = useContext(PlanContext);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -79,35 +77,14 @@ const Main = () => {
   const navigate = useNavigate();
   const handleSubmit = async () => {
     const days = moment(endDate).diff(moment(startDate), 'days') + 1;
-
-    try {
-      const response = await fetch(
-        'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            description: prompt,
-            date: moment(startDate).format('YYYY-MM-DD'),
-            days: days,
-            // eslint-disable-next-line camelcase
-            plan_name: `${days - 1}박${days}일 여행계획`,
-          }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error('error fetching data');
-      }
-      const body1 = await response.json();
-      const data = body1.data;
-      setData(data);
-      navigate('/plan');
-    } catch (error) {
-      console.error('Error:', error);
-      alert('데이터를 가져오는 중 오류가 발생했습니다. 다시 시도해 주세요.');
-    }
+    navigate('/loading', {
+      state: {
+        description: prompt,
+        startDate: moment(startDate).format('YYYY-MM-DD'),
+        days: days,
+        planName: `${days - 1}박${days}일 여행계획`,
+      },
+    });
   };
 
   return (
@@ -123,11 +100,13 @@ const Main = () => {
                 className="MainDescription wow fadeInLeft delay-05s animated"
                 src={mainDescriptionImg}
                 alt="MainDescription"
+                draggable="false"
               ></img>
               <img
                 className="MainPhonePCImg wow fadeInUp delay-05s animated"
                 src={mainPhonePCImg}
                 alt="mainPhonePCImg"
+                draggable="false"
               ></img>
             </div>
             <div className="MainContent">
