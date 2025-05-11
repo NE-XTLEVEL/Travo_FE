@@ -35,6 +35,7 @@ function App() {
               <Route path="/main" element={<MainMobile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/loading" element={<Loading />} />
               <Route path="/" element={<MainWeb />}></Route>
             </Routes>
           ) : (
