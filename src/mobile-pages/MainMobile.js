@@ -136,6 +136,7 @@ const MainMobile = () => {
             <CustomCalendar
               onDateChange={handleDateChange}
               onInvalidRange={handleInvalidRange}
+              mobile={true}
             />
             <div>
               <span>{FormattingDate(startDate)}</span> ~{' '}
@@ -145,9 +146,10 @@ const MainMobile = () => {
 
           <div className="OptionPeople" style={{ position: 'relative' }}>
             <MdPeopleOutline
-              size={'3vw'}
+              size={'5vw'}
               onClick={handleIconClick}
               style={{ cursor: 'pointer' }}
+              fontWeight={800}
             />
             <div style={{ fontSize: '15px' }}>{peopleCount}명</div>
             {showInput && (

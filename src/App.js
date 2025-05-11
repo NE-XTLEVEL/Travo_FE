@@ -13,10 +13,12 @@ import Signup from './pages/Signup/Signup';
 import Loading from './component/Loading';
 import './index.css';
 import { PlanContext } from './context/PlanContext';
+import { MaxIdContext } from './context/MaxIdContext';
 
 function App() {
   const { isMobile } = useResponsive();
   const [data, setData] = useState({});
+  const [maxId, setMaxId] = useState(0);
 
   return (
     <GridLines
@@ -25,7 +27,8 @@ function App() {
       strokeWidth={0.5}
       color="EFEFEF"
     >
-      <PlanContext.Provider value={{ data, setData }}>
+      <MaxIdContext.Provider value={{ maxId, setMaxId }}>
+        <PlanContext.Provider value={{ data, setData }}>
         {isMobile ? (
           <Routes>
             <Route path="/plan" element={<PlanMobile />} />
@@ -45,6 +48,7 @@ function App() {
           </Routes>
         )}
       </PlanContext.Provider>
+      </MaxIdContext.Provider>
     </GridLines>
   );
 }

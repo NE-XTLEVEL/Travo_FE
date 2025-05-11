@@ -1,40 +1,19 @@
 import { /*useEffect,*/ useState, useContext } from 'react';
 import './AddLocation.css';
+import { MaxIdContext } from '../context/MaxIdContext';
 import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
 import { BeatLoader } from 'react-spinners';
 import { PlanContext } from '../context/PlanContext';
 
-const AddLocation = ({ dayId }) => {
+const AddLocation = ({ dayId, close }) => {
   const { data, setData } = useContext(PlanContext);
+  const { maxId, setMaxId } = useContext(MaxIdContext);
   const dayPlan = data[`day${dayId}`];
-  console.log('AddLocation/', data);
-  console.log('AddLocation/', dayId);
-  console.log('AddLocation/', dayPlan);
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
   const [loading, setLoading] = useState(false);
   const [noResult, setNoResult] = useState(false);
-  // useEffect(() => {
-  //   const loadKakaoMap = () => {
-  //     if (window.kakao) {
-  //       return;
-  //     }
-
-  //     const script = document.createElement('script');
-  //     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
-  //     script.async = true;
-  //     document.head.appendChild(script);
-
-  //     script.onload = () => {
-  //       console.log('Kakao Map API 로드 완료');
-  //       window.kakao.maps.load(() => {
-  //         console.log('Kakao Maps Services 로드 완료');
-  //       });
-  //     };
-  //   };
-  //   loadKakaoMap();
-  // });
   const searchPlaces = (keyWord) => {
     if (!window.kakao || !window.kakao.maps) return;
 
@@ -75,24 +54,33 @@ const AddLocation = ({ dayId }) => {
         [`day${dayId}`]: [
           ...dayPlan,
           {
-            kakao_id: place.id,
-            category: place.category_group_name,
+            kakao_id: Number(place.id),
             name: place.place_name,
+            address: place.address_name,
             url: place.place_url,
             x: place.x,
             y: place.y,
-            address: place.address_name,
+            category: place.category_group_name,
+            local_id: maxId + 1,
           },
         ],
       };
       setData(updated);
+      setMaxId(maxId + 1);
+      close();
       console.log(updated);
     } else {
       console.log('이미 있는 장소입니다.');
       console.log(dayPlan);
+      close();
     }
   };
   /* eslint-disable camelcase */
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchPlaces(keyWord);
+    }
+  };
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* 1. 제목 영역 (20%) */}
@@ -134,6 +122,7 @@ const AddLocation = ({ dayId }) => {
             style={{ fontSize: '130%', outline: 'none' }}
             value={keyWord}
             onChange={(e) => setKeyWord(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
           <FiSearch
             onClick={() => searchPlaces(keyWord)}
