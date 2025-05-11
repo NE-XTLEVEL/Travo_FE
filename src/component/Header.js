@@ -60,7 +60,13 @@ const Header = ({ mobile = false, planName }) => {
         ...(!mobile && { borderBottom: '1px solid #EFEFEF' }),
       }}
     >
-      <img src="/logo.svg" width={30} style={{ margin: '10px' }} />
+      <button
+        style={{ background: 'none', border: 'none' }}
+        onClick={() => navigate('/main')}
+      >
+        <img src="/logo.svg" width={30} style={{ margin: '10px' }} />
+      </button>
+
       {!mobile && (
         <div style={{ padding: '10px', fontSize: '20px' }}>Travo</div>
       )}
