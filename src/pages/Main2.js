@@ -1,5 +1,6 @@
 import React from 'react';
 import FadeInOnScroll from '../component/FadeInOnScroll.js';
+import './Main2.css';
 
 import introImage1 from '../component/assets/Intro_Image_1.svg';
 import introImage2 from '../component/assets/Intro_Image_2.svg';
@@ -31,121 +32,72 @@ import introText3Three from '../component/assets/Intro_Text_3_3.svg';
  */
 const Main2 = () => {
   return (
-    <div
-      className="Main2 flex flex-col items-center justify-center gap-[8vw]"
-      style={{
-        width: '100%',
-        backgroundImage: 'url(./assets/mainBackground.png)',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-      }}
-    >
+    <div className="Main2">
       {/* Intro 1 */}
-      <div className="Intro1 flex flex-row items-center justify-center gap-5 max-w-screen-lg w-full mx-auto">
-        <FadeInOnScroll delay={0.4}>
-          <div className="IntroItems flex flex-row items-center gap-5">
-            <img
-              src={introText1}
-              alt="Intro Text 1"
-              className="w-auto h-auto object-contain"
-            />
-            <img
-              src={introImage1}
-              alt="Intro Image 1"
-              className="w-auto h-auto object-contain"
-            />
-          </div>
-        </FadeInOnScroll>
-      </div>
+      <FadeInOnScroll delay={0.4}>
+        <div className="IntroItems">
+          <img
+            className="IntroText1"
+            src={introText1}
+            alt="Intro Text 1"
+            draggable="false"
+          />
+          <img
+            className="IntroImage1"
+            src={introImage1}
+            alt="Intro Image 1"
+            draggable="false"
+          />
+        </div>
+      </FadeInOnScroll>
 
       {/* Intro 2 */}
-      <div className="Intro2 flex flex-row items-center justify-center gap-5 max-w-screen-lg w-full mx-auto">
+      <div className="Intro2">
         <FadeInOnScroll delay={0.6}>
-          <div className="IntroItems flex flex-row items-center gap-5">
-            <img
-              src={introText2}
-              alt="Intro Text 2"
-              className="w-auto h-auto object-contain"
-            />
-            <img
-              src={introImage2}
-              alt="Intro Image 2"
-              className="w-auto h-auto object-contain"
-            />
+          <div className="IntroItems2">
+            <img src={introText2} alt="Intro Text 2" draggable="false" />
+            <img src={introImage2} alt="Intro Image 2" draggable="false" />
           </div>
         </FadeInOnScroll>
       </div>
 
       {/* Intro 3 */}
-      <div className="Intro3 flex flex-col items-center justify-center gap-[6vw] max-w-screen-lg w-full mx-auto">
+      <div className="Intro3">
         {/* intro3-0 */}
-        <div
-          className="Intro3-0 flex items-center justify-center"
-          style={{ marginBottom: '8vw' }}
-        >
+        <div className="IntroItems3">
           <FadeInOnScroll delay={0.6}>
-            <img
-              src={introText3}
-              alt="Intro Text 3"
-              className="w-auto h-auto object-contain"
-            />
+            <img src={introText3} alt="Intro Text 3" draggable="false" />
           </FadeInOnScroll>
         </div>
 
         {/* intro3-1 */}
-        <div className="Intro3-1 flex flex-row justify-center gap-5">
-          <FadeInOnScroll delay={0.6}>
-            <div className="IntroItems flex flex-row items-center gap-5">
-              <img
-                src={introImage3One}
-                alt="Intro Image 3.1"
-                className="w-auto h-auto object-contain"
-              />
-              <img
-                src={introText3One}
-                alt="Intro Text 3.1"
-                className="w-auto h-auto object-contain"
-              />
-            </div>
-          </FadeInOnScroll>
-        </div>
+        <FadeInOnScroll delay={0.6}>
+          <div className="IntroItems3">
+            <img src={introImage3One} alt="Intro Image 3.1" draggable="false" />
+            <img src={introText3One} alt="Intro Text 3.1" draggable="false" />
+          </div>
+        </FadeInOnScroll>
 
         {/* intro3-2 */}
-        <div className="Intro3-2 flex flex-row justify-center gap-5">
-          <FadeInOnScroll delay={1.2}>
-            <div className="IntroItems flex flex-row items-center gap-5">
-              <img
-                src={introText3Two}
-                alt="Intro Text 3.2"
-                className="w-auto h-auto object-contain"
-              />
-              <img
-                src={introImage3Two}
-                alt="Intro Image 3.2"
-                className="w-auto h-auto object-contain"
-              />
-            </div>
-          </FadeInOnScroll>
-        </div>
+        <FadeInOnScroll delay={1.2}>
+          <div className="IntroItems3">
+            <img src={introText3Two} alt="Intro Text 3.2" draggable="false" />
+            <img src={introImage3Two} alt="Intro Image 3.2" draggable="false" />
+          </div>
+        </FadeInOnScroll>
 
         {/* intro3-3 */}
-        <div className="Intro3-3 flex flex-row justify-center gap-5">
-          <FadeInOnScroll delay={1.0}>
-            <div className="IntroItems flex flex-row items-center gap-5">
-              <img
-                src={introImage3Three}
-                alt="Intro Image 3.3"
-                className="w-auto h-auto object-contain"
-              />
-              <img
-                src={introText3Three}
-                alt="Intro Text 3.3"
-                className="w-auto h-auto object-contain"
-              />
-            </div>
-          </FadeInOnScroll>
-        </div>
+
+        <FadeInOnScroll delay={1.0}>
+          <div className="IntroItems3">
+            <img
+              src={introImage3Three}
+              alt="Intro Image 3.3"
+              draggable="false"
+            />
+            <img src={introText3Three} alt="Intro Text 3.3" draggable="false" />
+          </div>
+        </FadeInOnScroll>
       </div>
     </div>
   );
