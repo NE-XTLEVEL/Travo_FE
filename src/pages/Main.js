@@ -77,34 +77,14 @@ const Main = () => {
   const navigate = useNavigate();
   const handleSubmit = async () => {
     const days = moment(endDate).diff(moment(startDate), 'days') + 1;
-
-    try {
-      const response = await fetch(
-        'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            description: prompt,
-            date: moment(startDate).format('YYYY-MM-DD'),
-            days: days,
-            // eslint-disable-next-line camelcase
-            plan_name: `${days - 1}박${days}일 여행계획`,
-          }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error('error fetching data');
-      }
-      const body1 = await response.json();
-      const data = body1.data;
-      navigate('/Plan', { state: { plan: data } });
-    } catch (error) {
-      console.error('Error:', error);
-      alert('데이터를 가져오는 중 오류가 발생했습니다. 다시 시도해 주세요.');
-    }
+    navigate('/loading', {
+      state: {
+        description: prompt,
+        startDate: moment(startDate).format('YYYY-MM-DD'),
+        days: days,
+        planName: `${days - 1}박${days}일 여행계획`,
+      },
+    });
   };
 
   return (
@@ -120,11 +100,13 @@ const Main = () => {
                 className="MainDescription wow fadeInLeft delay-05s animated"
                 src={mainDescriptionImg}
                 alt="MainDescription"
+                draggable="false"
               ></img>
               <img
                 className="MainPhonePCImg wow fadeInUp delay-05s animated"
                 src={mainPhonePCImg}
                 alt="mainPhonePCImg"
+                draggable="false"
               ></img>
             </div>
             <div className="MainContent">

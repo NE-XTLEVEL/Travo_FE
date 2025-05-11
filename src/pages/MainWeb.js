@@ -8,6 +8,7 @@ const MainWeb = () => {
       this is web
       <button onClick={() => navigate('/plan')}>plan</button>
       <button onClick={() => navigate('/main')}>main</button>
+      <button onClick={() => navigate('/loading')}>loading</button>
     </div>
   );
 };
