@@ -48,7 +48,7 @@ const Loading = () => {
       }
     };
     fetchData();
-  }, [location.state, navigate, setData]);
+  }, [location.state, navigate, setData, setMaxId]);
 
   return (
     <Background>
