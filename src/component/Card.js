@@ -94,6 +94,7 @@ const Card = ({ isOverlay = false, item }) => {
               </div>
             )}
           </div>
+          <div className="CardAddress">{item.address}</div>
         </div>
       </div>
 
