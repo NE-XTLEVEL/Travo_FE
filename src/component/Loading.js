@@ -1,19 +1,21 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Background, LoadingText } from './LoadingStyles';
 import Spinner from './assets/Spinner.gif';
+import { PlanContext } from '../context/PlanContext';
 
 const Loading = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setData } = useContext(PlanContext);
 
   useEffect(() => {
     const fetchData = async () => {
       const { description, startDate, days, planName } = location.state || {};
       try {
         const response = await fetch(
-          'https://api-server-860259406241.asia-northeast1.run.app/location/recommendation',
+          'https://api.travo.kr/location/recommendation',
           {
             method: 'POST',
             headers: {
@@ -33,6 +35,7 @@ const Loading = () => {
         }
         const body1 = await response.json();
         const data = body1.data;
+        setData(data);
         // 응답 받으면 Plan 페이지로 이동
         navigate('/Plan', { state: { plan: data } });
       } catch (error) {
@@ -42,7 +45,7 @@ const Loading = () => {
       }
     };
     fetchData();
-  }, [location.state, navigate]);
+  }, [location.state, navigate, setData]);
 
   return (
     <Background>

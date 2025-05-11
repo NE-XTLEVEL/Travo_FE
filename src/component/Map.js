@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import './Map.css';
+import { PlanContext } from '../context/PlanContext';
 
 const MapComponent = () => {
+  const { data } = useContext(PlanContext);
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -97,40 +99,41 @@ const MapComponent = () => {
     /**
      * loadMapScript 함수 - Kakao Map API 스크립트 생성, 로드
      */
-    const loadMapScript = () => {
+    const loadMapScript = (markerData) => {
       const script = document.createElement('script');
       script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
-
       script.async = true;
       document.head.appendChild(script);
 
-      // 카카오맵 내부 완전히 준비 된 후, mockData 가져와서 InitMap 호출, 마커와 선 그림
       script.onload = () => {
         if (window.kakao && window.kakao.maps) {
-          fetch('/mockData.json')
-            .then((res) => res.json())
-            .then((data) => data.data)
-            .then((data) => window.kakao.maps.load(() => InitMap(data)))
-            .catch((err) => console.error('데이터 로딩 실패:', err));
+          window.kakao.maps.load(() => InitMap(markerData));
         } else {
           console.error('카카오맵 API가 정상적으로 로드되지 않았습니다.');
         }
       };
     };
 
-    /**
-     * Kakao Map API가 로드되어 있지 않은 경우, loadMapScript 함수를 호출
-     * Kakao Map API가 이미 로드된 경우, fetch를 통해 mock 데이터를 가져와 InitMap 함수 호출
-     */
     if (!window.kakao || !window.kakao.maps) {
-      loadMapScript();
+      if (data) {
+        loadMapScript(data);
+      } else {
+        fetch('/mockData.json')
+          .then((res) => res.json())
+          .then((data) => loadMapScript(data))
+          .catch((err) => console.error('데이터 로딩 실패:', err));
+      }
     } else {
-      fetch('/mockData.json')
-        .then((res) => res.json())
-        .then((data) => window.kakao.maps.load(() => InitMap(data)))
-        .catch((err) => console.error('데이터 로딩 실패:', err));
+      if (data) {
+        window.kakao.maps.load(() => InitMap(data));
+      } else {
+        fetch('/mockData.json')
+          .then((res) => res.json())
+          .then((data) => window.kakao.maps.load(() => InitMap(data)))
+          .catch((err) => console.error('데이터 로딩 실패:', err));
+      }
     }
-  }, []);
+  }, [data]);
 
   // 렌더링할 JSX를 반환. React 애플리케이션
   return <div className="mapViewContainer" ref={mapRef}></div>;

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import {
   SortableContext,
@@ -12,11 +12,13 @@ import Modal from './Modal.js';
 import AddLocation from './AddLocation.js';
 import TransportDuration from './TransportDuration';
 import SortableCard from './SortableCard.js';
+import { PlanContext } from '../context/PlanContext';
 
 const API_KEY = process.env.REACT_APP_TMAP_API_KEY;
 const durationCache = new Map();
 
-function DayList({ id, day, data, setData }) {
+function DayList({ id, day }) {
+  const { data } = useContext(PlanContext);
   const items = data[id];
   const colors = [
     '#8861FF',
@@ -135,7 +137,7 @@ function DayList({ id, day, data, setData }) {
         </div>
       </div>
       <Modal open={isModalOpen} close={closeModal}>
-        <AddLocation dayId={day} data={data} setData={setData} />
+        <AddLocation dayId={day} />
       </Modal>
     </SortableContext>
   );
