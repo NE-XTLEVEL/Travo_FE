@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './MainMobile.css';
 import CustomCalendar from '../component/CustomCalendar';
-import Header from '../component/Header';
+import HeaderMain from '../component/HeaderMain';
 import { useNavigate } from 'react-router-dom';
 import { MdPeopleOutline } from 'react-icons/md';
 import { LuSend } from 'react-icons/lu';
@@ -70,7 +70,7 @@ const MainMobile = () => {
       style={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}
     >
       <div style={{ height: '10%', boxSizing: 'border-box' }}>
-        <Header mobile={true} />
+        <HeaderMain mobile={true} />
       </div>
       <Slider
         {...settings}
