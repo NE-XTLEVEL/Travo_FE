@@ -38,9 +38,7 @@ function CardIcons(category) {
       return <HiOutlineFlag size={35} color="#B0B0B0" />;
     case '문화시설':
       return <LiaLandmarkSolid size={35} color="#B0B0B0" />;
-    case '어린이집':
-      return <IoSchoolOutline size={35} color="#B0B0B0" />;
-    case '유치원':
+    case '어린이집,유치원':
       return <IoSchoolOutline size={35} color="#B0B0B0" />;
     case '학교':
       return <IoSchoolOutline size={35} color="#B0B0B0" />;
