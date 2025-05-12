@@ -24,6 +24,7 @@
   padding: 13px 17px;
   gap: 5px;
   align-items: center;
+  max-width: 85%;
 }
 .CardImage {
   margin-right: 10px;
@@ -74,7 +75,7 @@
 .Option {
   width: 35px;
   height: 35px;
-  padding-top: 22px;
+  padding-top: 27px;
   padding-bottom: 17.5px;
   margin-right: 17.85px;
   cursor: pointer;
