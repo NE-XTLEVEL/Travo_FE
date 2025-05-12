@@ -22,6 +22,8 @@ const MapComponent = () => {
         const map = new window.kakao.maps.Map(mapRef.current, {
           center: new window.kakao.maps.LatLng(37.5665, 126.978), // 지도 초기 중심 좌표 (서울 시청 기준)
           level: 3, // 지도 확대/축소 레벨 (작을수록 더 확대됨)
+          draggable: true, // 드래그 가능 여부
+          zoomable: true, // 줌 가능 여부
         });
 
         // 2) 마커 설정
@@ -91,6 +93,11 @@ const MapComponent = () => {
         });
 
         map.setBounds(bounds); // bounds에 저장된 모든 마커 한 화면 안에 보이도록 (카카오맵 제공 메서드)
+        if (window.innerWidth <= 768) {
+          const mapHeight = mapRef.current.offsetHeight;
+          const offsetY = Math.floor(mapHeight * 0.2); // 지도 높이의 20% 아래로 이동
+          map.panBy(0, offsetY); // 지도를 아래로 → 마커는 화면 위쪽으로
+        }
       } else {
         console.error('카카오맵 API가 로드되지 않았습니다.');
       }
