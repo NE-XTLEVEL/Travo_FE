@@ -16,11 +16,11 @@ const Header = ({ mobile = false, planName }) => {
       plan: '2박3일 서울 여행 계획',
     },
     {
-      id: 1,
+      id: 2,
       plan: '2박3일 서울 여행 계획',
     },
     {
-      id: 1,
+      id: 3,
       plan: '2박3일 서울 여행 계획',
     },
   ];
@@ -52,7 +52,7 @@ const Header = ({ mobile = false, planName }) => {
   return (
     <div
       style={{
-        backgroundColor: mobile ? 'transparent' : 'white',
+        backgroundColor: 'white',
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
@@ -61,55 +61,86 @@ const Header = ({ mobile = false, planName }) => {
       }}
     >
       <button
-        style={{ background: 'none', border: 'none' }}
+        style={{
+          background: 'none',
+          border: 'none',
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+        }}
         onClick={() => navigate('/main')}
       >
-        <img src="/logo.svg" width={30} style={{ margin: '10px' }} />
+        <img
+          src="/logo.svg"
+          width={mobile ? 25 : 40}
+          style={{ margin: '10px' }}
+        />
+        {!mobile && (
+          <div
+            style={{
+              padding: '10px',
+              fontSize: '24px',
+              color: '#030045',
+              fontWeight: 700,
+            }}
+          >
+            Travo
+          </div>
+        )}
       </button>
-
-      {!mobile && (
-        <div style={{ padding: '10px', fontSize: '20px' }}>Travo</div>
-      )}
+      <div
+        style={{
+          flex: mobile ? 8 : 4,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          style={{
+            border: 'none',
+            height: '50px',
+            width: '80%',
+            fontSize: mobile ? '20px' : '26px',
+            fontWeight: 700,
+            textAlign: 'center',
+            outline: 'none',
+          }}
+        ></input>
+      </div>
       <div
         style={{
           flex: 1,
           display: 'flex',
-          justifyContent: 'center',
-          fontSize: '20px',
+          justifyContent: 'flex-end',
+          margin: '10px',
         }}
       >
-        {mobile ? (
-          <p style={{ fontWeight: 700 }}>Travo</p>
-        ) : (
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+        {auth ? (
+          <button
             style={{
+              background: 'none',
               border: 'none',
-              height: '50px',
-              width: '40%',
-              fontSize: '80%',
-              textAlign: 'center',
-              outline: 'none',
             }}
-          ></input>
+            onClick={() => setIsOpen(true)}
+          >
+            <FaBars size={mobile ? 20 : 30} color="#030045" />
+          </button>
+        ) : (
+          <button
+            style={{
+              background: 'none',
+              border: 'none',
+            }}
+            onClick={() => navigate('/login')}
+          >
+            <PiSignInBold size={mobile ? 20 : 30} color="#030045" />
+          </button>
         )}
       </div>
-      {auth ? (
-        <button
-          style={{ background: 'none', border: 'none', margin: '10px' }}
-          onClick={() => setIsOpen(true)}
-        >
-          <FaBars size={30} />
-        </button>
-      ) : (
-        <button
-          style={{ background: 'none', border: 'none', margin: '10px' }}
-          onClick={() => navigate('/login')}
-        >
-          <PiSignInBold size={30} />
-        </button>
-      )}
 
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} mobile={mobile}>
         {plans.map((plan) => (
