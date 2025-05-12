@@ -1,85 +1,12 @@
 import { useState } from 'react';
-import {
-  DndContext,
-  useDraggable,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { RiArrowUpWideFill } from 'react-icons/ri';
 import Map from '../component/Map';
 import Recommendation from '../component/Recommendation';
 import Header from '../component/Header';
-
-const MIN_HEIGHT = 50;
-const MAX_HEIGHT = 500;
-const INITIAL_HEIGHT = 150;
-
-// Recommendation을 포함하는 화면 하단 시트
-const DraggableSheet = ({ sheetHeight }) => {
-  const { listeners, setNodeRef, setActivatorNodeRef } = useDraggable({
-    id: 'bottom-sheet',
-  });
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={{
-        height: sheetHeight,
-        borderTop: '1px solid #D9D9D9',
-        borderRadius: '20px 10px 0 0',
-        boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
-      }}
-    >
-      <div
-        ref={setActivatorNodeRef}
-        {...listeners}
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          padding: '10px',
-          cursor: 'ns-resize',
-        }}
-      >
-        <div
-          style={{
-            width: 80,
-            height: 6,
-            backgroundColor: '#B0B0B0',
-            borderRadius: 3,
-          }}
-        />
-      </div>
-      <div
-        style={{
-          height: sheetHeight - 50,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'start',
-        }}
-      >
-        <Recommendation />
-      </div>
-    </div>
-  );
-};
+import grids from './assets/grids.svg';
 
 const PlanMobile = () => {
-  const [sheetHeight, setSheetHeight] = useState(INITIAL_HEIGHT);
-
-  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
-
-  // DraggableSheet를 드래그할 때 sheetHeight를 조정
-  const handleDragMove = (event) => {
-    if (event.active.id === 'bottom-sheet') {
-      const deltaY = event.delta.y;
-      setSheetHeight((prev) => {
-        let newHeight = prev - deltaY;
-        return Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, newHeight));
-      });
-    }
-  };
+  const [isSheetOpen, setIsSheetOpen] = useState(true);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -88,27 +15,70 @@ const PlanMobile = () => {
       </div>
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
+          position: 'relative',
           height: '90%',
           boxSizing: 'border-box',
         }}
       >
         <div
           style={{
-            height: `calc(100% - ${sheetHeight}px)`,
-            padding: 20,
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1,
+            height: '100%',
+            width: '100%',
           }}
         >
           <Map />
         </div>
-        <DndContext
-          sensors={sensors}
-          onDragMove={handleDragMove}
-          modifiers={[restrictToVerticalAxis]}
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 2,
+            height: isSheetOpen ? '60%' : '40px',
+            width: '100%',
+            transition: 'height 0.4s ease',
+            borderTop: '1px solid #D9D9D9',
+            borderRadius: '20px 10px 0 0',
+            boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
+            backgroundColor: 'white',
+            backgroundImage: `url(${grids})`,
+          }}
         >
-          <DraggableSheet sheetHeight={sheetHeight} />
-        </DndContext>
+          <div
+            onClick={() => setIsSheetOpen(!isSheetOpen)}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              padding: '5px 20px',
+              cursor: 'pointer',
+            }}
+          >
+            <RiArrowUpWideFill
+              size={30}
+              color="#030045"
+              style={{
+                transform: isSheetOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.4s ease',
+              }}
+            />
+          </div>
+          <div
+            style={{
+              height: 'calc(100% - 50px)',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'start',
+            }}
+          >
+            <Recommendation />
+          </div>
+        </div>
       </div>
     </div>
   );
