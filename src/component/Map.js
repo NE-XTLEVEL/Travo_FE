@@ -28,16 +28,16 @@ const MapComponent = () => {
         const bounds = new window.kakao.maps.LatLngBounds(); // 마커들이 있는 위치를 모두 포함하는 범위 계산
 
         const dayColors = [
-          '#1CBB39',
-          '#FF4646',
+          '#8861FF',
+          '#C9D405',
+          '#FB6AA1',
+          '#477DEF',
           '#38A7EC',
           '#FF762D',
-          '#FB6AA1',
-          '#C9D405',
-          '#477DEF',
-          '#CF8524',
+          '#FF4646',
+          '#9CB5FF',
           '#5AE1C2',
-          '#8861FF',
+          '#1CBB39',
         ];
 
         Object.values(markerData).forEach((locations, dayIndex) => {
