@@ -43,6 +43,7 @@
 .CardLowLine {
   display: flex;
   flex-direction: row;
+  white-space: nowrap;
   gap: 15px;
   width: 100%;
   min-width: 0;

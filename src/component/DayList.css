@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  margin-left: 15%;
 }
 .DayHeader {
   width: 100%;
@@ -41,4 +42,17 @@
   font-weight: 800;
   background: none;
   border: none;
+}
+@media screen and (max-width: 767px) {
+  .DayList {
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .DayHeader {
+    padding: 0 10%;
+    justify-content: space-between;
+  }
 }

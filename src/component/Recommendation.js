@@ -69,7 +69,6 @@ const Recommendation = () => {
         height: '100%', // 원하는 높이로 조정
         padding: 0,
         margin: 0,
-        marginLeft: '15%',
         display: 'flex',
         flexDirection: 'column',
       }}
