@@ -125,7 +125,7 @@ function DayList({ id, day }) {
             <span className="addButton"> + </span>장소추가
           </div>
         </div>
-        <div ref={setNodeRef}>
+        <div ref={setNodeRef} className="DayContent">
           {items.map((item, index) => (
             <React.Fragment key={item.local_id}>
               <SortableCard item={item} />
