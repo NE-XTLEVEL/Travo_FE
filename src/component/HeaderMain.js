@@ -37,7 +37,7 @@ const HeaderMain = ({ mobile = false }) => {
           flex: 1,
           display: 'flex',
           justifyContent: 'center',
-          fontSize: mobile ? '18px' : '24px',
+          fontSize: mobile ? '20px' : '26px',
           color: '#030045',
         }}
       >

@@ -69,13 +69,13 @@ const MainMobile = () => {
       className="mobile-body"
       style={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}
     >
-      <div style={{ height: '10%', boxSizing: 'border-box' }}>
+      <div style={{ height: '8%', boxSizing: 'border-box' }}>
         <HeaderMain mobile={true} />
       </div>
       <Slider
         {...settings}
         style={{
-          height: '55%',
+          height: '57%',
           display: 'flex',
           alignItems: 'center',
           width: '100%',

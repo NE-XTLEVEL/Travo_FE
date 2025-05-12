@@ -1,22 +1,32 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { RiArrowUpWideFill } from 'react-icons/ri';
 import Map from '../component/Map';
 import Recommendation from '../component/Recommendation';
 import Header from '../component/Header';
 import grids from './assets/grids.svg';
+import { PlanContext } from '../context/PlanContext';
 
 const PlanMobile = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(true);
+  const { data } = useContext(PlanContext);
+  const dayCount = Object.keys(data).length;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <div style={{ height: '10%', boxSizing: 'border-box' }}>
-        <Header />
+      <div style={{ height: '8%', boxSizing: 'border-box' }}>
+        <Header
+          mobile={true}
+          planName={
+            dayCount === 1
+              ? '당일치기 여행 계획'
+              : `${dayCount - 1}박 ${dayCount}일 여행 계획`
+          }
+        />
       </div>
       <div
         style={{
           position: 'relative',
-          height: '90%',
+          height: '92%',
           boxSizing: 'border-box',
         }}
       >
