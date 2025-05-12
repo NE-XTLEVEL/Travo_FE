@@ -20,6 +20,12 @@
   align-items: center;
   justify-content: space-between;
 }
+.DayContent {
+  width: 100%;
+  min-width: 300px;
+  max-width: 440px;
+  padding: 0 6px;
+}
 .dayNum {
   color: #ff4646;
   font-size: 25px;
@@ -48,11 +54,5 @@
     margin-left: 0;
     display: flex;
     align-items: center;
-  }
-}
-@media screen and (max-width: 1024px) {
-  .DayHeader {
-    padding: 0 10%;
-    justify-content: space-between;
   }
 }
