@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaBars } from 'react-icons/fa6';
 import Sidebar from './Sidebar';
 
-const HeaderMain = () => {
+const HeaderMain = ({ mobile = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const plans = [
     {
@@ -27,21 +27,27 @@ const HeaderMain = () => {
         alignItems: 'center',
       }}
     >
-      <img src="/logo.png" width={30} style={{ margin: '10px' }} />
-      <div style={{ padding: '10px', fontSize: '20px' }}>Travo</div>
+      <img
+        src="/logo.png"
+        width={mobile ? 25 : 40}
+        style={{ margin: '10px' }}
+      />
       <div
         style={{
           flex: 1,
           display: 'flex',
           justifyContent: 'center',
-          fontSize: '20px',
+          fontSize: mobile ? '18px' : '24px',
+          color: '#030045',
         }}
-      ></div>
+      >
+        <p style={{ fontWeight: 700 }}>Travo</p>
+      </div>
       <button
         style={{ background: 'none', border: 'none', margin: '10px' }}
         onClick={() => setIsOpen(true)}
       >
-        <FaBars size={30} />
+        <FaBars size={mobile ? 20 : 30} color="#030045" />
       </button>
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}>
         {plans.map((plan) => (
