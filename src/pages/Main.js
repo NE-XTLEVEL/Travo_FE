@@ -176,7 +176,7 @@ const Main = () => {
                 <textarea
                   className="MainPromptInput"
                   type="text"
-                  placeholder="연인과 함께 북촌으로 봄 여행을 가고 싶어. 가고 싶은 장소는 북촌 한옥마을, 인사동, 삼청동이야. 서비스가 불친절한 곳에서는 자고 싶지 않아."
+                  placeholder="잠실로 산뜻한 봄 여행을 떠나고 싶어."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   onKeyDown={(e) => {
