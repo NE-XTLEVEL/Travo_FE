@@ -8,7 +8,9 @@ import authAxios from './AuthAxios';
 const Header = ({ mobile = false, planName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState(planName || '');
+  const [debouncedInput, setDebouncedInput] = useState('');
   const [auth, setAuth] = useState(false);
+
   const navigate = useNavigate();
   useEffect(() => {
     authAxios
@@ -23,6 +25,23 @@ const Header = ({ mobile = false, planName }) => {
         console.log(error);
       });
   }, []);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedInput(input);
+    }, 500); // 500ms 후 반영
+
+    return () => {
+      clearTimeout(handler); // 다음 입력 전에 이전 타이머 취소
+    };
+  }, [input]);
+
+  // ✅ 이 effect는 debouncedInput이 바뀔 때만 실행됨
+  useEffect(() => {
+    if (debouncedInput) {
+      // 여기에 API 호출
+      console.log('요청:', debouncedInput);
+    }
+  }, [debouncedInput]);
   return (
     <div
       style={{
