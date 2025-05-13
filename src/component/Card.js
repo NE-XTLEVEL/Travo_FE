@@ -15,7 +15,7 @@ import {
 } from 'react-icons/lia';
 import { BsCart2 } from 'react-icons/bs';
 import { HiOutlineFlag } from 'react-icons/hi';
-import { IoSchoolOutline } from 'react-icons/io5';
+import { IoSchoolOutline, IoLocationOutline } from 'react-icons/io5';
 import { HiOutlineBuildingOffice } from 'react-icons/hi2';
 import { LuCircleParking } from 'react-icons/lu';
 import classNames from 'classnames';
@@ -62,6 +62,8 @@ function CardIcons(category) {
       return <LiaBriefcaseMedicalSolid size={35} color="#B0B0B0" />;
     case '약국':
       return <LiaBriefcaseMedicalSolid size={35} color="#B0B0B0" />;
+    case '기타':
+      return <IoLocationOutline size={35} color="#B0B0B0" />;
     default:
       return <FiAlertCircle size={35} color="#B0B0B0" />;
   }
