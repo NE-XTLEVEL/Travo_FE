@@ -55,7 +55,7 @@ const Recommendation = () => {
   const sensors = useSensors(
     useSensor(MouseSensor),
     useSensor(TouchSensor, {
-      activationConstraint: { delay: 400, distance: 0 },
+      activationConstraint: { delay: 400, tolerance: 0 },
     })
   );
 
