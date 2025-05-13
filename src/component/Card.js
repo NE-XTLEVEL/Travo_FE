@@ -67,14 +67,18 @@ function CardIcons(category) {
   }
 }
 
-const Card = ({ isOverlay = false, item }) => {
+const Card = ({ isOverlay = false, item, notSelected }) => {
   const classes = classNames('Card', {
     OverlayCard: isOverlay,
   });
 
+  const contentClasses = classNames('CardContent', {
+    lowOpacity: notSelected, // 선택되지 않은 일차의 카드 투명도 조절
+  });
+
   return (
     <div className={classes}>
-      <div className="CardContent">
+      <div className={contentClasses}>
         <div className="CardImage">{CardIcons(item.category)}</div>
         <div className="CardInfo">
           <div className="CardType">{item.category}</div>
