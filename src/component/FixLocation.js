@@ -1,29 +1,39 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useContext, useState } from 'react';
 import './AddLocation.css';
 import { LuSend } from 'react-icons/lu';
 import { FaPlus } from 'react-icons/fa6';
+import { PlanContext } from '../context/PlanContext';
+import AuthAxios from './AuthAxios';
 
-const FixLocation = ({ item, setDayPlan }) => {
+const FixLocation = ({ item, close }) => {
   const [keyWord, setKeyWord] = useState('');
   const [places, setPlaces] = useState([]);
-  const searchPlaces = ({ keyWord }) => {
-    const url = '' + keyWord;
-    axios
-      .get(url)
+  const { setData } = useContext(PlanContext);
+  /* eslint-disable camelcase */
+  const FixPlaces = ({ keyWord }) => {
+    AuthAxios.post('locatoin/recommendation/one', {
+      description: keyWord,
+      day: 0,
+      category: item.category,
+      is_lunch: true,
+      x: item.x,
+      y: item.y,
+      high_review: true,
+      local_id: item.local_id,
+    })
       .then((res) => {
         setPlaces(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
       });
   };
-
+  /* eslint-enable camelcase */
   const handleFix = ({ place }) => {
-    setDayPlan((prevData) =>
-      prevData.map((item) => (item.id === place.id ? place : item))
+    setData((prevData) =>
+      prevData.map((item) => (item.local_id === place.local_id ? place : item))
     );
+    close();
   };
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -68,7 +78,7 @@ const FixLocation = ({ item, setDayPlan }) => {
             onChange={(e) => setKeyWord(e.target.value)}
           />
           <LuSend
-            onClick={() => searchPlaces(keyWord)}
+            onClick={() => FixPlaces(keyWord)}
             style={{ cursor: 'pointer', scale: '1.5' }}
           />
         </div>
