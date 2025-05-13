@@ -139,7 +139,7 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
                   margin: '10px 0',
                 }}
               >
-                <ClipLoader size={24} color="#36d7b7" />
+                <ClipLoader size={24} color="#9c63e1" />
               </div>
             )}
 
