@@ -43,6 +43,7 @@ const Header = ({ mobile = false, planName }) => {
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'center',
+          padding: 0,
         }}
         onClick={() => navigate('/main')}
       >

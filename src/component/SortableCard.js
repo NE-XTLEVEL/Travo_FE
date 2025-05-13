@@ -23,7 +23,7 @@ import Card from './Card';
   );
 }*/
 
-export default function SortableCard({ item }) {
+export default function SortableCard({ item, notSelected = false }) {
   const { attributes, listeners, setNodeRef, transform } = useSortable({
     id: item.local_id,
   });
@@ -36,7 +36,7 @@ export default function SortableCard({ item }) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card item={item} />
+      <Card item={item} notSelected={notSelected} />
     </div>
   );
 }

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useContext } from 'react';
 import './Map.css';
 import { PlanContext } from '../context/PlanContext';
+import { SelectedDayContext } from '../context/SelectedDayContext';
 
-const MapComponent = () => {
+const MapComponent = ({ isMobile = false }) => {
   const { data } = useContext(PlanContext);
+  const { selectedDay } = useContext(SelectedDayContext);
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -44,6 +46,12 @@ const MapComponent = () => {
 
         Object.values(markerData).forEach((locations, dayIndex) => {
           // day 무시하고 장소 배열만 가져옴 (locations:특정 날짜의 장소 리스트, dayIndex: 날짜 인덱스)
+
+          // 선택된 일차가 있을 경우 해당 일차의 마커만 표시
+          if (selectedDay > 0 && dayIndex !== selectedDay - 1) {
+            return;
+          }
+
           const linePath = [];
 
           locations.forEach((loc, idx) => {
@@ -93,7 +101,7 @@ const MapComponent = () => {
         });
 
         map.setBounds(bounds); // bounds에 저장된 모든 마커 한 화면 안에 보이도록 (카카오맵 제공 메서드)
-        if (window.innerWidth <= 768) {
+        if (isMobile) {
           const mapHeight = mapRef.current.offsetHeight;
           const offsetY = Math.floor(mapHeight * 0.4); // 지도 높이의 40% 아래로 이동
           map.panBy(0, offsetY); // 지도를 아래로 → 마커는 화면 위쪽으로
@@ -140,7 +148,7 @@ const MapComponent = () => {
           .catch((err) => console.error('데이터 로딩 실패:', err));
       }
     }
-  }, [data]);
+  }, [data, selectedDay, isMobile]); // data와 highlitedDayIndex가 변경될 때마다 useEffect 실행
 
   // 렌더링할 JSX를 반환. React 애플리케이션
   return <div className="mapViewContainer" ref={mapRef}></div>;

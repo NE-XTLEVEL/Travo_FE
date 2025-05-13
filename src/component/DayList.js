@@ -13,6 +13,7 @@ import AddLocation from './AddLocation.js';
 import TransportDuration from './TransportDuration';
 import SortableCard from './SortableCard.js';
 import { PlanContext } from '../context/PlanContext';
+import { SelectedDayContext } from '../context/SelectedDayContext';
 
 const API_KEY = process.env.REACT_APP_TMAP_API_KEY;
 const durationCache = new Map();
@@ -20,6 +21,7 @@ const durationCache = new Map();
 function DayList({ id, day }) {
   const { data } = useContext(PlanContext);
   const items = data[id];
+  const { selectedDay, setSelectedDay } = useContext(SelectedDayContext);
   const colors = [
     '#8861FF',
     '#C9D405',
@@ -108,7 +110,19 @@ function DayList({ id, day }) {
     setIsModalOpen(false);
   };
 
+  const handleSelectDay = () => {
+    // 이미 선택된 일차를 다시 클릭하면 선택 해제
+    // 선택된 일차가 없거나 다른 일차를 클릭하면 선택
+    if (day === selectedDay) {
+      setSelectedDay(0);
+    } else {
+      setSelectedDay(day);
+    }
+  };
+
   const { setNodeRef } = useDroppable({ id });
+
+  const notSelected = selectedDay > 0 && day !== selectedDay;
 
   return (
     <SortableContext
@@ -117,8 +131,12 @@ function DayList({ id, day }) {
       strategy={verticalListSortingStrategy}
     >
       <div className="DayList">
-        <div className="DayHeader">
-          <div className="dayNum" style={{ color: dayColor }}>
+        <div className="DayHeader" style={{ opacity: notSelected ? 0.4 : 1 }}>
+          <div
+            className="dayNum"
+            style={{ color: dayColor, cursor: 'pointer' }}
+            onClick={() => handleSelectDay()}
+          >
             {day}일차
           </div>
           <div className="addPlace" onClick={openModal}>
@@ -128,7 +146,7 @@ function DayList({ id, day }) {
         <div ref={setNodeRef} className="DayContent">
           {items.map((item, index) => (
             <React.Fragment key={item.local_id}>
-              <SortableCard item={item} />
+              <SortableCard item={item} notSelected={notSelected} />
               {index < items.length - 1 && (
                 <TransportDuration duration={durations[index]} />
               )}

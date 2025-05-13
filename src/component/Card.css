@@ -84,3 +84,6 @@
   color: #b0b0b0;
   font-size: 12px;
 }
+.lowOpacity {
+  opacity: 0.4;
+}
