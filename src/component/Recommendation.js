@@ -14,6 +14,7 @@ import { arrayMove } from '@dnd-kit/sortable';
 import Card from './Card';
 import DayList from './DayList.js';
 import PlaceBin from './PlaceBin.js';
+import AuthAxios from './AuthAxios.js';
 
 import { PlanContext } from '../context/PlanContext';
 
@@ -36,7 +37,7 @@ function collisionDetectionAlgorithm({ droppableContainers, ...args }) {
   });
 }
 
-const Recommendation = () => {
+const Recommendation = ({ planId }) => {
   const { data, setData } = useContext(PlanContext);
 
   // dragging 중인 Card의 id
@@ -179,6 +180,17 @@ const Recommendation = () => {
     const { id } = active;
     const { id: overId } = over;
 
+    const postData = async (newData) => {
+      try {
+        const response = await AuthAxios.put(`/plan/${planId}`, {
+          data: newData,
+        });
+        console.log('Data sent successfully:', response.status);
+      } catch (error) {
+        console.error('Error sending data:', error);
+      }
+    };
+
     const activeDay = findDay(id);
 
     if (overId === 'place-bin') {
@@ -188,6 +200,9 @@ const Recommendation = () => {
           (place) => place.local_id !== id
         );
         newData[activeDay] = activeItems;
+        if (planId) {
+          postData(newData);
+        }
         return newData;
       });
       setActiveId(null);
@@ -207,10 +222,16 @@ const Recommendation = () => {
     );
 
     if (activeIndex !== overIndex) {
-      setData((prevData) => ({
-        ...prevData,
-        [overDay]: arrayMove(data[overDay], activeIndex, overIndex),
-      }));
+      setData((prevData) => {
+        const newData = {
+          ...prevData,
+          [overDay]: arrayMove(data[overDay], activeIndex, overIndex),
+        };
+        if (planId) {
+          postData(newData);
+        }
+        return newData;
+      });
     }
     setIsBinActive(false);
     setActiveId(null);

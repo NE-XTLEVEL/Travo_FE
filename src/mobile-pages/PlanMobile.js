@@ -26,7 +26,6 @@ const PlanMobile = () => {
       if (planId === 0) {
         // 로그인하지 않은 경우
         // 로컬 스토리지에서 여행 계획 가져오기
-        // planLocal = {data: {day1: [], ...}, max_id: positive integer, plan_id: positive integer or null}
         const planData = JSON.parse(
           window.localStorage.getItem('travo_plan_data')
         );
@@ -45,10 +44,7 @@ const PlanMobile = () => {
         // 서버에서 여행 계획 가져오기
         try {
           const response = await authAxios.get(`/plan/${planId}`);
-          if (!response.ok) {
-            throw new Error('error fetching data');
-          }
-          const plan = await response.json();
+          const plan = response.data;
           setData(plan.data);
           setMaxId(plan.max_id);
           setPlanName(plan.plan_name);
@@ -66,6 +62,23 @@ const PlanMobile = () => {
       fetchData();
     }
   }, [data, navigate, planId, setData, setMaxId, setPlanName]);
+
+  useEffect(() => {
+    // 페이지를 나가거나 새로고침할 때 경고창 띄우기
+    // planId가 0인 경우(로그인하지 않은 경우)에만 경고창을 띄우도록 설정
+    if (planId === 0) {
+      const handleBeforeUnload = (event) => {
+        event.preventDefault();
+        event.returnValue = '';
+      };
+
+      window.addEventListener('beforeunload', handleBeforeUnload);
+
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
+    }
+  }, [planId]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -135,7 +148,7 @@ const PlanMobile = () => {
               alignItems: 'start',
             }}
           >
-            <Recommendation />
+            <Recommendation planId={planId} />
           </div>
         </div>
       </div>
