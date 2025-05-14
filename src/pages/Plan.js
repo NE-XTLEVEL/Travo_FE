@@ -60,6 +60,23 @@ const Plan = () => {
     }
   }, [data, navigate, planId, setData, setMaxId, setPlanName]);
 
+  useEffect(() => {
+    // 페이지를 나가거나 새로고침할 때 경고창 띄우기
+    // planId가 0인 경우(로그인하지 않은 경우)에만 경고창을 띄우도록 설정
+    if (planId === 0) {
+      const handleBeforeUnload = (event) => {
+        event.preventDefault();
+        event.returnValue = '';
+      };
+
+      window.addEventListener('beforeunload', handleBeforeUnload);
+
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
+    }
+  }, [planId]);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div style={{ height: '10%', boxSizing: 'border-box' }}>
@@ -97,7 +114,7 @@ const Plan = () => {
             boxSizing: 'border-box',
           }}
         >
-          <Recommendation />
+          <Recommendation planId={planId} />
         </div>
       </div>
     </div>
