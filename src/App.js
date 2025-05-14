@@ -13,13 +13,13 @@ import Signup from './pages/Signup/Signup';
 import Loading from './component/Loading';
 import './index.css';
 import { PlanContext } from './context/PlanContext';
-import { MaxIdContext } from './context/MaxIdContext';
 import { SelectedDayContext } from './context/SelectedDayContext';
 
 function App() {
   const { isMobile } = useResponsive();
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [maxId, setMaxId] = useState(0);
+  const [planName, setPlanName] = useState('');
   const [selectedDay, setSelectedDay] = useState(0);
 
   return (
@@ -29,31 +29,31 @@ function App() {
       strokeWidth={0.5}
       color="EFEFEF"
     >
-      <MaxIdContext.Provider value={{ maxId, setMaxId }}>
-        <PlanContext.Provider value={{ data, setData }}>
-          <SelectedDayContext.Provider value={{ selectedDay, setSelectedDay }}>
-            {isMobile ? (
-              <Routes>
-                <Route path="/plan" element={<PlanMobile />} />
-                <Route path="/main" element={<MainMobile />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/loading" element={<Loading />} />
-                <Route path="/" element={<MainWeb />}></Route>
-              </Routes>
-            ) : (
-              <Routes>
-                <Route path="/plan" element={<Plan />} />
-                <Route path="/main" element={<Main />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/loading" element={<Loading />} />
-                <Route path="/" element={<MainWeb />}></Route>
-              </Routes>
-            )}
-          </SelectedDayContext.Provider>
-        </PlanContext.Provider>
-      </MaxIdContext.Provider>
+      <PlanContext.Provider
+        value={{ data, setData, maxId, setMaxId, planName, setPlanName }}
+      >
+        <SelectedDayContext.Provider value={{ selectedDay, setSelectedDay }}>
+          {isMobile ? (
+            <Routes>
+              <Route path="/plan" element={<PlanMobile />} />
+              <Route path="/main" element={<MainMobile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/loading" element={<Loading />} />
+              <Route path="/" element={<MainWeb />}></Route>
+            </Routes>
+          ) : (
+            <Routes>
+              <Route path="/plan" element={<Plan />} />
+              <Route path="/main" element={<Main />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/loading" element={<Loading />} />
+              <Route path="/" element={<MainWeb />}></Route>
+            </Routes>
+          )}
+        </SelectedDayContext.Provider>
+      </PlanContext.Provider>
     </GridLines>
   );
 }

@@ -1,14 +1,12 @@
 import { /*useEffect,*/ useState, useContext } from 'react';
 import './AddLocation.css';
-import { MaxIdContext } from '../context/MaxIdContext';
 import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
 import { BeatLoader } from 'react-spinners';
 import { PlanContext } from '../context/PlanContext';
 
 const AddLocation = ({ dayId, close }) => {
-  const { data, setData } = useContext(PlanContext);
-  const { maxId, setMaxId } = useContext(MaxIdContext);
+  const { data, setData, maxId, setMaxId } = useContext(PlanContext);
   const dayPlan = data[`day${dayId}`];
   const [places, setPlaces] = useState([]);
   const [keyWord, setKeyWord] = useState('');
