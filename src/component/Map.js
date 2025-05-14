@@ -131,11 +131,15 @@ const MapComponent = ({ isMobile = false }) => {
     };
 
     if (!window.kakao || !window.kakao.maps) {
-      loadMapScript(data || {});
+      if (data) {
+        loadMapScript(data);
+      }
     } else {
-      window.kakao.maps.load(() => InitMap(data || {}));
+      if (data) {
+        window.kakao.maps.load(() => InitMap(data || {}));
+      }
     }
-  }, [data, selectedDay, isMobile]); // data와 highlitedDayIndex가 변경될 때마다 useEffect 실행
+  }, [data, selectedDay, isMobile]); // data와 selectedDay가 변경될 때마다 useEffect 실행
 
   // 렌더링할 JSX를 반환. React 애플리케이션
   return <div className="mapViewContainer" ref={mapRef}></div>;
