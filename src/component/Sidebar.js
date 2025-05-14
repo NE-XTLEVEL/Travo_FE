@@ -102,7 +102,7 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
   const handleLogOut = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    window.location.reload();
+    navigate('/main');
   };
   const handlePlanData = (id) => {
     AuthAxios.get(`/plan/${id}`)
