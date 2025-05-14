@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './App.css';
-import MainWeb from './pages/MainWeb';
 import Plan from './pages/Plan';
 import PlanMobile from './mobile-pages/PlanMobile';
 import MainMobile from './mobile-pages/MainMobile';
@@ -40,7 +39,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/loading" element={<Loading />} />
-              <Route path="/" element={<MainWeb />}></Route>
+              <Route path="/" element={<MainMobile />}></Route>
             </Routes>
           ) : (
             <Routes>
@@ -49,7 +48,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/loading" element={<Loading />} />
-              <Route path="/" element={<MainWeb />}></Route>
+              <Route path="/" element={<Main />}></Route>
             </Routes>
           )}
         </SelectedDayContext.Provider>
