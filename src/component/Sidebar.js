@@ -9,12 +9,10 @@ import styles from './Sidebar.module.css';
 import { PiSignOut } from 'react-icons/pi';
 import AuthAxios from './AuthAxios';
 import { PlanContext } from '../context/PlanContext';
-import { MaxIdContext } from '../context/MaxIdContext';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
-  const { setData } = useContext(PlanContext);
-  const { setMaxId } = useContext(MaxIdContext);
+  const { setData, setMaxId } = useContext(PlanContext);
   const [plans, setPlans] = useState([]);
   const [cursor, setCursor] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
