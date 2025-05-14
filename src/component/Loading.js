@@ -1,12 +1,8 @@
-import React from 'react';
-import { useEffect, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { Background, LoadingText } from './LoadingStyles';
 import Spinner from './assets/Spinner.gif';
-import { PlanContext } from '../context/PlanContext';
-import { MaxIdContext } from '../context/MaxIdContext';
 
 const Loading = () => {
+  /*
   const location = useLocation();
   const navigate = useNavigate();
   const { setData } = useContext(PlanContext);
@@ -49,11 +45,12 @@ const Loading = () => {
     };
     fetchData();
   }, [location.state, navigate, setData, setMaxId]);
+  */
 
   return (
     <Background>
-      <LoadingText>일정을 생성 중입니다....</LoadingText>
-      <img src={Spinner} alt="Loading..." style={{ width: '30%' }} />
+      <LoadingText>여행 일정을 만들고 있어요</LoadingText>
+      <img src={Spinner} alt="Loading..." style={{ width: '15%' }} />
     </Background>
   );
 };

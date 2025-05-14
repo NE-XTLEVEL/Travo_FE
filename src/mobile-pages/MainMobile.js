@@ -10,6 +10,7 @@ import authAxios from '../component/AuthAxios';
 import { PlanContext } from '../context/PlanContext';
 import { SelectedDayContext } from '../context/SelectedDayContext';
 import Header from '../component/Header';
+import Loading from '../component/Loading';
 
 import { useNavigate } from 'react-router-dom';
 import { MdPeopleOutline } from 'react-icons/md';
@@ -37,7 +38,9 @@ const MainMobile = () => {
   // 서버로 데이터 request 보내기
   const { setData } = useContext(PlanContext);
   const { setSelectedDay } = useContext(SelectedDayContext);
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태
   const handleSubmit = async () => {
+    setIsLoading(true); // 로딩 시작
     setData(null);
     setSelectedDay(0);
     const days = moment(endDate).diff(moment(startDate), 'days') + 1;
@@ -98,6 +101,11 @@ const MainMobile = () => {
       setPeopleCount(value);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div
       className="mobile-body"
