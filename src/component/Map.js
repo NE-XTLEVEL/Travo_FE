@@ -131,17 +131,9 @@ const MapComponent = ({ isMobile = false }) => {
     };
 
     if (!window.kakao || !window.kakao.maps) {
-      if (data) {
-        loadMapScript(data);
-      } else {
-        loadMapScript({});
-      }
+      loadMapScript(data || {});
     } else {
-      if (data) {
-        window.kakao.maps.load(() => InitMap(data));
-      } else {
-        window.kakao.maps.load(() => InitMap({}));
-      }
+      window.kakao.maps.load(() => InitMap(data || {}));
     }
   }, [data, selectedDay, isMobile]); // data와 highlitedDayIndex가 변경될 때마다 useEffect 실행
 

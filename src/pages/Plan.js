@@ -17,7 +17,6 @@ const Plan = () => {
   const { data, setData } = useContext(PlanContext);
   const { setMaxId } = useContext(PlanContext);
   const { setPlanName } = useContext(PlanContext);
-  console.log('Plan data:', data);
 
   useEffect(() => {
     const fetchData = async () => {
