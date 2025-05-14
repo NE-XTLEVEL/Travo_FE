@@ -19,6 +19,9 @@ import { IoSchoolOutline, IoLocationOutline } from 'react-icons/io5';
 import { HiOutlineBuildingOffice } from 'react-icons/hi2';
 import { LuCircleParking } from 'react-icons/lu';
 import classNames from 'classnames';
+import { useState } from 'react';
+import Modal from './Modal';
+import FixLocation from './FixLocation';
 
 function CardIcons(category) {
   switch (category) {
@@ -70,6 +73,7 @@ function CardIcons(category) {
 }
 
 const Card = ({ isOverlay = false, item, notSelected }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const classes = classNames('Card', {
     OverlayCard: isOverlay,
   });
@@ -77,7 +81,12 @@ const Card = ({ isOverlay = false, item, notSelected }) => {
   const contentClasses = classNames('CardContent', {
     lowOpacity: notSelected, // 선택되지 않은 일차의 카드 투명도 조절
   });
-
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className={classes}>
       <div className={contentClasses}>
@@ -102,9 +111,12 @@ const Card = ({ isOverlay = false, item, notSelected }) => {
         </div>
       </div>
 
-      <div className="Option">
+      <button className="Option" onClick={openModal}>
         <Option />
-      </div>
+      </button>
+      <Modal open={isModalOpen} close={closeModal}>
+        <FixLocation close={closeModal} />
+      </Modal>
     </div>
   );
 };

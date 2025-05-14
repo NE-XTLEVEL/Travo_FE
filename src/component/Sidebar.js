@@ -49,8 +49,14 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
       .then((res) => {
         console.log(res);
         const result = res.data;
+
         setPlans((prev) => [...prev, ...result]);
-        setCursor(result[result.length - 1].id);
+
+        if (result.length === 0) {
+          setCursor(1);
+        } else {
+          setCursor(result[result.length - 1].id);
+        }
       })
       .catch((error) => {
         console.error('데이터 불러오기 오류:', error);
@@ -82,6 +88,13 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
       }
     };
   }, [loadMore, cursor]);
+  useEffect(() => {
+    if (isOpen) {
+      setPlans([]); // 이전 목록 제거
+      setCursor(0); // 커서 초기화
+      loadMore();
+    }
+  }, [isOpen]);
   const handleLogOut = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -90,8 +103,9 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
   const handlePlanData = (id) => {
     AuthAxios.get(`/plan/${id}`)
       .then((res) => {
-        setData(res.data);
-        setMaxId(res.max_id);
+        console.log(res);
+        setData(res.data.data);
+        setMaxId(res.data.max_id);
       })
       .catch((err) => console.error(err));
   };
