@@ -146,7 +146,7 @@ function DayList({ id, day }) {
         <div ref={setNodeRef} className="DayContent">
           {items.map((item, index) => (
             <React.Fragment key={item.local_id}>
-              <SortableCard item={item} notSelected={notSelected} />
+              <SortableCard item={item} notSelected={notSelected} dayId={day} />
               {index < items.length - 1 && (
                 <TransportDuration duration={durations[index]} />
               )}

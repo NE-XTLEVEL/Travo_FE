@@ -19,7 +19,6 @@ import { IoSchoolOutline, IoLocationOutline } from 'react-icons/io5';
 import { HiOutlineBuildingOffice } from 'react-icons/hi2';
 import { LuCircleParking } from 'react-icons/lu';
 import classNames from 'classnames';
-import { useState } from 'react';
 import Modal from './Modal';
 import FixLocation from './FixLocation';
 
@@ -72,8 +71,14 @@ function CardIcons(category) {
   }
 }
 
-const Card = ({ isOverlay = false, item, notSelected }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const Card = ({
+  isOverlay = false,
+  item,
+  notSelected,
+  isModalOpen,
+  setIsModalOpen,
+  dayId,
+}) => {
   const classes = classNames('Card', {
     OverlayCard: isOverlay,
   });
@@ -111,11 +116,19 @@ const Card = ({ isOverlay = false, item, notSelected }) => {
         </div>
       </div>
 
-      <button className="Option" onClick={openModal}>
+      <button
+        className="Option"
+        onMouseDown={(e) => e.stopPropagation()} //드래그 이벤트 전파 차단
+        onClick={(e) => {
+          e.stopPropagation();
+          openModal();
+        }}
+        style={{ background: 'none', border: 'none' }}
+      >
         <Option />
       </button>
       <Modal open={isModalOpen} close={closeModal}>
-        <FixLocation close={closeModal} />
+        <FixLocation item={item} close={closeModal} dayId={dayId} />
       </Modal>
     </div>
   );
