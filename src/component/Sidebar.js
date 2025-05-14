@@ -10,9 +10,11 @@ import { PiSignOut } from 'react-icons/pi';
 import AuthAxios from './AuthAxios';
 import { PlanContext } from '../context/PlanContext';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
-  const { setData, setMaxId } = useContext(PlanContext);
+  const navigate = useNavigate();
+  const { setData, setMaxId, setPlanName } = useContext(PlanContext);
   const [plans, setPlans] = useState([]);
   const [cursor, setCursor] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -90,9 +92,13 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
     if (isOpen) {
       setPlans([]); // 이전 목록 제거
       setCursor(0); // 커서 초기화
-      loadMore();
     }
   }, [isOpen]);
+  useEffect(() => {
+    if (isOpen && cursor === 0) {
+      loadMore();
+    }
+  }, [cursor, isOpen]);
   const handleLogOut = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -104,6 +110,8 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
         console.log(res);
         setData(res.data.data);
         setMaxId(res.data.max_id);
+        setPlanName(res.data.plan_name);
+        navigate(`/Plan?planId=${id}`);
       })
       .catch((err) => console.error(err));
   };
