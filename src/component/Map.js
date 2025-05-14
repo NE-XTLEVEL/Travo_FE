@@ -93,9 +93,9 @@ const MapComponent = () => {
         });
 
         map.setBounds(bounds); // bounds에 저장된 모든 마커 한 화면 안에 보이도록 (카카오맵 제공 메서드)
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 767) {
           const mapHeight = mapRef.current.offsetHeight;
-          const offsetY = Math.floor(mapHeight * 0.4); // 지도 높이의 40% 아래로 이동
+          const offsetY = Math.floor(mapHeight * 0.3); // 지도 높이의 30%를 아래로 이동 -> 마커가 위로 올라감 -> recommendation에 덜 가림
           map.panBy(0, offsetY); // 지도를 아래로 → 마커는 화면 위쪽으로
         }
       } else {
