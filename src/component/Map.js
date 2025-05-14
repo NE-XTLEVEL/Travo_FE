@@ -125,7 +125,7 @@ const MapComponent = ({ isMobile = false }) => {
         if (window.kakao && window.kakao.maps) {
           window.kakao.maps.load(() => InitMap(markerData));
         } else {
-          console.log('카카오맵 API가 정상적으로 로드되지 않았습니다.');
+          console.error('카카오맵 API가 정상적으로 로드되지 않았습니다.');
         }
       };
     };
