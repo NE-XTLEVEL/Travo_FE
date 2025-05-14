@@ -7,13 +7,18 @@ import authAxios from './AuthAxios';
 import { PlanContext } from '../context/PlanContext';
 
 const Header = ({ mobile = false, main = false }) => {
-  const { planName } = useContext(PlanContext);
+  const { planName, setPlanName } = useContext(PlanContext);
   const [isOpen, setIsOpen] = useState(false);
-  const [input, setInput] = useState(planName || '');
+  const [input, setInput] = useState(planName);
   const [debouncedInput, setDebouncedInput] = useState('');
   const [auth, setAuth] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setInput(planName);
+  }, [planName]);
+
   useEffect(() => {
     authAxios
       .get('/auth/check')
@@ -29,13 +34,14 @@ const Header = ({ mobile = false, main = false }) => {
   }, []);
   useEffect(() => {
     const handler = setTimeout(() => {
+      setPlanName(input);
       setDebouncedInput(input);
     }, 500); // 500ms 후 반영
 
     return () => {
       clearTimeout(handler); // 다음 입력 전에 이전 타이머 취소
     };
-  }, [input]);
+  }, [input, setPlanName]);
 
   // ✅ 이 effect는 debouncedInput이 바뀔 때만 실행됨
   useEffect(() => {
