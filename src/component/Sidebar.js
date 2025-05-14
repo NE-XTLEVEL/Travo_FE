@@ -49,8 +49,14 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
       .then((res) => {
         console.log(res);
         const result = res.data;
+
         setPlans((prev) => [...prev, ...result]);
-        setCursor(result[result.length - 1].id);
+
+        if (result.length === 0) {
+          setCursor(1);
+        } else {
+          setCursor(result[result.length - 1].id);
+        }
       })
       .catch((error) => {
         console.error('데이터 불러오기 오류:', error);
