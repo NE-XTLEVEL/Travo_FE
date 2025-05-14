@@ -125,23 +125,15 @@ const MapComponent = ({ isMobile = false }) => {
         if (window.kakao && window.kakao.maps) {
           window.kakao.maps.load(() => InitMap(markerData));
         } else {
-          console.error('카카오맵 API가 정상적으로 로드되지 않았습니다.');
+          console.log('카카오맵 API가 정상적으로 로드되지 않았습니다.');
         }
       };
     };
 
     if (!window.kakao || !window.kakao.maps) {
-      if (data) {
-        loadMapScript(data);
-      } else {
-        loadMapScript({});
-      }
+      loadMapScript(data || {});
     } else {
-      if (data) {
-        window.kakao.maps.load(() => InitMap(data));
-      } else {
-        window.kakao.maps.load(() => InitMap({}));
-      }
+      window.kakao.maps.load(() => InitMap(data || {}));
     }
   }, [data, selectedDay, isMobile]); // data와 highlitedDayIndex가 변경될 때마다 useEffect 실행
 
