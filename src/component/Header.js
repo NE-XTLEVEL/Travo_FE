@@ -12,7 +12,8 @@ const Header = ({ mobile = false, main = false }) => {
   const [input, setInput] = useState(planName);
   const [debouncedInput, setDebouncedInput] = useState('');
   const [auth, setAuth] = useState(false);
-
+  const queryParams = new URLSearchParams(location.search);
+  const planId = Number(queryParams.get('planId'));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,10 +47,20 @@ const Header = ({ mobile = false, main = false }) => {
   // ✅ 이 effect는 debouncedInput이 바뀔 때만 실행됨
   useEffect(() => {
     if (debouncedInput) {
-      // 여기에 API 호출
+      authAxios
+        .patch(`/plan/name/${planId}`, {
+          name: input,
+        })
+        .then((res) => {
+          console.log(res.data.message);
+          setPlanName(input);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
       console.log('요청:', debouncedInput);
     }
-  }, [debouncedInput]);
+  }, [debouncedInput, input, planId, setPlanName]);
   return (
     <div
       style={{
@@ -113,10 +124,11 @@ const Header = ({ mobile = false, main = false }) => {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            maxLength={19}
             style={{
               border: 'none',
               height: '50px',
-              width: '80%',
+              width: '90%',
               fontSize: mobile ? '20px' : '26px',
               fontWeight: 700,
               textAlign: 'center',

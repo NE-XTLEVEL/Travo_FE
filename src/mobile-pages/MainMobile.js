@@ -46,8 +46,8 @@ const MainMobile = () => {
     const days = moment(endDate).diff(moment(startDate), 'days') + 1;
     const startDateFormatted = moment(startDate).format('YYYY-MM-DD'); // 서버에 보낼 시작 날짜
     const planName = moment(startDate).isSame(endDate, 'day')
-      ? `${moment(startDate).format('MM.DD(ddd)')} 여행 계획`
-      : `${moment(startDate).format('MM.DD(ddd)')}-${moment(endDate).format('MM.DD(ddd)')} 여행 계획`;
+      ? `${moment(startDate).format('MM.DD(ddd)')} 여행`
+      : `${moment(startDate).format('MM.DD(ddd)')}-${moment(endDate).format('MM.DD(ddd)')} 여행`;
     const getRecommendation = async () => {
       try {
         console.log('loading....');
