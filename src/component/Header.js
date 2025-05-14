@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 import authAxios from './AuthAxios';
 
-const Header = ({ mobile = false, planName }) => {
+const Header = ({ mobile = false, planName, main = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState(planName || '');
   const [debouncedInput, setDebouncedInput] = useState('');
@@ -45,12 +45,11 @@ const Header = ({ mobile = false, planName }) => {
   return (
     <div
       style={{
-        backgroundColor: mobile ? 'transparent' : 'white',
+        backgroundColor: main ? 'transparent' : 'white',
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        ...(!mobile && { borderBottom: '1px solid #EFEFEF' }),
       }}
     >
       <button
@@ -91,7 +90,7 @@ const Header = ({ mobile = false, planName }) => {
           justifyContent: 'center',
         }}
       >
-        {mobile ? (
+        {main ? (
           <div
             style={{
               padding: '10px',

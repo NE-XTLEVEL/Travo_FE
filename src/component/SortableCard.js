@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
@@ -23,9 +24,11 @@ import Card from './Card';
   );
 }*/
 
-export default function SortableCard({ item, notSelected = false }) {
+export default function SortableCard({ item, notSelected = false, dayId }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { attributes, listeners, setNodeRef, transform } = useSortable({
     id: item.local_id,
+    disabled: isModalOpen,
   });
 
   const style = {
@@ -36,7 +39,13 @@ export default function SortableCard({ item, notSelected = false }) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card item={item} notSelected={notSelected} />
+      <Card
+        item={item}
+        notSelected={notSelected}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        dayId={dayId}
+      />
     </div>
   );
 }

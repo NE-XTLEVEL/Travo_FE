@@ -19,7 +19,22 @@
   border: none;
   background-color: #efefef;
 }
+.searchbar::-webkit-scrollbar {
+  width: 6px;
+}
 
+.searchbar::-webkit-scrollbar-track {
+  background: none;
+}
+
+.searchbar::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+  border-radius: 3px;
+}
+
+.searchbar::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
 .scroll-container {
   overflow: auto; /* 내부 스크롤 활성화 */
   scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
