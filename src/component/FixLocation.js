@@ -4,15 +4,17 @@ import { LuSend } from 'react-icons/lu';
 import { FaPlus } from 'react-icons/fa6';
 import { PlanContext } from '../context/PlanContext';
 // import AuthAxios from './AuthAxios';
-import axios from 'axios';
+import authAxios from './AuthAxios';
 
 const FixLocation = ({ item, close, dayId }) => {
   const [keyWord, setKeyWord] = useState('');
   const [places, setPlaces] = useState([]);
-  const { setData } = useContext(PlanContext);
+  const { data, setData } = useContext(PlanContext);
+  const queryParams = new URLSearchParams(location.search);
+  const planId = Number(queryParams.get('planId'));
   /* eslint-disable camelcase */
   const fixPlaces = (keyWord) => {
-    axios
+    authAxios
       .post(
         'https://api.travo.kr/location/recommendation/one',
         {
@@ -40,20 +42,33 @@ const FixLocation = ({ item, close, dayId }) => {
         console.log('fixlocation 실패', err);
       });
   };
+  const handleChange = (e) => {
+    const el = e.target;
+    setKeyWord(el.value);
+    el.style.height = 'auto'; // 높이 초기화
+    el.style.height = `${el.scrollHeight}px`; // 콘텐츠에 맞춰 자동 높이
+  };
   /* eslint-enable camelcase */
   const handleFix = (place) => {
     console.log(dayId);
-    setData((prevData) => {
-      console.log(prevData[`day${dayId}`]);
-      const updatedDayList = prevData[`day${dayId}`].map((oldItem) =>
+    const newData = {
+      ...data,
+      [`day${dayId}`]: data[`day${dayId}`].map((oldItem) =>
         oldItem.local_id === place.local_id ? place : oldItem
-      );
+      ),
+    };
+    setData(newData);
+    authAxios
+      .put(`/plan/${planId}`, {
+        data: newData,
+      })
+      .then((res) => {
+        console.log(res.data.message);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
-      return {
-        ...prevData,
-        [`day${dayId}`]: updatedDayList, // 수정한 일차만 교체
-      };
-    });
     close();
   };
   const handleKeyDown = (e) => {
@@ -105,13 +120,13 @@ const FixLocation = ({ item, close, dayId }) => {
               width: '80%',
               resize: 'none',
               overflowY: 'auto',
-              maxHeight: '200px',
-              minHeight: '80px',
+              maxHeight: '130px',
+              minHeight: '40px',
               lineHeight: '1.5',
               outline: 'none',
             }}
             value={keyWord}
-            onChange={(e) => setKeyWord(e.target.value)}
+            onChange={(e) => handleChange(e)}
             onKeyDown={(e) => handleKeyDown(e)}
           />
           <LuSend

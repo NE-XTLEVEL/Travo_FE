@@ -4,6 +4,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { FiSearch } from 'react-icons/fi';
 import { BeatLoader } from 'react-spinners';
 import { PlanContext } from '../context/PlanContext';
+import authAxios from './AuthAxios';
 
 const AddLocation = ({ dayId, close }) => {
   const { data, setData, maxId, setMaxId } = useContext(PlanContext);
@@ -12,6 +13,8 @@ const AddLocation = ({ dayId, close }) => {
   const [keyWord, setKeyWord] = useState('');
   const [loading, setLoading] = useState(false);
   const [noResult, setNoResult] = useState(false);
+  const queryParams = new URLSearchParams(location.search);
+  const planId = Number(queryParams.get('planId'));
   const searchPlaces = (keyWord) => {
     if (!window.kakao || !window.kakao.maps) return;
 
@@ -56,8 +59,8 @@ const AddLocation = ({ dayId, close }) => {
             name: place.place_name,
             address: place.address_name,
             url: place.place_url,
-            x: place.x,
-            y: place.y,
+            x: parseFloat(place.x),
+            y: parseFloat(place.y),
             category: place.category_group_name,
             local_id: maxId + 1,
           },
@@ -66,7 +69,16 @@ const AddLocation = ({ dayId, close }) => {
       setData(updated);
       setMaxId(maxId + 1);
       close();
-      console.log(updated);
+      authAxios
+        .put(`/plan/${planId}`, {
+          data: updated,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       console.log('이미 있는 장소입니다.');
       console.log(dayPlan);

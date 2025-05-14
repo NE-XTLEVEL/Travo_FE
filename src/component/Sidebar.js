@@ -98,7 +98,7 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
     if (isOpen && cursor === 0) {
       loadMore();
     }
-  }, [cursor, isOpen]);
+  }, [cursor, isOpen, loadMore]);
   const handleLogOut = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
