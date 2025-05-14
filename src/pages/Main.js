@@ -12,6 +12,7 @@ import { LuSend } from 'react-icons/lu';
 import mainDescriptionImg from './assets/mainDescription.svg';
 import mainPhonePCImg from './assets/mainPhonePCImg.svg';
 import CustomCalendar from '../component/CustomCalendar';
+import Loading from '../component/Loading';
 import { PlanContext } from '../context/PlanContext';
 import { SelectedDayContext } from '../context/SelectedDayContext';
 import moment from 'moment';
@@ -78,8 +79,10 @@ const Main = () => {
   const { setData } = useContext(PlanContext);
   const { setSelectedDay } = useContext(SelectedDayContext);
   const [prompt, setPrompt] = useState(''); // 프롬프트
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태
   const navigate = useNavigate();
   const handleSubmit = async () => {
+    setIsLoading(true); // 로딩 시작
     setData(null);
     setSelectedDay(0);
     const days = moment(endDate).diff(moment(startDate), 'days') + 1;
@@ -115,6 +118,10 @@ const Main = () => {
     };
     getRecommendation();
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
