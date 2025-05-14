@@ -102,7 +102,11 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
   const handleLogOut = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    navigate('/main');
+    if (window.location.pathname === '/main') {
+      window.location.reload(); // 현재 페이지 새로고침
+    } else {
+      navigate('/main'); // 다른 페이지면 /main으로 이동
+    }
   };
   const handlePlanData = (id) => {
     AuthAxios.get(`/plan/${id}`)
