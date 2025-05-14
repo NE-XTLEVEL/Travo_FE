@@ -41,7 +41,7 @@ const PlanMobile = () => {
             width: '100%',
           }}
         >
-          <Map />
+          <Map isMobile={true} />
         </div>
         <div
           style={{

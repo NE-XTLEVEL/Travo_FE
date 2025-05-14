@@ -1,11 +1,26 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useCallback,
+  useState,
+  useContext,
+} from 'react';
 import styles from './Sidebar.module.css';
 import { PiSignOut } from 'react-icons/pi';
+import AuthAxios from './AuthAxios';
+import { PlanContext } from '../context/PlanContext';
+import { MaxIdContext } from '../context/MaxIdContext';
+import ClipLoader from 'react-spinners/ClipLoader';
 
-const Sidebar = ({ children, isOpen, setIsOpen, mobile }) => {
+const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
+  const { setData } = useContext(PlanContext);
+  const { setMaxId } = useContext(MaxIdContext);
+  const [plans, setPlans] = useState([]);
+  const [cursor, setCursor] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const loaderRef = useRef(null);
   //mobile일 때 sidebar의 너비를 더 넓게 설정
   const side = useRef();
-
   const handleClose = useCallback(
     (e) => {
       if (side.current && !side.current.contains(e.target)) {
@@ -26,20 +41,65 @@ const Sidebar = ({ children, isOpen, setIsOpen, mobile }) => {
       window.removeEventListener('mousedown', handleClose);
     };
   }, [isOpen, handleClose]);
+  const loadMore = useCallback(() => {
+    if (isLoading) return;
+    setIsLoading(true);
 
+    AuthAxios.get(`plan/all${cursor === 0 ? '' : `?cursor=${cursor}`}`)
+      .then((res) => {
+        console.log(res);
+        const result = res.data;
+        setPlans((prev) => [...prev, ...result]);
+        setCursor(result[result.length - 1].id);
+      })
+      .catch((error) => {
+        console.error('데이터 불러오기 오류:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [cursor, isLoading]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && !(cursor === 1)) {
+          loadMore();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    const currentLoader = loaderRef.current;
+    if (currentLoader) {
+      observer.observe(currentLoader);
+    }
+
+    return () => {
+      if (currentLoader) {
+        observer.unobserve(currentLoader);
+      }
+    };
+  }, [loadMore, cursor]);
   const handleLogOut = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     window.location.reload();
   };
-
+  const handlePlanData = (id) => {
+    AuthAxios.get(`/plan/${id}`)
+      .then((res) => {
+        setData(res.data);
+        setMaxId(res.max_id);
+      })
+      .catch((err) => console.error(err));
+  };
   return (
     <div className={styles.container}>
       <div
         ref={side}
-        className={isOpen ? 'open' : ''}
         style={{
-          zIndex: 5,
           height: '100%',
           width: mobile ? '70%' : '25%',
           right: isOpen ? 0 : mobile ? '-70%' : '-25%',
@@ -47,9 +107,48 @@ const Sidebar = ({ children, isOpen, setIsOpen, mobile }) => {
           position: 'fixed',
           backgroundColor: 'white',
           transition: 'right 0.5s ease',
+          zIndex: 5,
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        <div className={styles.content}>{children}</div>
+        <div
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+          }}
+        >
+          <div className={styles.content}>
+            {plans.map((plan) => (
+              <div key={plan.id} className="search-item">
+                <button
+                  style={{ background: 'none', border: 'none' }}
+                  onClick={() => handlePlanData(plan.id)}
+                >
+                  {plan.plan_name}
+                </button>
+              </div>
+            ))}
+
+            {/* ✅ 로딩 스피너 */}
+            {isLoading && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  margin: '10px 0',
+                }}
+              >
+                <ClipLoader size={24} color="#9c63e1" />
+              </div>
+            )}
+
+            {/* ✅ IntersectionObserver용 */}
+            <div ref={loaderRef} style={{ height: '1px' }} />
+          </div>
+        </div>
+
+        {/* ✅ 하단 고정 버튼 */}
         <button className={styles.logoutButton} onClick={handleLogOut}>
           <PiSignOut />
           로그아웃

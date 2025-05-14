@@ -15,7 +15,7 @@ import {
 } from 'react-icons/lia';
 import { BsCart2 } from 'react-icons/bs';
 import { HiOutlineFlag } from 'react-icons/hi';
-import { IoSchoolOutline } from 'react-icons/io5';
+import { IoSchoolOutline, IoLocationOutline } from 'react-icons/io5';
 import { HiOutlineBuildingOffice } from 'react-icons/hi2';
 import { LuCircleParking } from 'react-icons/lu';
 import classNames from 'classnames';
@@ -62,19 +62,25 @@ function CardIcons(category) {
       return <LiaBriefcaseMedicalSolid size={35} color="#B0B0B0" />;
     case '약국':
       return <LiaBriefcaseMedicalSolid size={35} color="#B0B0B0" />;
+    case '기타':
+      return <IoLocationOutline size={35} color="#B0B0B0" />;
     default:
       return <FiAlertCircle size={35} color="#B0B0B0" />;
   }
 }
 
-const Card = ({ isOverlay = false, item }) => {
+const Card = ({ isOverlay = false, item, notSelected }) => {
   const classes = classNames('Card', {
     OverlayCard: isOverlay,
   });
 
+  const contentClasses = classNames('CardContent', {
+    lowOpacity: notSelected, // 선택되지 않은 일차의 카드 투명도 조절
+  });
+
   return (
     <div className={classes}>
-      <div className="CardContent">
+      <div className={contentClasses}>
         <div className="CardImage">{CardIcons(item.category)}</div>
         <div className="CardInfo">
           <div className="CardType">{item.category}</div>

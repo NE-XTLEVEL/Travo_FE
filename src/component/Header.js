@@ -8,22 +8,10 @@ import authAxios from './AuthAxios';
 const Header = ({ mobile = false, planName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState(planName || '');
+  const [debouncedInput, setDebouncedInput] = useState('');
   const [auth, setAuth] = useState(false);
+
   const navigate = useNavigate();
-  const plans = [
-    {
-      id: 1,
-      plan: '2박3일 서울 여행 계획',
-    },
-    {
-      id: 2,
-      plan: '2박3일 서울 여행 계획',
-    },
-    {
-      id: 3,
-      plan: '2박3일 서울 여행 계획',
-    },
-  ];
   useEffect(() => {
     authAxios
       .get('/auth/check')
@@ -37,22 +25,27 @@ const Header = ({ mobile = false, planName }) => {
         console.log(error);
       });
   }, []);
-  const handleToPlan = (planName) => {
-    authAxios
-      .get(`/auth/plan${planName}`)
-      .then((res) => {
-        if (res.status == 200) {
-          navigate('/plan', { state: { plan: res.data } });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedInput(input);
+    }, 500); // 500ms 후 반영
+
+    return () => {
+      clearTimeout(handler); // 다음 입력 전에 이전 타이머 취소
+    };
+  }, [input]);
+
+  // ✅ 이 effect는 debouncedInput이 바뀔 때만 실행됨
+  useEffect(() => {
+    if (debouncedInput) {
+      // 여기에 API 호출
+      console.log('요청:', debouncedInput);
+    }
+  }, [debouncedInput]);
   return (
     <div
       style={{
-        backgroundColor: 'white',
+        backgroundColor: mobile ? 'transparent' : 'white',
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
@@ -69,6 +62,7 @@ const Header = ({ mobile = false, planName }) => {
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'center',
+          padding: 0,
         }}
         onClick={() => navigate('/main')}
       >
@@ -97,19 +91,32 @@ const Header = ({ mobile = false, planName }) => {
           justifyContent: 'center',
         }}
       >
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          style={{
-            border: 'none',
-            height: '50px',
-            width: '80%',
-            fontSize: mobile ? '20px' : '26px',
-            fontWeight: 700,
-            textAlign: 'center',
-            outline: 'none',
-          }}
-        ></input>
+        {mobile ? (
+          <div
+            style={{
+              padding: '10px',
+              fontSize: '24px',
+              color: '#030045',
+              fontWeight: 700,
+            }}
+          >
+            Travo
+          </div>
+        ) : (
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            style={{
+              border: 'none',
+              height: '50px',
+              width: '80%',
+              fontSize: mobile ? '20px' : '26px',
+              fontWeight: 700,
+              textAlign: 'center',
+              outline: 'none',
+            }}
+          ></input>
+        )}
       </div>
       <div
         style={{
@@ -142,18 +149,7 @@ const Header = ({ mobile = false, planName }) => {
         )}
       </div>
 
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} mobile={mobile}>
-        {plans.map((plan) => (
-          <div key={plan.id} className="search-item">
-            <button
-              style={{ background: 'none', border: 'none' }}
-              onClick={() => handleToPlan(plan.plan)}
-            >
-              {plan.plan}
-            </button>
-          </div>
-        ))}
-      </Sidebar>
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} mobile={mobile} />
     </div>
   );
 };
