@@ -17,6 +17,6 @@ export const Background = styled.div`
 export const LoadingText = styled.div`
   font: 1rem 'KakaoBigSans';
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #b0b0b0;
 `;
