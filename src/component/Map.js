@@ -19,6 +19,7 @@ const MapComponent = ({ isMobile = false }) => {
      * @param {*} markerData :
      */
     const InitMap = (markerData) => {
+      console.log('InitMap', markerData);
       // 1) Kakao Map 초기화
       if (window.kakao && window.kakao.maps) {
         const map = new window.kakao.maps.Map(mapRef.current, {
@@ -116,6 +117,7 @@ const MapComponent = ({ isMobile = false }) => {
      * loadMapScript 함수 - Kakao Map API 스크립트 생성, 로드
      */
     const loadMapScript = (markerData) => {
+      console.log('loadMapScript', markerData);
       const script = document.createElement('script');
       script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
       script.async = true;
@@ -123,6 +125,7 @@ const MapComponent = ({ isMobile = false }) => {
 
       script.onload = () => {
         if (window.kakao && window.kakao.maps) {
+          console.log('카카오맵 API 로드 완료');
           window.kakao.maps.load(() => InitMap(markerData));
         } else {
           console.error('카카오맵 API가 정상적으로 로드되지 않았습니다.');
@@ -131,11 +134,15 @@ const MapComponent = ({ isMobile = false }) => {
     };
 
     if (!window.kakao || !window.kakao.maps) {
-      loadMapScript(data || {});
+      if (data) {
+        loadMapScript(data);
+      }
     } else {
-      window.kakao.maps.load(() => InitMap(data || {}));
+      if (data) {
+        window.kakao.maps.load(() => InitMap(data || {}));
+      }
     }
-  }, [data, selectedDay, isMobile]); // data와 highlitedDayIndex가 변경될 때마다 useEffect 실행
+  }, [data, selectedDay, isMobile]); // data와 selectedDay가 변경될 때마다 useEffect 실행
 
   // 렌더링할 JSX를 반환. React 애플리케이션
   return <div className="mapViewContainer" ref={mapRef}></div>;

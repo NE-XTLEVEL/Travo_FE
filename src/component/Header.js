@@ -124,10 +124,11 @@ const Header = ({ mobile = false, main = false }) => {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            maxLength={19}
             style={{
               border: 'none',
               height: '50px',
-              width: '80%',
+              width: '90%',
               fontSize: mobile ? '20px' : '26px',
               fontWeight: 700,
               textAlign: 'center',
