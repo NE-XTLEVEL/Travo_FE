@@ -123,7 +123,6 @@ const MapComponent = ({ isMobile = false }) => {
 
       script.onload = () => {
         if (window.kakao && window.kakao.maps) {
-          console.log('카카오맵 API 로드 완료');
           window.kakao.maps.load(() => InitMap(markerData));
         } else {
           console.error('카카오맵 API가 정상적으로 로드되지 않았습니다.');
