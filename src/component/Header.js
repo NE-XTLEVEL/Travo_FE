@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { FaBars } from 'react-icons/fa6';
 import { PiSignInBold } from 'react-icons/pi';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 import authAxios from './AuthAxios';
+import { PlanContext } from '../context/PlanContext';
 
-const Header = ({ mobile = false, planName, main = false }) => {
+const Header = ({ mobile = false, main = false }) => {
+  const { planName } = useContext(PlanContext);
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState(planName || '');
   const [debouncedInput, setDebouncedInput] = useState('');

@@ -134,19 +134,13 @@ const MapComponent = ({ isMobile = false }) => {
       if (data) {
         loadMapScript(data);
       } else {
-        fetch('/mockData.json')
-          .then((res) => res.json())
-          .then((data) => loadMapScript(data))
-          .catch((err) => console.error('데이터 로딩 실패:', err));
+        loadMapScript({});
       }
     } else {
       if (data) {
         window.kakao.maps.load(() => InitMap(data));
       } else {
-        fetch('/mockData.json')
-          .then((res) => res.json())
-          .then((data) => window.kakao.maps.load(() => InitMap(data)))
-          .catch((err) => console.error('데이터 로딩 실패:', err));
+        window.kakao.maps.load(() => InitMap({}));
       }
     }
   }, [data, selectedDay, isMobile]); // data와 highlitedDayIndex가 변경될 때마다 useEffect 실행

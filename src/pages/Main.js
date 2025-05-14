@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderMain from '../component/Header';
 import './Main.css';
@@ -7,11 +6,14 @@ import Main2 from './Main2';
 import Footer from '../component/Footer';
 import '../component/Footer.css';
 import '../component/CustomCalendar';
+import authAxios from '../component/AuthAxios';
 import { MdPeopleOutline, MdKeyboardArrowDown } from 'react-icons/md';
 import { LuSend } from 'react-icons/lu';
 import mainDescriptionImg from './assets/mainDescription.svg';
 import mainPhonePCImg from './assets/mainPhonePCImg.svg';
 import CustomCalendar from '../component/CustomCalendar';
+import { PlanContext } from '../context/PlanContext';
+import { SelectedDayContext } from '../context/SelectedDayContext';
 import moment from 'moment';
 import 'moment/locale/ko';
 moment.locale('ko');
@@ -73,18 +75,45 @@ const Main = () => {
     setShowInput(!showInput);
   };
   // 서버로 데이터 request 보내기
+  const { setData } = useContext(PlanContext);
+  const { setSelectedDay } = useContext(SelectedDayContext);
   const [prompt, setPrompt] = useState(''); // 프롬프트
   const navigate = useNavigate();
   const handleSubmit = async () => {
+    setData(null);
+    setSelectedDay(0);
     const days = moment(endDate).diff(moment(startDate), 'days') + 1;
-    navigate('/loading', {
-      state: {
-        description: prompt,
-        startDate: moment(startDate).format('YYYY-MM-DD'),
-        days: days,
-        planName: `${days - 1}박${days}일 여행계획`,
-      },
-    });
+    const startDateFormatted = moment(startDate).format('YYYY-MM-DD'); // 서버에 보낼 시작 날짜
+    const planName = moment(startDate).isSame(endDate, 'day')
+      ? `${moment(startDate).format('MM.DD(ddd)')} 여행 계획`
+      : `${moment(startDate).format('MM.DD(ddd)')}-${moment(endDate).format('MM.DD(ddd)')} 여행 계획`;
+    const getRecommendation = async () => {
+      try {
+        console.log('loading....');
+        const response = await authAxios.post('/location/recommendation', {
+          description: prompt,
+          date: startDateFormatted,
+          days: days,
+          // eslint-disable-next-line camelcase
+          plan_name: planName,
+        });
+
+        const plan = response.data;
+        const planId = plan.plan_id || 0; // 로그인하지 않아 planId가 null인 경우 0으로 설정
+        window.localStorage.setItem('travo_plan_name', planName);
+        window.localStorage.setItem(
+          'travo_plan_data',
+          JSON.stringify(plan.data)
+        );
+        window.localStorage.setItem('travo_plan_max_id', plan.max_id);
+        navigate(`/Plan?planId=${planId}`);
+      } catch (error) {
+        console.error('Error:', error);
+        alert('데이터를 가져오는 중 오류가 발생했습니다. 다시 시도해 주세요.');
+        navigate('/main');
+      }
+    };
+    getRecommendation();
   };
 
   return (
