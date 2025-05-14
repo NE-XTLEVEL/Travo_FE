@@ -15,10 +15,12 @@ import {
 } from 'react-icons/lia';
 import { BsCart2 } from 'react-icons/bs';
 import { HiOutlineFlag } from 'react-icons/hi';
-import { IoSchoolOutline } from 'react-icons/io5';
+import { IoSchoolOutline, IoLocationOutline } from 'react-icons/io5';
 import { HiOutlineBuildingOffice } from 'react-icons/hi2';
 import { LuCircleParking } from 'react-icons/lu';
 import classNames from 'classnames';
+import Modal from './Modal';
+import FixLocation from './FixLocation';
 
 function CardIcons(category) {
   switch (category) {
@@ -62,12 +64,21 @@ function CardIcons(category) {
       return <LiaBriefcaseMedicalSolid size={35} color="#B0B0B0" />;
     case '약국':
       return <LiaBriefcaseMedicalSolid size={35} color="#B0B0B0" />;
+    case '기타':
+      return <IoLocationOutline size={35} color="#B0B0B0" />;
     default:
       return <FiAlertCircle size={35} color="#B0B0B0" />;
   }
 }
 
-const Card = ({ isOverlay = false, item, notSelected }) => {
+const Card = ({
+  isOverlay = false,
+  item,
+  notSelected,
+  isModalOpen,
+  setIsModalOpen,
+  dayId,
+}) => {
   const classes = classNames('Card', {
     OverlayCard: isOverlay,
   });
@@ -75,7 +86,12 @@ const Card = ({ isOverlay = false, item, notSelected }) => {
   const contentClasses = classNames('CardContent', {
     lowOpacity: notSelected, // 선택되지 않은 일차의 카드 투명도 조절
   });
-
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className={classes}>
       <div className={contentClasses}>
@@ -100,9 +116,20 @@ const Card = ({ isOverlay = false, item, notSelected }) => {
         </div>
       </div>
 
-      <div className="Option">
+      <button
+        className="Option"
+        onMouseDown={(e) => e.stopPropagation()} //드래그 이벤트 전파 차단
+        onClick={(e) => {
+          e.stopPropagation();
+          openModal();
+        }}
+        style={{ background: 'none', border: 'none' }}
+      >
         <Option />
-      </div>
+      </button>
+      <Modal open={isModalOpen} close={closeModal}>
+        <FixLocation item={item} close={closeModal} dayId={dayId} />
+      </Modal>
     </div>
   );
 };

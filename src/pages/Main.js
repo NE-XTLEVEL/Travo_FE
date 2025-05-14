@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import HeaderMain from '../component/HeaderMain';
+import HeaderMain from '../component/Header';
 import './Main.css';
 import Main2 from './Main2';
 import Footer from '../component/Footer';
@@ -121,7 +121,7 @@ const Main = () => {
       <div className="MainContainer" ref={containerRef}>
         <div className="Main" id="firstPage">
           <div className={isSticky ? 'MainHeader-sticky' : 'MainHeader'}>
-            <HeaderMain style={{ position: 'sticky' }} />
+            <HeaderMain main={true} style={{ position: 'sticky' }} />
           </div>
           <div style={{ width: '100vw' }}>
             <div className="MainImage">

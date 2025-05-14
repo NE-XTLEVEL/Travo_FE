@@ -1,29 +1,65 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useContext, useState } from 'react';
 import './AddLocation.css';
 import { LuSend } from 'react-icons/lu';
 import { FaPlus } from 'react-icons/fa6';
+import { PlanContext } from '../context/PlanContext';
+// import AuthAxios from './AuthAxios';
+import axios from 'axios';
 
-const FixLocation = ({ item, setDayPlan }) => {
+const FixLocation = ({ item, close, dayId }) => {
   const [keyWord, setKeyWord] = useState('');
   const [places, setPlaces] = useState([]);
-  const searchPlaces = ({ keyWord }) => {
-    const url = '' + keyWord;
+  const { setData } = useContext(PlanContext);
+  /* eslint-disable camelcase */
+  const fixPlaces = (keyWord) => {
     axios
-      .get(url)
+      .post(
+        'https://api.travo.kr/location/recommendation/one',
+        {
+          description: keyWord,
+          day: 0,
+          category: item.category,
+          is_lunch: true,
+          x: item.x,
+          y: item.y,
+          high_review: true,
+          local_id: item.local_id,
+        },
+        {
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then((res) => {
-        setPlaces(res.data);
         console.log(res.data);
+        setPlaces(res.data);
       })
       .catch((err) => {
-        console.error(err);
+        console.log('fixlocation 실패', err);
       });
   };
+  /* eslint-enable camelcase */
+  const handleFix = (place) => {
+    console.log(dayId);
+    setData((prevData) => {
+      console.log(prevData[`day${dayId}`]);
+      const updatedDayList = prevData[`day${dayId}`].map((oldItem) =>
+        oldItem.local_id === place.local_id ? place : oldItem
+      );
 
-  const handleFix = ({ place }) => {
-    setDayPlan((prevData) =>
-      prevData.map((item) => (item.id === place.id ? place : item))
-    );
+      return {
+        ...prevData,
+        [`day${dayId}`]: updatedDayList, // 수정한 일차만 교체
+      };
+    });
+    close();
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      fixPlaces(keyWord);
+    }
   };
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -34,6 +70,7 @@ const FixLocation = ({ item, setDayPlan }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          padding: '10px',
         }}
       >
         <div style={{ fontSize: '130%' }}>
@@ -44,7 +81,7 @@ const FixLocation = ({ item, setDayPlan }) => {
       {/* 2. 검색창 영역 (10%) */}
       <div
         style={{
-          flex: 1.5,
+          flex: 2,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -53,7 +90,7 @@ const FixLocation = ({ item, setDayPlan }) => {
         <div
           style={{
             width: '90%',
-            height: '80%',
+            height: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-evenly',
@@ -61,14 +98,24 @@ const FixLocation = ({ item, setDayPlan }) => {
             borderRadius: '10px',
           }}
         >
-          <input
+          <textarea
             className="searchbar"
-            style={{ fontSize: '130%' }}
+            style={{
+              fontSize: '100%',
+              width: '80%',
+              resize: 'none',
+              overflowY: 'auto',
+              maxHeight: '200px',
+              minHeight: '80px',
+              lineHeight: '1.5',
+              outline: 'none',
+            }}
             value={keyWord}
             onChange={(e) => setKeyWord(e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
           <LuSend
-            onClick={() => searchPlaces(keyWord)}
+            onClick={() => fixPlaces(keyWord)}
             style={{ cursor: 'pointer', scale: '1.5' }}
           />
         </div>
@@ -78,7 +125,7 @@ const FixLocation = ({ item, setDayPlan }) => {
       <div
         className="scroll-container"
         style={{
-          flex: 9,
+          flex: 7,
           overflow: 'auto',
           paddingLeft: '20px',
           paddingRight: '20px',
@@ -95,16 +142,28 @@ const FixLocation = ({ item, setDayPlan }) => {
           }}
         >
           {places.map((place) => (
-            <li key={place.id} className="search-item">
-              <div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <div>{place.category_group_name}</div>
-                  <div>{place.address_name}</div>
+            <li key={place.kakao_id} className="search-item">
+              <div
+                style={{
+                  flex: 5,
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <div>{place.category}</div>
+                  <div style={{ height: '30px' }}></div>
+                  <div style={{ color: '#B0B0B0' }}>{place.address}</div>
                 </div>
 
-                <strong>{place.place_name}</strong>
+                <strong>{place.name}</strong>
               </div>
               <button
+                style={{ flex: 1 }}
                 className="addlocation-button"
                 onClick={() => handleFix(place)}
               >

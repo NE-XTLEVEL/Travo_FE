@@ -5,10 +5,12 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './MainMobile.css';
 import CustomCalendar from '../component/CustomCalendar';
-import HeaderMain from '../component/HeaderMain';
+
 import authAxios from '../component/AuthAxios';
 import { PlanContext } from '../context/PlanContext';
 import { SelectedDayContext } from '../context/SelectedDayContext';
+import Header from '../component/Header';
+
 import { useNavigate } from 'react-router-dom';
 import { MdPeopleOutline } from 'react-icons/md';
 import { LuSend } from 'react-icons/lu';
@@ -102,7 +104,7 @@ const MainMobile = () => {
       style={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}
     >
       <div style={{ height: '8%', boxSizing: 'border-box' }}>
-        <HeaderMain mobile={true} />
+        <Header mobile={true} main={true} />
       </div>
       <Slider
         {...settings}
