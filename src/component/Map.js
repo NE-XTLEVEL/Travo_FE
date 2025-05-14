@@ -19,7 +19,6 @@ const MapComponent = ({ isMobile = false }) => {
      * @param {*} markerData :
      */
     const InitMap = (markerData) => {
-      console.log('InitMap', markerData);
       // 1) Kakao Map 초기화
       if (window.kakao && window.kakao.maps) {
         const map = new window.kakao.maps.Map(mapRef.current, {
@@ -117,7 +116,6 @@ const MapComponent = ({ isMobile = false }) => {
      * loadMapScript 함수 - Kakao Map API 스크립트 생성, 로드
      */
     const loadMapScript = (markerData) => {
-      console.log('loadMapScript', markerData);
       const script = document.createElement('script');
       script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&libraries=services&autoload=false`;
       script.async = true;
