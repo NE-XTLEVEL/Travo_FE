@@ -14,8 +14,6 @@
 .signup-image {
   width: 5vw; /* 원하는 크기로 조정 */
   height: auto; /* 원하는 크기로 조정 */
-  margin-right: 15px; /* 간격 조정 */
-  margin-top: 10px;
 }
 
 .logo-button {
