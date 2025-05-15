@@ -51,26 +51,27 @@ const Login = () => {
         </button>
       </div>
       <div className="login-container">
-        <div>
+        <div className="container-row">
+          <label className="input-label">이메일 주소</label>
           <input
             type="text"
             id="id"
-            placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyPress={handleKeyPress}
           />
         </div>
-        <div>
+        <div className="container-row">
+          <label className="input-label">비밀번호</label>
           <input
             type="password"
             id="password"
-            placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyPress={handleKeyPress}
           />
         </div>
+
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button onClick={handleLogin}>로그인</button>
       </div>
