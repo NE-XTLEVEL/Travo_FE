@@ -36,6 +36,7 @@ const Header = ({ mobile = false, main = false }) => {
   }, []);
   useEffect(() => {
     const handler = setTimeout(() => {
+      setPlanName(input); // 화면 너비 변경될 때도 input 유지
       setDebouncedInput(input);
     }, 1000); // 500ms 후 반영
 
