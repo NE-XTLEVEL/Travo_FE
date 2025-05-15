@@ -15,8 +15,6 @@
   width: 5vw; /* 원하는 크기로 조정 */
   height: auto; /* 원하는 크기로 조정 */
   min-width: 100px;
-  margin-right: 15px; /* 간격 조정 */
-  margin-top: 10px;
 }
 
 .logo-button {
@@ -101,6 +99,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 80%;
   margin: 0px auto;
 }
