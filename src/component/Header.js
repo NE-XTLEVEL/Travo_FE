@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { FaBars } from 'react-icons/fa6';
 import { PiSignInBold } from 'react-icons/pi';
 import Sidebar from './Sidebar';
@@ -15,6 +15,7 @@ const Header = ({ mobile = false, main = false }) => {
   const [isEdited, setIsEdited] = useState(false);
   const queryParams = new URLSearchParams(location.search);
   const planId = Number(queryParams.get('planId'));
+  const inputRef = useRef();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,6 +57,7 @@ const Header = ({ mobile = false, main = false }) => {
           console.log(res.data.message);
           setPlanName(debouncedInput);
           setIsEdited(false);
+          inputRef.current.blur();
         })
         .catch((err) => {
           console.error(err);
@@ -129,6 +131,7 @@ const Header = ({ mobile = false, main = false }) => {
           </div>
         ) : (
           <input
+            ref={inputRef}
             value={input}
             maxLength={19}
             onChange={(e) => handleInput(e)}
