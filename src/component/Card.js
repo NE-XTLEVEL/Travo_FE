@@ -108,7 +108,7 @@ const Card = ({
                 }}
                 onClick={() => window.open(item.url, '_blank')}
               >
-                예약하기
+                더보기
               </div>
             )}
           </div>

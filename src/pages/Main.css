@@ -40,18 +40,19 @@
 }
 .MainImage {
   height: 60vh;
+  margin: 0 10vw;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 .MainDescription {
-  width: 30%;
+  width: 40%;
   height: auto;
   visibility: visible;
   animation-name: fadeInLeft;
 }
 .MainPhonePCImg {
-  width: 35%;
+  width: 45%;
   height: auto;
   visibility: visible;
   animation-name: fadeInUp;
