@@ -29,6 +29,7 @@ const FixLocation = ({ item, close, dayId }) => {
           y: item.y,
           high_review: true,
           local_id: item.local_id,
+          original_id: item.kakao_id,
         },
         {
           headers: {
