@@ -40,7 +40,7 @@ const Signup = () => {
   return (
     <div
       className="signup-wrapper"
-      style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}
+      style={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}
     >
       <div className="signup-logo">
         <img src="/logo.svg" alt="Logo" className="logo-image" />

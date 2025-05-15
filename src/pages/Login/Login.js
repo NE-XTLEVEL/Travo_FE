@@ -42,7 +42,7 @@ const Login = () => {
   return (
     <div
       className="login-wrapper"
-      style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}
+      style={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}
     >
       <div className="login-logo">
         <img src="/logo.svg" alt="Logo" className="logo-image" />
