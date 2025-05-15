@@ -130,7 +130,7 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
           top: 0,
           right: 0,
           height: '100%',
-          minWidth: '300px',
+          minWidth: '250px',
           maxWidth: '400px',
           width: mobile ? '60vw' : '25vw',
           backgroundColor: 'white',
@@ -148,38 +148,48 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
         </button>
         <div
           style={{
-            flex: 1,
-            overflowY: 'auto',
-            marginTop: '40px',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '85%',
+            overflow: 'hidden', // ✅ 이게 중요!
+            marginTop: '50px',
           }}
         >
-          <div className={styles.content}>
-            {plans.map((plan) => (
-              <div key={plan.id} className="search-item">
-                <button
-                  style={{ background: 'none', border: 'none' }}
-                  onClick={() => handlePlanData(plan.id)}
+          <div
+            className={styles.scrollArea}
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+            }}
+          >
+            <div className={styles.content}>
+              {plans.map((plan) => (
+                <div key={plan.id} className="search-item">
+                  <button
+                    style={{ background: 'none', border: 'none' }}
+                    onClick={() => handlePlanData(plan.id)}
+                  >
+                    {plan.plan_name}
+                  </button>
+                </div>
+              ))}
+
+              {/* ✅ 로딩 스피너 */}
+              {isLoading && (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    margin: '10px 0',
+                  }}
                 >
-                  {plan.plan_name}
-                </button>
-              </div>
-            ))}
+                  <ClipLoader size={24} color="#9c63e1" />
+                </div>
+              )}
 
-            {/* ✅ 로딩 스피너 */}
-            {isLoading && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  margin: '10px 0',
-                }}
-              >
-                <ClipLoader size={24} color="#9c63e1" />
-              </div>
-            )}
-
-            {/* ✅ IntersectionObserver용 */}
-            <div ref={loaderRef} style={{ height: '1px' }} />
+              {/* ✅ IntersectionObserver용 */}
+              <div ref={loaderRef} style={{ height: '1px' }} />
+            </div>
           </div>
         </div>
 
