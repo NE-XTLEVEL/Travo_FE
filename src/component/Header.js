@@ -98,18 +98,6 @@ const Header = ({ mobile = false, main = false }) => {
           width={mobile ? 25 : 40}
           style={{ margin: '10px' }}
         />
-        {!mobile && (
-          <div
-            style={{
-              padding: '10px',
-              fontSize: '24px',
-              color: '#030045',
-              fontWeight: 700,
-            }}
-          >
-            Travo
-          </div>
-        )}
       </button>
       <div
         style={{
