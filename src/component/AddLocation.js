@@ -130,7 +130,7 @@ const AddLocation = ({ dayId, close }) => {
         >
           <input
             className="searchbar"
-            style={{ fontSize: '130%', outline: 'none' }}
+            style={{ fontSize: '100%', outline: 'none' }}
             value={keyWord}
             onChange={(e) => setKeyWord(e.target.value)}
             onKeyDown={handleKeyPress}
@@ -192,23 +192,21 @@ const AddLocation = ({ dayId, close }) => {
                 <div
                   style={{
                     flex: 5,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
                   }}
                 >
                   <div
                     style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
+                      fontSize: 'clamp(10px, 4vw, 15px)',
+                      color: '#b0b0b0',
                     }}
                   >
-                    <div>{place.category_group_name}</div>
-                    <div style={{ height: '30px' }}></div>
-                    <div style={{ color: '#B0B0B0' }}>
-                      {place.road_address_name}
-                    </div>
+                    {place.category_group_name}
                   </div>
-
                   <strong>{place.place_name}</strong>
+                  <div style={{ color: '#B0B0B0' }}>{place.address_name}</div>
                 </div>
                 <button
                   style={{ flex: 1 }}

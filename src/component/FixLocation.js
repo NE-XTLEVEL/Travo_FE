@@ -3,6 +3,7 @@ import './AddLocation.css';
 import { LuSend } from 'react-icons/lu';
 import { FaPlus } from 'react-icons/fa6';
 import { PlanContext } from '../context/PlanContext';
+import { BeatLoader } from 'react-spinners';
 // import AuthAxios from './AuthAxios';
 import authAxios from './AuthAxios';
 
@@ -10,10 +11,12 @@ const FixLocation = ({ item, close, dayId }) => {
   const [keyWord, setKeyWord] = useState('');
   const [places, setPlaces] = useState([]);
   const { data, setData } = useContext(PlanContext);
+  const [isLoading, setIsLoading] = useState(false);
   const queryParams = new URLSearchParams(location.search);
   const planId = Number(queryParams.get('planId'));
   /* eslint-disable camelcase */
   const fixPlaces = (keyWord) => {
+    setIsLoading(true);
     authAxios
       .post(
         'https://api.travo.kr/location/recommendation/one',
@@ -37,9 +40,11 @@ const FixLocation = ({ item, close, dayId }) => {
       .then((res) => {
         console.log(res.data);
         setPlaces(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log('fixlocation 실패', err);
+        setIsLoading(false);
       });
   };
   const handleChange = (e) => {
@@ -146,6 +151,19 @@ const FixLocation = ({ item, close, dayId }) => {
           paddingRight: '20px',
         }}
       >
+        {isLoading && (
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {' '}
+            <BeatLoader color="#9c63e1" size={10} speedMultiplier={0.5} />
+          </div>
+        )}
         <ul
           style={{
             margin: '0px',
@@ -161,21 +179,21 @@ const FixLocation = ({ item, close, dayId }) => {
               <div
                 style={{
                   flex: 5,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
                 }}
               >
                 <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    fontSize: 'clamp(10px, 4vw, 15px)',
+                    color: '#b0b0b0',
                   }}
                 >
-                  <div>{place.category}</div>
-                  <div style={{ height: '30px' }}></div>
-                  <div style={{ color: '#B0B0B0' }}>{place.address}</div>
+                  {place.category}
                 </div>
-
                 <strong>{place.name}</strong>
+                <div style={{ color: '#B0B0B0' }}>{place.address}</div>
               </div>
               <button
                 style={{ flex: 1 }}
