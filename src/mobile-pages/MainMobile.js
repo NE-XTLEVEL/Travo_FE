@@ -209,9 +209,10 @@ const MainMobile = () => {
           </div>
         </div>
 
-        <div className="MainPrompt" style={{ padding: '3px' }}>
+        <div className="MainPrompt" style={{ padding: '3px', gap: '15px' }}>
           <textarea
             className="MainPromptInput"
+            style={{ height: '90%' }}
             type="text"
             placeholder="잠실로 산뜻한 봄 여행을 떠나고 싶어."
             value={prompt}
@@ -224,7 +225,7 @@ const MainMobile = () => {
             }}
           ></textarea>
           <LuSend
-            size={'3vw'}
+            size={'5vw'}
             stroke="#030045"
             strokeWidth={2}
             style={{ cursor: 'pointer' }}
