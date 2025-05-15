@@ -25,7 +25,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10vw;
+  gap: 5vw;
 }
 .Intro3 {
   display: flex;
@@ -40,8 +40,41 @@
   width: 30vw;
   visibility: visible;
 }
+.IntroText2 {
+  width: 27vw;
+  visibility: visible;
+}
+.IntroText3 {
+  width: 20vw;
+  visibility: visible;
+}
+.IntroText3-2 {
+  width: 21vw;
+  visibility: visible;
+}
+.IntroText3-3 {
+  width: 25vw;
+  visibility: visible;
+}
 .IntroImage1 {
   width: 30vw;
   height: 30vw;
   visibility: visible;
+}
+.IntroImage2 {
+  width: 27vw;
+  visibility: visible;
+}
+.IntroImage3 {
+  width: 25vw;
+  visibility: visible;
+}
+.IntroVideo {
+  height: 25vw;
+  width: 27vw;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 20px;
+  box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.1);
 }

@@ -6,7 +6,8 @@ import introImage1 from '../component/assets/Intro_Image_1.svg';
 import introImage2 from '../component/assets/Intro_Image_2.svg';
 import introImage3One from '../component/assets/Intro_Image_3_1.svg';
 import introImage3Two from '../component/assets/Intro_Image_3_2.svg';
-import introImage3Three from '../component/assets/Intro_Image_3_3.svg';
+//import introImage3Three from '../component/assets/Intro_Image_3_3.svg';
+import introImage3Video from '../component/assets/Intro_Image_3_Video.mp4';
 
 import introText1 from '../component/assets/Intro_Text_1.svg';
 import introText2 from '../component/assets/Intro_Text_2.svg';
@@ -55,8 +56,18 @@ const Main2 = () => {
       <div className="Intro2">
         <FadeInOnScroll delay={0.6}>
           <div className="IntroItems2">
-            <img src={introText2} alt="Intro Text 2" draggable="false" />
-            <img src={introImage2} alt="Intro Image 2" draggable="false" />
+            <img
+              className="IntroText2"
+              src={introText2}
+              alt="Intro Text 2"
+              draggable="false"
+            />
+            <img
+              className="IntroImage2"
+              src={introImage2}
+              alt="Intro Image 2"
+              draggable="false"
+            />
           </div>
         </FadeInOnScroll>
       </div>
@@ -66,23 +77,48 @@ const Main2 = () => {
         {/* intro3-0 */}
         <div className="IntroItems3">
           <FadeInOnScroll delay={0.6}>
-            <img src={introText3} alt="Intro Text 3" draggable="false" />
+            <img
+              className="IntroText3"
+              src={introText3}
+              alt="Intro Text 3"
+              draggable="false"
+            />
           </FadeInOnScroll>
         </div>
 
         {/* intro3-1 */}
         <FadeInOnScroll delay={0.6}>
           <div className="IntroItems3">
-            <img src={introImage3One} alt="Intro Image 3.1" draggable="false" />
-            <img src={introText3One} alt="Intro Text 3.1" draggable="false" />
+            <img
+              className="IntroImage3"
+              src={introImage3One}
+              alt="Intro Image 3.1"
+              draggable="false"
+            />
+            <img
+              className="IntroText3"
+              src={introText3One}
+              alt="Intro Text 3.1"
+              draggable="false"
+            />
           </div>
         </FadeInOnScroll>
 
         {/* intro3-2 */}
         <FadeInOnScroll delay={1.2}>
           <div className="IntroItems3">
-            <img src={introText3Two} alt="Intro Text 3.2" draggable="false" />
-            <img src={introImage3Two} alt="Intro Image 3.2" draggable="false" />
+            <img
+              className="IntroText3-2"
+              src={introText3Two}
+              alt="Intro Text 3.2"
+              draggable="false"
+            />
+            <img
+              className="IntroImage3"
+              src={introImage3Two}
+              alt="Intro Image 3.2"
+              draggable="false"
+            />
           </div>
         </FadeInOnScroll>
 
@@ -90,12 +126,22 @@ const Main2 = () => {
 
         <FadeInOnScroll delay={1.0}>
           <div className="IntroItems3">
-            <img
-              src={introImage3Three}
+            <video
+              className="IntroVideo"
+              src={introImage3Video}
               alt="Intro Image 3.3"
               draggable="false"
+              autoPlay
+              loop
+              muted
+              playsInline
             />
-            <img src={introText3Three} alt="Intro Text 3.3" draggable="false" />
+            <img
+              className="IntroText3-3"
+              src={introText3Three}
+              alt="Intro Text 3.3"
+              draggable="false"
+            />
           </div>
         </FadeInOnScroll>
       </div>
