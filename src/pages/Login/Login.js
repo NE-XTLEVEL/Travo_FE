@@ -44,12 +44,10 @@ const Login = () => {
       className="login-wrapper"
       style={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}
     >
-      <div className="login-logo">
+      <button className="logo-button" onClick={() => navigate('/')}>
         <img src="/logo.svg" alt="Logo" className="logo-image" />
-        <button className="logo-button" onClick={() => navigate('/')}>
-          Travo
-        </button>
-      </div>
+        Travo
+      </button>
       <div className="login-container">
         <div className="container-row">
           <label className="input-label">이메일 주소</label>
@@ -80,7 +78,7 @@ const Login = () => {
           className="login-transparent-button"
           onClick={() => navigate('/signup')}
         >
-          <div style={{ color: '#FFFFF' }}>회원가입</div>
+          <div style={{ color: '#b0b0b0' }}>회원가입</div>
         </button>
       </div>
     </div>

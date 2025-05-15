@@ -42,12 +42,10 @@ const Signup = () => {
       className="signup-wrapper"
       style={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}
     >
-      <div className="signup-logo">
+      <button className="logo-button" onClick={() => navigate('/')}>
         <img src="/logo.svg" alt="Logo" className="logo-image" />
-        <button className="logo-button" onClick={() => navigate('/')}>
-          Travo
-        </button>
-      </div>
+        Travo
+      </button>
       <div className="signup-container">
         <div className="container-row">
           <label className="input-label">이름 입력</label>

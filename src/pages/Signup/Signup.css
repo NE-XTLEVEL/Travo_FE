@@ -8,22 +8,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
 }
 
 .signup-image {
   width: 5vw; /* 원하는 크기로 조정 */
   height: auto; /* 원하는 크기로 조정 */
-}
-
-.logo-button {
-  font-size: clamp(14px, 6vw, 50px);
-  margin-top: 10px;
-  font-weight: normal; /* 글씨 굵기를 줄임 */
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: inherit; /* 버튼의 텍스트 색상을 상속받도록 설정 */
 }
 
 .signup-container {
