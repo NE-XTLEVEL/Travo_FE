@@ -54,7 +54,7 @@
   width: 100px;
   text-align: right;
   color: #b0b0b0;
-  font-size: clamp(5px, 5vw, 15px);
+  font-size: clamp(10px, 3vw, 15px);
 }
 .login-container input {
   text-align: left;
