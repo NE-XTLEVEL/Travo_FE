@@ -4,7 +4,7 @@
 .Main2 {
   display: flex;
   flex-direction: column;
-  gap: 20vh;
+  gap: clamp(150px, 20vh, 200px);
 }
 .IntroItems {
   margin-top: 20vh;
@@ -21,6 +21,13 @@
   align-items: center;
   gap: 10vw;
 }
+.IntroHeader3 {
+  width: 15vw;
+  height: 15vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .IntroItems3 {
   display: flex;
   justify-content: center;
@@ -32,12 +39,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15vh;
-  margin-top: 20vh;
+  gap: 5vh;
   margin-bottom: 20vh;
 }
-.IntroText1 {
+.IntroImage {
   width: 30vw;
+  height: 30vw;
   visibility: visible;
 }
 .IntroText2 {

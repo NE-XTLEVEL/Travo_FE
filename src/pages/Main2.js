@@ -38,13 +38,13 @@ const Main2 = () => {
       <FadeInOnScroll delay={0.4}>
         <div className="IntroItems">
           <img
-            className="IntroText1"
+            className="IntroImage"
             src={introText1}
             alt="Intro Text 1"
             draggable="false"
           />
           <img
-            className="IntroImage1"
+            className="IntroImage"
             src={introImage1}
             alt="Intro Image 1"
             draggable="false"
@@ -75,7 +75,7 @@ const Main2 = () => {
       {/* Intro 3 */}
       <div className="Intro3">
         {/* intro3-0 */}
-        <div className="IntroItems3">
+        <div className="IntroHeader3">
           <FadeInOnScroll delay={0.6}>
             <img
               className="IntroText3"
