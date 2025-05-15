@@ -49,30 +49,29 @@ const Signup = () => {
         </button>
       </div>
       <div className="signup-container">
-        <div>
+        <div className="container-row">
+          <label className="input-label">이름 입력</label>
           <input
             type="text"
             id="id"
-            placeholder="이름을 입력해주세요"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div>
+        <div className="container-row">
+          <label className="input-label">이메일 주소</label>
           <input
             type="text"
             id="id"
-            placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        {/* {emailError && <div>{emailError}</div>} */}
-        <div>
+        <div className="container-row">
+          <label className="input-label">비밀번호</label>
           <input
             type="password"
             id="password"
-            placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -84,24 +83,26 @@ const Signup = () => {
               : '비밀번호가 일치합니다.'}
           </p>
         )}
-        <div>
+        <div className="container-row">
+          <label className="input-label">비밀번호 확인</label>
           <input
             type="password"
             id="checkpassword"
-            placeholder="비밀번호 확인"
             onChange={(e) => {
               confirmPassword(password, e.target.value);
             }}
           />
         </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button
-          className="signup-button"
-          onClick={handleSignup}
-          disabled={passwordError}
-        >
-          회원가입
-        </button>
+        <div className="container-row">
+          <button
+            className="signup-button"
+            onClick={handleSignup}
+            disabled={passwordError}
+          >
+            회원가입
+          </button>
+        </div>
       </div>
     </div>
   );

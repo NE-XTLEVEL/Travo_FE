@@ -12,9 +12,9 @@ body.login-body {
   justify-content: center;
   align-items: center;
 }
-
 .login-logo {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
@@ -29,8 +29,9 @@ body.login-body {
 }
 
 .logo-button {
-  font-size: clamp(14px, 10vw, 100px);
+  font-size: clamp(14px, 6vw, 50px);
   margin: 0;
+  margin-top: 10px;
   font-weight: normal; /* 글씨 굵기를 줄임 */
   background: none;
   border: none;
@@ -39,27 +40,44 @@ body.login-body {
 }
 
 .login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 80vw;
   max-width: 500px;
   margin: 0 auto;
   padding: 20px 20px 0px 20px;
-  border-radius: 10px;
 }
-
+.container-row {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  margin: 0 auto; /* input을 수평 가운데 정렬 */
+}
+.input-label {
+  position: absolute;
+  left: -70px; /* input 왼쪽에 고정 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100px;
+  text-align: right;
+  color: #b0b0b0;
+}
 .login-container input {
   text-align: left;
-  width: 100%;
+  width: 80%;
   line-height: 1.1;
   padding: 15px;
   margin: 30px 0;
   border: 1px solid #ccc;
   border-radius: 20px;
   box-sizing: border-box;
-  background-color: #f0f0f0;
+  background-color: white;
 }
 
 .login-container button {
-  width: 100%;
+  width: 80%;
   padding: 15px;
   background-color: #b563e8;
   color: white;

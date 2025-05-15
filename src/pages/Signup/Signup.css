@@ -15,6 +15,7 @@ body.signup-body {
 
 .signup-logo {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
@@ -27,9 +28,9 @@ body.signup-body {
   margin-top: 10px;
 }
 
-.signup-button {
-  font-size: clamp(14px, 10vw, 100px);
-  margin: 0;
+.logo-button {
+  font-size: clamp(14px, 6vw, 50px);
+  margin-top: 10px;
   font-weight: normal; /* 글씨 굵기를 줄임 */
   background: none;
   border: none;
@@ -38,27 +39,31 @@ body.signup-body {
 }
 
 .signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 80vw;
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
-  border-radius: 10px;
 }
 
 .signup-container input {
   text-align: left;
-  width: 100%;
+  width: 80%;
+  height: 60%;
   line-height: 1.1;
   padding: 15px;
   margin: 20px 0;
   border: 1px solid #ccc;
   border-radius: 20px;
   box-sizing: border-box;
-  background-color: #f0f0f0;
+  background-color: white;
 }
 
 .signup-button {
-  width: 100%;
+  width: 80%;
+  height: 60%;
   padding: 15px;
   background-color: #b563e8;
   color: white;

@@ -66,6 +66,7 @@ const AddLocation = ({ dayId, close }) => {
           },
         ],
       };
+      console.log(updated);
       setData(updated);
       setMaxId(maxId + 1);
       close();

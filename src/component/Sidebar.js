@@ -132,7 +132,7 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
           height: '100%',
           minWidth: '300px',
           maxWidth: '400px',
-          width: mobile ? '70vw' : '25vw',
+          width: mobile ? '60vw' : '25vw',
           backgroundColor: 'white',
           zIndex: 5,
           display: 'flex',

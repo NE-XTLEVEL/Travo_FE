@@ -150,13 +150,16 @@ const MainMobile = () => {
               onInvalidRange={handleInvalidRange}
               mobile={true}
             />
-            <div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <span>{FormattingDate(startDate)}</span> ~{' '}
               <span>{FormattingDate(endDate)}</span>
             </div>
           </div>
 
-          <div className="OptionPeople" style={{ position: 'relative' }}>
+          <div
+            className="OptionPeople"
+            style={{ position: 'relative', zIndex: '3' }}
+          >
             <MdPeopleOutline
               size={'5vw'}
               onClick={handleIconClick}
