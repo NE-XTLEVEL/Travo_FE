@@ -234,7 +234,10 @@ const MainMobile = () => {
           </div>
         </div>
 
-        <div className="MainPrompt" style={{ padding: '3px', gap: '15px' }}>
+        <div
+          className="MainPrompt"
+          style={{ padding: '6px 10px 6px 6px', gap: '15px' }}
+        >
           <textarea
             className="MainPromptInput"
             style={{ height: '90%' }}
