@@ -46,8 +46,8 @@ const MainMobile = () => {
     const days = moment(endDate).diff(moment(startDate), 'days') + 1;
     const startDateFormatted = moment(startDate).format('YYYY-MM-DD'); // 서버에 보낼 시작 날짜
     const planName = moment(startDate).isSame(endDate, 'day')
-      ? `${moment(startDate).format('MM.DD(ddd)')} 여행 계획`
-      : `${moment(startDate).format('MM.DD(ddd)')}-${moment(endDate).format('MM.DD(ddd)')} 여행 계획`;
+      ? `${moment(startDate).format('MM.DD(ddd)')} 여행`
+      : `${moment(startDate).format('MM.DD(ddd)')}-${moment(endDate).format('MM.DD(ddd)')} 여행`;
     const getRecommendation = async () => {
       try {
         console.log('loading....');
@@ -94,12 +94,6 @@ const MainMobile = () => {
 
   const handleIconClick = () => {
     setShowInput(!showInput);
-  };
-  const handleInputChange = (e) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0) {
-      setPeopleCount(value);
-    }
   };
 
   if (isLoading) {
@@ -176,7 +170,27 @@ const MainMobile = () => {
                 min="1"
                 max="10"
                 value={peopleCount}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  // 숫자 아닌 값은 무시
+                  if (!/^\d*$/.test(value)) return;
+
+                  const num = parseInt(value, 10);
+
+                  if (value === '') {
+                    // 빈 문자열 허용 (입력 중)
+                    setPeopleCount('');
+                  } else if (num === 0) {
+                    alert('최소 1명 이상 입력해주세요.');
+                    setPeopleCount('1');
+                  } else if (num > 10) {
+                    alert('최대 10명까지 가능합니다.');
+                    setPeopleCount('10');
+                  } else {
+                    setPeopleCount(value);
+                  }
+                }}
                 onBlur={() => setShowInput(false)}
                 style={{
                   position: 'absolute',
@@ -195,16 +209,23 @@ const MainMobile = () => {
           </div>
         </div>
 
-        <div className="MainPrompt">
-          <input
+        <div className="MainPrompt" style={{ padding: '3px', gap: '15px' }}>
+          <textarea
             className="MainPromptInput"
+            style={{ height: '90%' }}
             type="text"
-            placeholder="어떤 여행을 떠나고 싶은가요?"
+            placeholder="잠실로 산뜻한 봄 여행을 떠나고 싶어."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-          ></input>
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // 줄바꿈 막고
+                handleSubmit(); // 제출
+              }
+            }}
+          ></textarea>
           <LuSend
-            size={'3vw'}
+            size={'5vw'}
             stroke="#030045"
             strokeWidth={2}
             style={{ cursor: 'pointer' }}

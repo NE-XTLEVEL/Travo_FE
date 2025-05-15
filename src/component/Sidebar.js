@@ -11,6 +11,7 @@ import AuthAxios from './AuthAxios';
 import { PlanContext } from '../context/PlanContext';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useNavigate } from 'react-router-dom';
+import { IoIosClose } from 'react-icons/io';
 
 const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
   const navigate = useNavigate();
@@ -116,6 +117,7 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
         setMaxId(res.data.max_id);
         setPlanName(res.data.plan_name);
         navigate(`/Plan?planId=${id}`);
+        setIsOpen(false);
       })
       .catch((err) => console.error(err));
   };
@@ -124,22 +126,31 @@ const Sidebar = ({ isOpen, setIsOpen, mobile }) => {
       <div
         ref={side}
         style={{
-          height: '100%',
-          width: mobile ? '70%' : '25%',
-          right: isOpen ? 0 : mobile ? '-70%' : '-25%',
-          top: 0,
           position: 'fixed',
+          top: 0,
+          right: 0,
+          height: '100%',
+          minWidth: '300px',
+          maxWidth: '400px',
+          width: mobile ? '70vw' : '25vw',
           backgroundColor: 'white',
-          transition: 'right 0.5s ease',
           zIndex: 5,
           display: 'flex',
           flexDirection: 'column',
+          transition: 'transform 0.5s ease',
+          transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+          borderLeft: '1px solid #B0B0B0',
+          boxShadow: '-4px 0 10px rgba(0, 0, 0, 0.1)',
         }}
       >
+        <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
+          <IoIosClose size={30} color="#B0B0B0" />
+        </button>
         <div
           style={{
             flex: 1,
             overflowY: 'auto',
+            marginTop: '40px',
           }}
         >
           <div className={styles.content}>

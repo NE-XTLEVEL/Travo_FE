@@ -12,6 +12,7 @@ const Header = ({ mobile = false, main = false }) => {
   const [input, setInput] = useState(planName);
   const [debouncedInput, setDebouncedInput] = useState('');
   const [auth, setAuth] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
   const queryParams = new URLSearchParams(location.search);
   const planId = Number(queryParams.get('planId'));
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const Header = ({ mobile = false, main = false }) => {
     const handler = setTimeout(() => {
       setPlanName(input); // 화면 너비 변경될 때도 input 유지
       setDebouncedInput(input);
-    }, 500); // 500ms 후 반영
+    }, 1000); // 500ms 후 반영
 
     return () => {
       clearTimeout(handler); // 다음 입력 전에 이전 타이머 취소
@@ -46,7 +47,7 @@ const Header = ({ mobile = false, main = false }) => {
 
   // ✅ 이 effect는 debouncedInput이 바뀔 때만 실행됨
   useEffect(() => {
-    if (debouncedInput) {
+    if (debouncedInput && isEdited && debouncedInput !== planName) {
       authAxios
         .patch(`/plan/name/${planId}`, {
           name: input,
@@ -54,13 +55,19 @@ const Header = ({ mobile = false, main = false }) => {
         .then((res) => {
           console.log(res.data.message);
           setPlanName(input);
+          setIsEdited(false);
         })
         .catch((err) => {
           console.error(err);
+          setIsEdited(false);
         });
       console.log('요청:', debouncedInput);
     }
-  }, [debouncedInput, input, planId, setPlanName]);
+  }, [debouncedInput, input, planId, setPlanName, isEdited, planName]);
+  const handleInput = (e) => {
+    setInput(e.target.value);
+    setIsEdited(true);
+  };
   return (
     <div
       style={{
@@ -123,11 +130,12 @@ const Header = ({ mobile = false, main = false }) => {
         ) : (
           <input
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            maxLength={19}
+            onChange={(e) => handleInput(e)}
             style={{
               border: 'none',
               height: '50px',
-              width: '80%',
+              width: '90%',
               fontSize: mobile ? '20px' : '26px',
               fontWeight: 700,
               textAlign: 'center',
