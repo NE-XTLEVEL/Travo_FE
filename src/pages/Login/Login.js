@@ -16,7 +16,6 @@ const Login = () => {
         password: password,
       })
       .then((res) => {
-        console.log(res);
         if (res.status == 201) {
           const accessToken = res.data.access_token;
           const refreshToken = res.data.refresh_token;

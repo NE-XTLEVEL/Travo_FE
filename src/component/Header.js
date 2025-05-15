@@ -36,7 +36,7 @@ const Header = ({ mobile = false, main = false }) => {
   }, []);
   useEffect(() => {
     const handler = setTimeout(() => {
-      setPlanName(input); // 화면 너비 변경될 때도 input 유지
+      // setPlanName(input); // 화면 너비 변경될 때도 input 유지
       setDebouncedInput(input);
     }, 1000); // 500ms 후 반영
 
@@ -47,14 +47,14 @@ const Header = ({ mobile = false, main = false }) => {
 
   // ✅ 이 effect는 debouncedInput이 바뀔 때만 실행됨
   useEffect(() => {
-    if (debouncedInput && isEdited && debouncedInput !== planName) {
+    if (debouncedInput && isEdited && debouncedInput != planName) {
       authAxios
         .patch(`/plan/name/${planId}`, {
           name: input,
         })
         .then((res) => {
           console.log(res.data.message);
-          setPlanName(input);
+          setPlanName(debouncedInput);
           setIsEdited(false);
         })
         .catch((err) => {
