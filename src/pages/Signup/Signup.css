@@ -1,13 +1,3 @@
-body.signup-body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #ffffff;
-  margin-top: 500;
-}
-
 .signup-wrapper {
   justify-content: center;
   align-items: center;
@@ -50,7 +40,7 @@ body.signup-body {
 
 .signup-container input {
   text-align: left;
-  width: 80%;
+  width: 100%;
   height: 60%;
   line-height: 1.1;
   padding: 15px;
@@ -62,7 +52,7 @@ body.signup-body {
 }
 
 .signup-button {
-  width: 80%;
+  width: 100%;
   height: 60%;
   padding: 15px;
   background-color: #b563e8;
